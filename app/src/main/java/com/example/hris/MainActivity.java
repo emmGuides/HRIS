@@ -97,7 +97,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     progressBar.setVisibility(View.GONE);
                 }
                 else{
-                    Toast.makeText(MainActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
