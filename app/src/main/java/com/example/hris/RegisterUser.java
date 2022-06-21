@@ -19,10 +19,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
-    private TextView banner, registerUser;
     private EditText editTextFullName, editTextAge, editTextEmail, editTextPassword;
     private ProgressBar progressBar;
 
@@ -32,10 +33,10 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_register_user);
 
         mAuth = FirebaseAuth.getInstance();
-        banner = (TextView) findViewById(R.id.banner);
+        TextView banner = (TextView) findViewById(R.id.banner);
         banner.setOnClickListener(this);
 
-        registerUser = (Button) findViewById((R.id.register));
+        TextView registerUser = (Button) findViewById((R.id.register));
         registerUser.setOnClickListener(this);
 
         editTextFullName = (EditText) findViewById(R.id.fullName);
@@ -105,26 +106,30 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if(task.isSuccessful()){
                             Employee employee = new Employee(fullName, age, email);
 
-                            FirebaseDatabase.getInstance().getReference("Employees")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees")
+                                    .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
                                     .setValue(employee).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
                                                 Toast.makeText(RegisterUser.this, "Employee Registered Successfully", Toast.LENGTH_LONG).show();
-                                                progressBar.setVisibility(View.GONE);
 
                                                 //TO DO: redirect to login layout
                                             }
                                             else{
                                                 Toast.makeText(RegisterUser.this, "Employee Registration Failed", Toast.LENGTH_LONG).show();
-                                                progressBar.setVisibility(View.GONE);
                                             }
+                                            progressBar.setVisibility(View.GONE);
                                         }
                                     });
+                        }
+                        else {
+                            Toast.makeText(RegisterUser.this, "Employee Registration Failed", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 });
