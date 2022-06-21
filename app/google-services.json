@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "454775084473",
+    "project_id": "hris-c2ba2",
+    "storage_bucket": "hris-c2ba2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454775084473:android:7a57be8cf3d85f8ae45268",
+        "android_client_info": {
+          "package_name": "com.example.hris"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "454775084473-6uoqrhhs33i83ec3o0plbua40o9su7pb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4A6cJ9HSnNsMJF96FRcfx59MznB-WflI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "454775084473-6uoqrhhs33i83ec3o0plbua40o9su7pb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
