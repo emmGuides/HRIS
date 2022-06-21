@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".RegisterUser">
 
     <TextView
         android:id="@+id/banner"
@@ -35,44 +35,72 @@
         tools:ignore="HardcodedText" />
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/fullName"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:ems="10"
-        android:hint="Email Address"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:textColorHint="#757575"
+        android:hint="Full Name"
+        android:inputType="text"
         android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bannerDescription"
-        tools:ignore="Autofill,HardcodedText" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="Autofill,HardcodedText"
+        />
+
+    <EditText
+        android:id="@+id/age"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Age"
+        android:inputType="number"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/fullName"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="Autofill,HardcodedText"
+        />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/age"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="Autofill,HardcodedText"
+        />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:textColorHint="#757575"
         android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email"
-        tools:ignore="Autofill,HardcodedText" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="Autofill,HardcodedText"
+        />
 
     <Button
-        android:id="@+id/signIn"
+        android:id="@+id/register"
         android:layout_width="300dp"
         android:layout_height="70dp"
         android:layout_marginTop="24dp"
         android:backgroundTint="#6499C3"
-        android:text="Login"
+        android:text="Register"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -80,32 +108,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
         tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/forgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Forgot Password?"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signIn"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="40dp"
-        tools:ignore="HardcodedText,RtlHardcoded" />
-
-    <TextView
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signIn"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="50dp"
-        tools:ignore="HardcodedText,RtlHardcoded" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -119,6 +121,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
