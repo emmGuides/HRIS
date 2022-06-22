@@ -51,7 +51,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.banner:
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, LogIn.class));
                 break;
             case R.id.register:
                 registerUser();
@@ -117,7 +117,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
                                                 Toast.makeText(RegisterUser.this, "Employee Registered Successfully", Toast.LENGTH_LONG).show();
-                                                startActivity(new Intent(RegisterUser.this, MainActivity.class));
+                                                startActivity(new Intent(RegisterUser.this, LogIn.class));
                                                 //TODO: redirect to login layout
                                             }
                                             else{
