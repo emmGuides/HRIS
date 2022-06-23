@@ -1,17 +1,17 @@
-package com.example.hris.ui.slideshow;
+package com.example.hris.ui.teams;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class TeamsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
     private final MutableLiveData<String> mText2;
 
-    public SlideshowViewModel() {
+    public TeamsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("This is Teams fragment");
         mText2 = new MutableLiveData<>();
         mText2.setValue("checking: This is mtext2");
     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">hris</string>
+    <string name="app_name">HRIS mobile</string>
     <string name="title_activity_home_screen">HomeScreen</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -9,6 +9,6 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_calendar">Calendar</string>
+    <string name="menu_teams">Teams</string>
 </resources>
