@@ -12,14 +12,27 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.hris.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_calendar"
+        android:name="com.example.hris.ui.calendar.CalendarFragment"
+        android:label="@string/menu_calendar"
+        tools:layout="@layout/fragment_calendar" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.hris.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_teams"
+        android:name="com.example.hris.ui.teams.TeamsFragment"
+        android:label="@string/menu_teams"
+        tools:layout="@layout/fragment_teams" />
+
+    <fragment
+        android:id="@+id/nav_vacation"
+        android:name="com.example.hris.ui.vacation.VacationFragment"
+        android:label="@string/menu_vacation"
+        tools:layout="@layout/fragment_vacation" />
+
+    <fragment
+        android:id="@+id/nav_sick"
+        android:name="com.example.hris.ui.sick.SickFragment"
+        android:label="@string/menu_sick"
+        tools:layout="@layout/fragment_sick" />
+
 </navigation>

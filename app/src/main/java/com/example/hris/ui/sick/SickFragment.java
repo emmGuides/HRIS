@@ -1,4 +1,4 @@
-package com.example.hris.ui.slideshow;
+package com.example.hris.ui.sick;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,24 +10,24 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.hris.databinding.FragmentSlideshowBinding;
+import com.example.hris.databinding.FragmentSickBinding;
 
-public class SlideshowFragment extends Fragment {
+public class SickFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
-
+    private FragmentSickBinding binding;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        SickViewModel sickViewModel =
+                new ViewModelProvider(this).get(SickViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentSickBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textSick;
+        sickViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
+
 
     @Override
     public void onDestroyView() {
