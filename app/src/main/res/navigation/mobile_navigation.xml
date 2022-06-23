@@ -12,14 +12,20 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_calendar"
         android:name="com.example.hris.ui.calendar.CalendarFragment"
         android:label="@string/menu_calendar"
         tools:layout="@layout/fragment_calendar" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_teams"
         android:name="com.example.hris.ui.teams.TeamsFragment"
         android:label="@string/menu_teams"
         tools:layout="@layout/fragment_teams" />
+
+    <fragment
+        android:id="@+id/nav_vacation"
+        android:name="com.example.hris.ui.vacation.VacationFragment"
+        android:label="@string/menu_vacation"
+        tools:layout="@layout/fragment_vacation" />
 </navigation>
