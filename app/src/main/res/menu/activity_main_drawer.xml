@@ -21,5 +21,10 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_vacation"
             />
+        <item
+            android:id="@+id/nav_sick"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_sick"
+            />
     </group>
 </menu>
