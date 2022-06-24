@@ -92,17 +92,21 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    // VERIFY EMAIL: DISABLED FOR NOW SINCE IT IS IN DEVELOPMENT (working)
-                    /* FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    // TODO VERIFY EMAIL: DISABLED FOR NOW SINCE IT IS IN DEVELOPMENT (working)
+                    /*FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if(user.isEmailVerified()){
-                        startActivity(new Intent(LogIn.this, HomeScreen.class));
+                        startActivity(new Intent(LogIn.this, for_test_only_final.class));
                         progressBar.setVisibility(View.GONE);
                     }
                     else {
                         user.sendEmailVerification();
                         Toast.makeText(LogIn.this, "Check your Email to Verify Account", Toast.LENGTH_LONG).show();
                         progressBar.setVisibility(View.GONE);
-                    } */
+                    }
+
+                     */
+
+                    // change for_test_final.class to HomeScreen.class to stop checking
                     startActivity(new Intent(LogIn.this, HomeScreen.class));
                     progressBar.setVisibility(View.GONE);
                 }
