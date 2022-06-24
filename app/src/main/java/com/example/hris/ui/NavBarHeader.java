@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hris.Employee;
 import com.example.hris.R;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,8 +32,17 @@ public class NavBarHeader extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_header_home_screen);
 
-        final TextView userNameDisplay = (TextView) findViewById(R.id.navBarName);
-        final TextView userEmailDisplay = (TextView) findViewById(R.id.navBarEmail);
+        // TODO: FIX NAVIGATION BAR AT TOP TO 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
+        View headerView = navigationView.getHeaderView(0);
+
+
+        TextView userNameDisplay = (TextView) headerView.findViewById(R.id.navBarName);
+        TextView userEmailDisplay = (TextView) headerView.findViewById(R.id.navBarEmail);
+
+        userNameDisplay.setText("success Name");
+        userEmailDisplay.setText("success Email");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Employees");

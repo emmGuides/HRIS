@@ -47,7 +47,7 @@ public class HomeScreen extends AppCompatActivity {
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "logout clicked", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "User has logged out", Toast.LENGTH_LONG).show();
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(HomeScreen.this, LogIn.class));
             }
