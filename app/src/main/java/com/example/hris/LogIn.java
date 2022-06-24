@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LogIn extends AppCompatActivity implements View.OnClickListener {
 
@@ -91,7 +92,17 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    //TODO redirect homescreen
+                    // VERIFY EMAIL: DISABLED FOR NOW SINCE IT IS IN DEVELOPMENT (working)
+                    /* FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if(user.isEmailVerified()){
+                        startActivity(new Intent(LogIn.this, HomeScreen.class));
+                        progressBar.setVisibility(View.GONE);
+                    }
+                    else {
+                        user.sendEmailVerification();
+                        Toast.makeText(LogIn.this, "Check your Email to Verify Account", Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.GONE);
+                    } */
                     startActivity(new Intent(LogIn.this, HomeScreen.class));
                     progressBar.setVisibility(View.GONE);
                 }
