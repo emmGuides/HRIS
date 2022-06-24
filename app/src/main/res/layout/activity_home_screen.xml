@@ -25,13 +25,14 @@
 
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/logOutButton"
             android:layout_width="30sp"
             android:layout_height="30sp"
             android:layout_gravity="bottom"
             android:layout_marginLeft="30dp"
             android:layout_marginBottom="30dp"
             app:srcCompat="@drawable/ic_logout" />
+
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
