@@ -32,7 +32,7 @@ public class NavBarHeader extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_header_home_screen);
 
-        // TODO: FIX NAVIGATION BAR AT TOP TO 
+        // TODO: FIX NAVIGATION BAR AT TOP TO DISPLAY USERNAME AND EMAIL
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
         View headerView = navigationView.getHeaderView(0);
