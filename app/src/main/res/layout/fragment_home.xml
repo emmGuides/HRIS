@@ -31,7 +31,7 @@
         android:id="@+id/texttext"
         />
 
-    <Button
+    <!-- Button
         android:id="@+id/testButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,6 +41,6 @@
         app:layout_constraintBottom_toTopOf="@+id/text_home"
         android:text="Test"
         tools:ignore="HardCodedText"
-        />
+        /-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
