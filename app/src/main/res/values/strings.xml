@@ -11,6 +11,6 @@
     <string name="menu_home">Home</string>
     <string name="menu_calendar">Calendar</string>
     <string name="menu_teams">Teams</string>
-    <string name="menu_vacation">Vacation Leave Request</string>
-    <string name="menu_sick">Sick Leave Request</string>
+    <string name="menu_vacation">Vacation Leave</string>
+    <string name="menu_sick">Sick Leave</string>
 </resources>

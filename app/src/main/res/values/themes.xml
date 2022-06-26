@@ -19,7 +19,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Hris.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Hris.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textSize">8dp</item>
+    </style>
 
-    <style name="Theme.Hris.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.Hris.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
 </resources>
