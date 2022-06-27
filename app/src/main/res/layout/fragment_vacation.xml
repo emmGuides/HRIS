@@ -7,16 +7,28 @@
     tools:context=".ui.vacation.VacationFragment">
 
 
+    <ImageView
+        android:layout_width="148dp"
+        android:layout_height="148dp"
+        android:layout_marginBottom="50dp"
+        android:alpha="0.5"
+        android:src="@drawable/coconuttree"
+        app:layout_constraintBottom_toBottomOf="@+id/vacation_start_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.939"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
-        android:textStyle="italic"
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Date"
-        app:layout_constraintWidth="300dp"
         android:layout_marginLeft="7dp"
+        android:text="Start Date"
+        android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/vacation_start_date"
         app:layout_constraintEnd_toEndOf="@+id/vacation_start_date"
         app:layout_constraintStart_toStartOf="@+id/vacation_start_date"
+        app:layout_constraintWidth="300dp"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
     <EditText
@@ -41,15 +53,16 @@
 
 
     <TextView
-        android:textStyle="italic"
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="End Date"
-        app:layout_constraintWidth="300dp"
         android:layout_marginLeft="7dp"
+        android:text="End Date"
+        android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/vacation_end_date"
         app:layout_constraintEnd_toEndOf="@+id/vacation_end_date"
         app:layout_constraintStart_toStartOf="@+id/vacation_end_date"
+        app:layout_constraintWidth="300dp"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
     <EditText
@@ -116,7 +129,7 @@
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="@+id/vacation_apply"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="50dp"/>
+        android:layout_marginBottom="40dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
