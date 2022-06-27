@@ -45,7 +45,7 @@
 		- app demo link: https://drive.google.com/file/d/1H-UKZI8wRfbvOy8D2NwriGxK6T6xoP0K/view?usp=drivesdk
 		
       June 27, 2022: 
-      		- Added Vacation Leave Form
+		- Added Vacation Leave Form
 		- Added Sick Leave Form
 		- Added calendar toggle for both forms' start and end dates for their respective leave dates
 		- Added empty/null user input checks for both forms, on all fields
