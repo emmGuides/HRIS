@@ -19,8 +19,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.hris.databinding.FragmentVacationBinding;
 import com.example.hris.ui.sick.SickFragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class VacationFragment extends Fragment {
@@ -30,6 +32,11 @@ public class VacationFragment extends Fragment {
     EditText editTextStart = null;
     EditText editTextEnd = null;
     EditText details = null;
+    String startDate;
+    String endDate;
+    String additionalDetails;
+    Date formattedStart = null;
+    Date formattedEnd = null;
     final Calendar myCalendar = Calendar.getInstance();
 
     Button applyButton = null;
@@ -94,9 +101,9 @@ public class VacationFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String startDate = editTextStart.getText().toString().trim();
-                String endDate = editTextEnd.getText().toString().trim();
-                String additionalDetails = details.getText().toString().trim();
+                startDate = editTextStart.getText().toString().trim();
+                endDate = editTextEnd.getText().toString().trim();
+                additionalDetails = details.getText().toString().trim();
 
 
                 if(startDate.isEmpty()){
@@ -117,7 +124,7 @@ public class VacationFragment extends Fragment {
                     return;
                 }
                 //TODO submit dates and location to firebase
-                Toast.makeText(getContext(), "Vacation Leave Applied", Toast.LENGTH_LONG).show();
+                updateDuration();
             }
         });
 
@@ -137,6 +144,19 @@ public class VacationFragment extends Fragment {
         String myFormat = "MM/dd/yy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
         editTextEnd.setText(dateFormat.format(myCalendar.getTime()));
+    }
+
+    private void updateDuration(){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        try {
+            formattedStart = dateFormat.parse(startDate);
+            formattedEnd = dateFormat.parse(endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String result = "Start Date: " + startDate + " End Date: " + endDate + " Difference in days: " + ((formattedEnd.getTime() - formattedStart.getTime()) / 86400000);
+        Toast.makeText(getContext(), result, Toast.LENGTH_SHORT).show();
     }
 
     @Override
