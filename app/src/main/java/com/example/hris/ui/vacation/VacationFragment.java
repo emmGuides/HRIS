@@ -3,6 +3,7 @@ package com.example.hris.ui.vacation;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.databinding.FragmentVacationBinding;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 public class VacationFragment extends Fragment {
 
@@ -40,6 +41,9 @@ public class VacationFragment extends Fragment {
     int differenceInDates = 0;
     Date formattedStart = null;
     Date formattedEnd = null;
+    long timeStart = 0;
+    long timeEnd = 0
+            ;
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     final Calendar myCalendar = Calendar.getInstance();
 
@@ -54,17 +58,17 @@ public class VacationFragment extends Fragment {
         View root = binding.getRoot();
 
         // Button apply
-        applyButton = (Button) binding.vacationApply;
+        applyButton = binding.vacationApply;
 
         // location
-        details = (EditText) binding.vacationAdditionalDetails;
+        details = binding.vacationAdditionalDetails;
 
         // calendar popup
-        editTextStart = (EditText) binding.vacationStartDate;
-        editTextEnd = (EditText) binding.vacationEndDate;
+        editTextStart = binding.vacationStartDate;
+        editTextEnd = binding.vacationEndDate;
 
         // days duration
-        numberOfDays = (TextView) binding.textVacationDays;
+        numberOfDays = binding.textVacationDays;
 
         // calendar popup
         DatePickerDialog.OnDateSetListener dateStart = new DatePickerDialog.OnDateSetListener() {
@@ -108,11 +112,6 @@ public class VacationFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                startDate = editTextStart.getText().toString().trim();
-                endDate = editTextEnd.getText().toString().trim();
-                additionalDetails = details.getText().toString().trim();
-
-
                 if(startDate.isEmpty()){
                     details.setError("Start Date is required");
                     details.requestFocus();
@@ -128,11 +127,15 @@ public class VacationFragment extends Fragment {
                 if(additionalDetails.isEmpty()){
                     details.setError("Details are Required");
                     details.requestFocus();
-                    return;
                 }
+
                 //TODO submit dates and details to firebase
-                updateDuration();
+                /*String yeah = "timeEnd: " + timeEnd + " timeStart: " + timeStart + "\nstartDate: " + startDate + " endDate: " + endDate
+                        + "\nformattedStart: " + formattedStart.getTime() + " formattedEnd: " + formattedEnd.getTime();
+                Toast.makeText(getContext(), yeah, Toast.LENGTH_SHORT).show();
+                */
             }
+
         });
 
         /* TODO: use ViewModelProperly
@@ -140,67 +143,90 @@ public class VacationFragment extends Fragment {
         vacationViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         */
 
+
         thread = new Thread() {
             @Override
-            public void run() {
-                while (!thread.isInterrupted()) {
-
-                    try {
+            public void run(){
+                try{
+                    while(!thread.isInterrupted()) {
                         Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void run() {
 
-                    requireActivity().runOnUiThread(new Runnable() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void run() {
-                            // update here
-                            Toast.makeText(getContext(), "updated", Toast.LENGTH_LONG).show();
-                        }
-                    });
+                                startDate = editTextStart.getText().toString().trim();
+                                endDate = editTextEnd.getText().toString().trim();
+                                additionalDetails = details.getText().toString().trim();
+
+                                if(isEditTextEmpty()){
+                                    numberOfDays.setText("Dates incomplete");
+                                }
+                                updateDuration();
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         };
         thread.start();
-
         return root;
 
     }
     // calendar popup
     private void updateLabelStart(){
-        String myFormat = "MM/dd/yy";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+        String myFormat = "MM/dd/yyyy";
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat);
         editTextStart.setText(dateFormat.format(myCalendar.getTime()));
     }
 
     // calendar popup
     private void updateLabelEnd(){
-        String myFormat = "MM/dd/yy";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+        String myFormat = "MM/dd/yyyy";
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat);
         editTextEnd.setText(dateFormat.format(myCalendar.getTime()));
+    }
+
+    private Boolean isEditTextEmpty(){
+        return (TextUtils.isEmpty(editTextStart.getText().toString()) || TextUtils.isEmpty(editTextEnd.getText().toString()));
     }
 
     @SuppressLint("SetTextI18n")
     private void updateDuration(){
-        if (editTextStart.getText().toString().trim() != null && editTextEnd.getText().toString().trim() != null) {
+
             try {
                 formattedStart = dateFormat.parse(startDate);
                 formattedEnd = dateFormat.parse(endDate);
-                differenceInDates = (int) ((formattedEnd.getTime() - formattedStart.getTime()) / 86400000);
-                numberOfDays.setText("This leave will take up "+ differenceInDates + " days.");
-            } catch (ParseException e) {
-                e.printStackTrace();
+                formattedStart.getTime();
+                differenceInDates = (int) ((formattedEnd.getTime() - formattedStart.getTime()) / 86400000 );
+                if(differenceInDates < 0){
+                    numberOfDays.setText("Invalid dates inputted!\n(You are not a time traveller)");
+                }
+                else if (differenceInDates == 1){
+                    numberOfDays.setText("This leave will take up a single day.");
+                }
+                else if (differenceInDates == 0) {
+                    numberOfDays.setText("This will be an emergency leave.");
+                }
+                else {
+                    numberOfDays.setText("This leave will take up " + differenceInDates + " days.");
+                }
+
             }
-        } else {
-            numberOfDays.setText("");
-        }
+            catch (Exception e) {
+                numberOfDays.setText("");
+            }
     }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        thread.interrupt();
+        Toast.makeText(getContext(), "thread interrupted", Toast.LENGTH_SHORT).show();
     }
 
 }
