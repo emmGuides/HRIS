@@ -3,6 +3,7 @@ package com.example.hris.ui.vacation;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.databinding.FragmentVacationBinding;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -54,17 +56,17 @@ public class VacationFragment extends Fragment {
         View root = binding.getRoot();
 
         // Button apply
-        applyButton = (Button) binding.vacationApply;
+        applyButton = binding.vacationApply;
 
         // location
-        details = (EditText) binding.vacationAdditionalDetails;
+        details = binding.vacationAdditionalDetails;
 
         // calendar popup
-        editTextStart = (EditText) binding.vacationStartDate;
-        editTextEnd = (EditText) binding.vacationEndDate;
+        editTextStart = binding.vacationStartDate;
+        editTextEnd = binding.vacationEndDate;
 
         // days duration
-        numberOfDays = (TextView) binding.textVacationDays;
+        numberOfDays = binding.textVacationDays;
 
         // calendar popup
         DatePickerDialog.OnDateSetListener dateStart = new DatePickerDialog.OnDateSetListener() {
@@ -128,10 +130,10 @@ public class VacationFragment extends Fragment {
                 if(additionalDetails.isEmpty()){
                     details.setError("Details are Required");
                     details.requestFocus();
-                    return;
                 }
+
                 //TODO submit dates and details to firebase
-                updateDuration();
+                //updateDuration();
             }
         });
 
@@ -140,29 +142,51 @@ public class VacationFragment extends Fragment {
         vacationViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         */
 
+
         thread = new Thread() {
             @Override
             public void run() {
-                while (!thread.isInterrupted()) {
-
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    requireActivity().runOnUiThread(new Runnable() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void run() {
-                            // update here
-                            Toast.makeText(getContext(), "updated", Toast.LENGTH_LONG).show();
+                try{
+                    while (!thread.isInterrupted()) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                    });
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void run() {
+                                // update here
+                                if( !(TextUtils.isEmpty(editTextEnd.getText().toString())) && !(TextUtils.isEmpty(editTextStart.getText().toString())) ){
+                                    try {
+                                        int difference = getDateDifference(editTextStart.getText().toString().trim(), editTextEnd.getText().toString().trim());
+                                        if(difference < 0){
+                                            numberOfDays.setText("Input correct dates, you are not a time traveler.");
+                                        } else if (difference == 1) {
+                                            numberOfDays.setText("This leave will take "+ difference +" day.");
+                                        } else {
+                                            numberOfDays.setText("This leave will take "+ difference +" days.");
+                                        }
+
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                } else {
+                                    numberOfDays.setText("");
+                                }
+                            }
+                        });
+                    }
+                } catch (Exception e ) {
+                    Toast.makeText(getContext(), "try cathc",Toast.LENGTH_SHORT).show();
                 }
+
             }
         };
         thread.start();
+
 
         return root;
 
@@ -181,6 +205,7 @@ public class VacationFragment extends Fragment {
         editTextEnd.setText(dateFormat.format(myCalendar.getTime()));
     }
 
+    /*
     @SuppressLint("SetTextI18n")
     private void updateDuration(){
         if (editTextStart.getText().toString().trim() != null && editTextEnd.getText().toString().trim() != null) {
@@ -195,12 +220,22 @@ public class VacationFragment extends Fragment {
         } else {
             numberOfDays.setText("");
         }
+    }*/
+
+    private int getDateDifference(String start, String end) throws ParseException {
+        formattedStart = dateFormat.parse(start);
+        formattedEnd = dateFormat.parse(end);
+        differenceInDates = (int) ((formattedEnd.getTime() - formattedStart.getTime()) / 86400000);
+        return differenceInDates;
     }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        //thread.interrupt();
+        Toast.makeText(getContext(), "thread interrupted", Toast.LENGTH_SHORT).show();
     }
 
 }
