@@ -42,8 +42,7 @@ public class VacationFragment extends Fragment {
     Date formattedStart = null;
     Date formattedEnd = null;
     long timeStart = 0;
-    long timeEnd = 0
-            ;
+    long timeEnd = 0;
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     final Calendar myCalendar = Calendar.getInstance();
 
@@ -130,6 +129,7 @@ public class VacationFragment extends Fragment {
                 }
 
                 //TODO submit dates and details to firebase
+                Toast.makeText(getContext(), "Vacation Leave Applied", Toast.LENGTH_LONG).show();
                 /*String yeah = "timeEnd: " + timeEnd + " timeStart: " + timeStart + "\nstartDate: " + startDate + " endDate: " + endDate
                         + "\nformattedStart: " + formattedStart.getTime() + " formattedEnd: " + formattedEnd.getTime();
                 Toast.makeText(getContext(), yeah, Toast.LENGTH_SHORT).show();

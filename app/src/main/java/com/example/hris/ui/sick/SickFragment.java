@@ -1,8 +1,10 @@
 package com.example.hris.ui.sick;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.example.hris.databinding.FragmentSickBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class SickFragment extends Fragment {
@@ -31,6 +34,16 @@ public class SickFragment extends Fragment {
     EditText editTextStart = null;
     EditText editTextEnd = null;
     EditText details = null;
+    TextView numberOfDays;
+    String startDate;
+    String endDate;
+    String additionalDetails;
+    Thread thread;
+    int differenceInDates = 0;
+    Date formattedStart = null;
+    Date formattedEnd = null;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+
 
     Button applyButton = null;
 
@@ -51,6 +64,9 @@ public class SickFragment extends Fragment {
 
         //location
         details = (EditText) binding.sickAdditionalDetails;
+
+        // days duration
+        numberOfDays = binding.textSickDays;
 
         // calendar popup
         DatePickerDialog.OnDateSetListener dateStart = new DatePickerDialog.OnDateSetListener() {
@@ -121,27 +137,93 @@ public class SickFragment extends Fragment {
             }
         });
 
+        /*
         final TextView textView = binding.textSickDays;
         sickViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
+
+         */
+        thread = new Thread() {
+            @Override
+            public void run(){
+                try{
+                    while(!thread.isInterrupted()) {
+                        Thread.sleep(500);
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void run() {
+
+                                startDate = editTextStart.getText().toString().trim();
+                                endDate = editTextEnd.getText().toString().trim();
+                                additionalDetails = details.getText().toString().trim();
+
+                                if(isEditTextEmpty()){
+                                    numberOfDays.setText("Dates incomplete");
+                                }
+                                updateDuration();
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+        return root;
     }
 
+    // calendar pop up
     private void updateLabelStart(){
         String myFormat = "MM/dd/yy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
         editTextStart.setText(dateFormat.format(myCalendar.getTime()));
     }
 
+    // calendar pop up
     private void updateLabelEnd(){
         String myFormat = "MM/dd/yy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
         editTextEnd.setText(dateFormat.format(myCalendar.getTime()));
     }
 
+    private Boolean isEditTextEmpty(){
+        return (TextUtils.isEmpty(editTextStart.getText().toString()) || TextUtils.isEmpty(editTextEnd.getText().toString()));
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void updateDuration(){
+
+        try {
+            formattedStart = dateFormat.parse(startDate);
+            formattedEnd = dateFormat.parse(endDate);
+            formattedStart.getTime();
+            differenceInDates = (int) ((formattedEnd.getTime() - formattedStart.getTime()) / 86400000 );
+            if(differenceInDates < 0){
+                numberOfDays.setText("Invalid dates inputted!\n(You are not a time traveller)");
+            }
+            else if (differenceInDates == 1){
+                numberOfDays.setText("This leave will take up a single day.");
+            }
+            else if (differenceInDates == 0) {
+                numberOfDays.setText("This will be an emergency leave.");
+            }
+            else {
+                numberOfDays.setText("This leave will take up " + differenceInDates + " days.");
+            }
+
+        }
+        catch (Exception e) {
+            numberOfDays.setText("");
+        }
+    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        thread.interrupt();
+        Toast.makeText(getContext(), "thread interrupted", Toast.LENGTH_SHORT).show();
     }
 }
