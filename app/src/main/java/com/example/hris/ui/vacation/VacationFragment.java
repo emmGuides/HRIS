@@ -126,6 +126,7 @@ public class VacationFragment extends Fragment {
                 if(additionalDetails.isEmpty()){
                     details.setError("Details are Required");
                     details.requestFocus();
+                    return;
                 }
 
                 //TODO submit dates and details to firebase
