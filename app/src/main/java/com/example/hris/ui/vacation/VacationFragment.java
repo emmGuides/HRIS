@@ -1,7 +1,7 @@
 package com.example.hris.ui.vacation;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +12,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.databinding.FragmentVacationBinding;
-import com.example.hris.ui.sick.SickFragment;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class VacationFragment extends Fragment {
 
@@ -32,11 +32,15 @@ public class VacationFragment extends Fragment {
     EditText editTextStart = null;
     EditText editTextEnd = null;
     EditText details = null;
+    TextView numberOfDays;
     String startDate;
     String endDate;
     String additionalDetails;
+    Thread thread;
+    int differenceInDates = 0;
     Date formattedStart = null;
     Date formattedEnd = null;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     final Calendar myCalendar = Calendar.getInstance();
 
     Button applyButton = null;
@@ -58,6 +62,9 @@ public class VacationFragment extends Fragment {
         // calendar popup
         editTextStart = (EditText) binding.vacationStartDate;
         editTextEnd = (EditText) binding.vacationEndDate;
+
+        // days duration
+        numberOfDays = (TextView) binding.textVacationDays;
 
         // calendar popup
         DatePickerDialog.OnDateSetListener dateStart = new DatePickerDialog.OnDateSetListener() {
@@ -123,14 +130,42 @@ public class VacationFragment extends Fragment {
                     details.requestFocus();
                     return;
                 }
-                //TODO submit dates and location to firebase
+                //TODO submit dates and details to firebase
                 updateDuration();
             }
         });
 
+        /* TODO: use ViewModelProperly
         final TextView textView = binding.textVacationDays;
         vacationViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        */
+
+        thread = new Thread() {
+            @Override
+            public void run() {
+                while (!thread.isInterrupted()) {
+
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void run() {
+                            // update here
+                            Toast.makeText(getContext(), "updated", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        };
+        thread.start();
+
         return root;
+
     }
     // calendar popup
     private void updateLabelStart(){
@@ -146,17 +181,20 @@ public class VacationFragment extends Fragment {
         editTextEnd.setText(dateFormat.format(myCalendar.getTime()));
     }
 
+    @SuppressLint("SetTextI18n")
     private void updateDuration(){
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        try {
-            formattedStart = dateFormat.parse(startDate);
-            formattedEnd = dateFormat.parse(endDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (editTextStart.getText().toString().trim() != null && editTextEnd.getText().toString().trim() != null) {
+            try {
+                formattedStart = dateFormat.parse(startDate);
+                formattedEnd = dateFormat.parse(endDate);
+                differenceInDates = (int) ((formattedEnd.getTime() - formattedStart.getTime()) / 86400000);
+                numberOfDays.setText("This leave will take up "+ differenceInDates + " days.");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            numberOfDays.setText("");
         }
-        String result = "Start Date: " + startDate + " End Date: " + endDate + " Difference in days: " + ((formattedEnd.getTime() - formattedStart.getTime()) / 86400000);
-        Toast.makeText(getContext(), result, Toast.LENGTH_SHORT).show();
     }
 
     @Override
