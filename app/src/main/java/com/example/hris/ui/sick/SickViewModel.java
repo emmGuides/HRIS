@@ -9,7 +9,7 @@ public class SickViewModel extends ViewModel {
 
     public SickViewModel(){
         mText = new MutableLiveData<>();
-        mText.setValue("This is Sick Fragment");
+        mText.setValue("number of days placeholder");
     }
 
     public LiveData<String> getText() { return mText; }
