@@ -145,49 +145,23 @@ public class VacationFragment extends Fragment {
 
         thread = new Thread() {
             @Override
-            public void run() {
+            public void run(){
                 try{
-                    while (!thread.isInterrupted()) {
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    while(!thread.isInterrupted()) {
+                        Thread.sleep(1000);
                         requireActivity().runOnUiThread(new Runnable() {
-                            @SuppressLint("SetTextI18n")
                             @Override
                             public void run() {
-                                // update here
-                                if( !(TextUtils.isEmpty(editTextEnd.getText().toString())) && !(TextUtils.isEmpty(editTextStart.getText().toString())) ){
-                                    try {
-                                        int difference = getDateDifference(editTextStart.getText().toString().trim(), editTextEnd.getText().toString().trim());
-                                        if(difference < 0){
-                                            numberOfDays.setText("Input correct dates, you are not a time traveler.");
-                                        } else if (difference == 1) {
-                                            numberOfDays.setText("This leave will take "+ difference +" day.");
-                                        } else {
-                                            numberOfDays.setText("This leave will take "+ difference +" days.");
-                                        }
-
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                } else {
-                                    numberOfDays.setText("");
-                                }
+                                Toast.makeText(getContext(), "YEAH", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
-                } catch (Exception e ) {
-                    Toast.makeText(getContext(), "try cathc",Toast.LENGTH_SHORT).show();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-
             }
         };
         thread.start();
-
-
         return root;
 
     }
@@ -234,7 +208,7 @@ public class VacationFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        //thread.interrupt();
+        thread.interrupt();
         Toast.makeText(getContext(), "thread interrupted", Toast.LENGTH_SHORT).show();
     }
 
