@@ -23,7 +23,7 @@ public class SickFragment extends Fragment {
         binding = FragmentSickBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSick;
+        final TextView textView = binding.textSickDays;
         sickViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }

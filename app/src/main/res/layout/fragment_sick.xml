@@ -6,28 +6,80 @@
     android:layout_height="match_parent"
     tools:context=".ui.vacation.VacationFragment">
 
-    <TextView
-        android:id="@+id/text_sick"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/sick_start_date"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:hint="From: DD/MM/YYYY"
+        android:inputType="datetime"
+        android:minHeight="48dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/sick_end_date"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="Autofill,HardcodedText,TextFields" />
+
+    <EditText
+        android:id="@+id/sick_end_date"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:hint="To: DD/MM/YYYY"
+        android:inputType="datetime"
+        android:minHeight="48dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/sick_leave_address"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="Autofill,HardcodedText,TextFields" />
+
+
+    <EditText
+        android:id="@+id/sick_leave_address"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:hint="Leave Address"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/sick_apply"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="Autofill,HardcodedText,TextFields" />
+
+
+    <Button
+        android:id="@+id/sick_apply"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#6499C3"
+        android:text="Apply"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/text_sick_days"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/text_sick_days"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_sick"
-        android:text="Hello you can edit Sick here"
-        android:id="@+id/texttext"
-        />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="@+id/sick_apply"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="100dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

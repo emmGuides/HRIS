@@ -9,7 +9,7 @@ public class VacationViewModel extends ViewModel {
 
     public VacationViewModel(){
         mText = new MutableLiveData<>();
-        mText.setValue("This is Vacation Fragment");
+        mText.setValue("Number of days");
     }
 
     public LiveData<String> getText() { return mText; }

@@ -23,7 +23,7 @@ public class VacationFragment extends Fragment {
         binding = FragmentVacationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textVacation;
+        final TextView textView = binding.textVacationDays;
         vacationViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
