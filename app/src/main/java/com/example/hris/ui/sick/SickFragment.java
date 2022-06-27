@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,6 +29,10 @@ public class SickFragment extends Fragment {
     private FragmentSickBinding binding;
     EditText editTextStart = null;
     EditText editTextEnd = null;
+    EditText location = null;
+
+    Button applyButton = null;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         SickViewModel sickViewModel =
@@ -35,9 +41,17 @@ public class SickFragment extends Fragment {
         binding = FragmentSickBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // calendar popup
         editTextStart = (EditText) binding.sickStartDate;
         editTextEnd = (EditText) binding.sickEndDate;
 
+        // button
+        applyButton = (Button) binding.sickApply;
+
+        //location
+        location = (EditText) binding.sickLeaveAddress;
+
+        // calendar popup
         DatePickerDialog.OnDateSetListener dateStart = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -48,6 +62,7 @@ public class SickFragment extends Fragment {
             }
         };
 
+        // calendar popup
         DatePickerDialog.OnDateSetListener dateEnd = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -58,6 +73,7 @@ public class SickFragment extends Fragment {
             }
         };
 
+        // calendar popup
         editTextStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,10 +81,42 @@ public class SickFragment extends Fragment {
             }
         });
 
+        // calendar popup
         editTextEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(getContext(),dateEnd,myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        // applyButton
+        applyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String startDate = editTextStart.getText().toString().trim();
+                String endDate = editTextEnd.getText().toString().trim();
+                String locationLeave = location.getText().toString().trim();
+
+
+                if(startDate.isEmpty()){
+                    location.setError("Start Date is required");
+                    location.requestFocus();
+                    return;
+                }
+
+                if(endDate.isEmpty()){
+                    location.setError("End Date is required");
+                    location.requestFocus();
+                    return;
+                }
+
+                if(locationLeave.isEmpty()){
+                    location.setError("Location is Required");
+                    location.requestFocus();
+                    return;
+                }
+                //TODO submit dates and location to firebase
+                Toast.makeText(getContext(), "Sick Leave Applied", Toast.LENGTH_LONG).show();
             }
         });
 
