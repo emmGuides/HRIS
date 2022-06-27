@@ -1,6 +1,7 @@
 package com.example.hris.ui.vacation;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.databinding.FragmentVacationBinding;
+import com.example.hris.ui.sick.SickFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,7 +29,7 @@ public class VacationFragment extends Fragment {
     // calendar popup
     EditText editTextStart = null;
     EditText editTextEnd = null;
-    EditText location = null;
+    EditText details = null;
     final Calendar myCalendar = Calendar.getInstance();
 
     Button applyButton = null;
@@ -44,7 +46,7 @@ public class VacationFragment extends Fragment {
         applyButton = (Button) binding.vacationApply;
 
         // location
-        location = (EditText) binding.vacationLeaveAddress;
+        details = (EditText) binding.vacationAdditionalDetails;
 
         // calendar popup
         editTextStart = (EditText) binding.vacationStartDate;
@@ -94,24 +96,24 @@ public class VacationFragment extends Fragment {
 
                 String startDate = editTextStart.getText().toString().trim();
                 String endDate = editTextEnd.getText().toString().trim();
-                String locationLeave = location.getText().toString().trim();
+                String additionalDetails = details.getText().toString().trim();
 
 
                 if(startDate.isEmpty()){
-                    location.setError("Start Date is required");
-                    location.requestFocus();
+                    details.setError("Start Date is required");
+                    details.requestFocus();
                     return;
                 }
 
                 if(endDate.isEmpty()){
-                    location.setError("End Date is required");
-                    location.requestFocus();
+                    details.setError("End Date is required");
+                    details.requestFocus();
                     return;
                 }
 
-                if(locationLeave.isEmpty()){
-                    location.setError("Location is Required");
-                    location.requestFocus();
+                if(additionalDetails.isEmpty()){
+                    details.setError("Details are Required");
+                    details.requestFocus();
                     return;
                 }
                 //TODO submit dates and location to firebase

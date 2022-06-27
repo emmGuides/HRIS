@@ -80,18 +80,18 @@
         android:inputType="date"
         android:minHeight="48dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/vacation_leave_address"
+        app:layout_constraintBottom_toTopOf="@+id/vacation_additional_details"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="Autofill,HardcodedText,TextFields" />
 
     <EditText
-        android:id="@+id/vacation_leave_address"
+        android:id="@+id/vacation_additional_details"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:ems="10"
-        android:hint="Leave Address"
+        android:hint="Additional Details..."
         android:inputType="text"
         android:minHeight="48dp"
         android:textSize="18sp"

@@ -1,6 +1,7 @@
 package com.example.hris.ui.sick;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,7 @@ public class SickFragment extends Fragment {
     private FragmentSickBinding binding;
     EditText editTextStart = null;
     EditText editTextEnd = null;
-    EditText location = null;
+    EditText details = null;
 
     Button applyButton = null;
 
@@ -49,7 +50,7 @@ public class SickFragment extends Fragment {
         applyButton = (Button) binding.sickApply;
 
         //location
-        location = (EditText) binding.sickLeaveAddress;
+        details = (EditText) binding.sickAdditionalDetails;
 
         // calendar popup
         DatePickerDialog.OnDateSetListener dateStart = new DatePickerDialog.OnDateSetListener() {
@@ -95,24 +96,24 @@ public class SickFragment extends Fragment {
             public void onClick(View view) {
                 String startDate = editTextStart.getText().toString().trim();
                 String endDate = editTextEnd.getText().toString().trim();
-                String locationLeave = location.getText().toString().trim();
+                String additionalDetails = details.getText().toString().trim();
 
 
                 if(startDate.isEmpty()){
-                    location.setError("Start Date is required");
-                    location.requestFocus();
+                    details.setError("Start Date is required");
+                    details.requestFocus();
                     return;
                 }
 
                 if(endDate.isEmpty()){
-                    location.setError("End Date is required");
-                    location.requestFocus();
+                    details.setError("End Date is required");
+                    details.requestFocus();
                     return;
                 }
 
-                if(locationLeave.isEmpty()){
-                    location.setError("Location is Required");
-                    location.requestFocus();
+                if(additionalDetails.isEmpty()){
+                    details.setError("Details are Required");
+                    details.requestFocus();
                     return;
                 }
                 //TODO submit dates and location to firebase
