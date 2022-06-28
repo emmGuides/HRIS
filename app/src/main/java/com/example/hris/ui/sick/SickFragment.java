@@ -19,10 +19,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.databinding.FragmentSickBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class SickFragment extends Fragment {
@@ -43,9 +49,12 @@ public class SickFragment extends Fragment {
     Date formattedStart = null;
     Date formattedEnd = null;
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+    String dateToday = dateFormat.format(myCalendar.getTime());
 
-
+    private DatabaseReference reference, masterList;
+    private FirebaseUser user;
     Button applyButton = null;
+    private String userID;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +76,11 @@ public class SickFragment extends Fragment {
 
         // days duration
         numberOfDays = binding.textSickDays;
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
+        userID = user.getUid();
+        masterList = reference.child(userID).child("sickLeaves");
 
         // calendar popup
         DatePickerDialog.OnDateSetListener dateStart = new DatePickerDialog.OnDateSetListener() {
@@ -133,16 +147,10 @@ public class SickFragment extends Fragment {
                     return;
                 }
                 //TODO submit dates and location to firebase
-                Toast.makeText(getContext(), "Sick Leave Applied", Toast.LENGTH_LONG).show();
+                sendToDatabase();
             }
         });
 
-        /*
-        final TextView textView = binding.textSickDays;
-        sickViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
-
-         */
         thread = new Thread() {
             @Override
             public void run(){
@@ -219,6 +227,22 @@ public class SickFragment extends Fragment {
         }
     }
 
+    public void sendToDatabase (){
+
+        List<String> toAdd = new ArrayList<>();
+        toAdd.add(dateToday);
+        toAdd.add(startDate);
+        toAdd.add(endDate);
+        toAdd.add(additionalDetails);
+        toAdd.add(String.valueOf(differenceInDates));
+        masterList.push().setValue(toAdd);
+        toAdd.clear();
+
+        // Snackbar.make(requireView(), "Vacation Leave Applied!", Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Sick Leave Applied!", Toast.LENGTH_LONG).show();
+        editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
+
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

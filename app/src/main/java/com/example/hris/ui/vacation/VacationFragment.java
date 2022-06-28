@@ -56,9 +56,8 @@ public class VacationFragment extends Fragment {
     String dateToday = dateFormat.format(myCalendar.getTime());
 
     private FirebaseUser user;
-    private DatabaseReference reference, referenceVacation;
+    private DatabaseReference reference, masterList;
     private String userID;
-    DatabaseReference masterList;
 
     Button applyButton;
 
@@ -86,7 +85,6 @@ public class VacationFragment extends Fragment {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
-        referenceVacation = reference.child("vacationLeaves");
         userID = user.getUid();
         masterList = reference.child(userID).child("vacationLeaves");
 
@@ -253,13 +251,17 @@ public class VacationFragment extends Fragment {
     public void sendToDatabase (){
 
         List <String> toAdd = new ArrayList<>();
-        toAdd.add(dateToday); toAdd.add(startDate); toAdd.add(endDate); toAdd.add(additionalDetails); toAdd.add(String.valueOf(differenceInDates));
-        reference.child(userID).child("vacationLeaves").push().setValue(toAdd);
+        toAdd.add(dateToday);
+        toAdd.add(startDate);
+        toAdd.add(endDate);
+        toAdd.add(additionalDetails);
+        toAdd.add(String.valueOf(differenceInDates));
+        masterList.push().setValue(toAdd);
         toAdd.clear();
+
         // Snackbar.make(requireView(), "Vacation Leave Applied!", Snackbar.LENGTH_LONG).show();
         Toast.makeText(getContext(), "Vacation Leave Applied!", Toast.LENGTH_LONG).show();
 
-        // progressBar.setVisibility(View.GONE);
         editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
 
     }
