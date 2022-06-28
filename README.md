@@ -1,7 +1,7 @@
 # A prototype for a mobile HRIS using Firebase as the database, Android Studio (with Java) as the IDE
 
 
-# Timeline:
+# Development Log:
       June 21, 2022: 
 		- Initialized Android Studio project, HRIS
 		- Started making standard Register and Login views 
@@ -53,7 +53,9 @@
 		- YouTube Demo link: https://youtu.be/8opwW905qFg
 		
       June 28, 2022:
-		- Fixed bug found yesterday
-		- Vacation leave form and Sick leave form functional, only needs Database connection
-		- 
-
+		- Fixed threading bug found yesterday
+		- Vacation leave form and Sick leave form now functional
+		- Successfully established Firebase DB connection for dates and details in Vacation Leave request Form.
+		- Successfully established Firebase DB connection for dates and details in Sick Leave request Form.
+		- YouTube Demo link: https://youtu.be/taxS_z-l2Ro
+		
