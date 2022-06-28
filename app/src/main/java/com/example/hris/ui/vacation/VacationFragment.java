@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.databinding.FragmentVacationBinding;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class VacationFragment extends Fragment {
 
@@ -254,11 +256,11 @@ public class VacationFragment extends Fragment {
         toAdd.add(dateToday); toAdd.add(startDate); toAdd.add(endDate); toAdd.add(additionalDetails); toAdd.add(String.valueOf(differenceInDates));
         reference.child(userID).child("vacationLeaves").push().setValue(toAdd);
         toAdd.clear();
-
-        Toast.makeText(getContext(), "Vacation Leave Applied", Toast.LENGTH_LONG).show();
+        // Snackbar.make(requireView(), "Vacation Leave Applied!", Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Vacation Leave Applied!", Toast.LENGTH_LONG).show();
 
         // progressBar.setVisibility(View.GONE);
-        // editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
+        editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
 
     }
 
