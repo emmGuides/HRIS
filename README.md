@@ -42,5 +42,18 @@
 		- Navigation Bar Header now correctly displays user's name and email
 		- Bug fixing took up more time than initially anticipated.
 		- Finished the Nav Bar UI
-		- app demo link: https://youtu.be/YjAZGqZKu8U
+		- app demo link: https://drive.google.com/file/d/1H-UKZI8wRfbvOy8D2NwriGxK6T6xoP0K/view?usp=drivesdk
+		
+      June 27, 2022: 
+		- Added Vacation Leave Form
+		- Added Sick Leave Form
+		- Added calendar toggle for both forms' start and end dates for their respective leave dates
+		- Added empty/null user input checks for both forms, on all fields
+		- Created new github branch to debug found bugs
+		- YouTube Demo link: https://youtu.be/8opwW905qFg
+		
+      June 28, 2022:
+		- Fixed bug found yesterday
+		- Vacation leave form and Sick leave form functional, only needs Database connection
+		- 
 
