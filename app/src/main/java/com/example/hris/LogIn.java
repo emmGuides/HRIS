@@ -95,6 +95,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                     // TODO VERIFY EMAIL: DISABLED FOR NOW SINCE IT IS IN DEVELOPMENT (working)
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     assert user != null;
+                    /*
                     if(user.isEmailVerified()){
                         startActivity(new Intent(LogIn.this, HomeScreen.class));
 
@@ -105,8 +106,9 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
 
                     }
 
+                     */
                     // change for_test_final.class to HomeScreen.class to stop checking
-                    // startActivity(new Intent(LogIn.this, HomeScreen.class));
+                    startActivity(new Intent(LogIn.this, HomeScreen.class));
                     progressBar.setVisibility(View.GONE);
                 }
                 else{

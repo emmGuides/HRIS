@@ -19,6 +19,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.databinding.FragmentVacationBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,10 +45,12 @@ public class VacationFragment extends Fragment {
     int differenceInDates = 0;
     Date formattedStart = null;
     Date formattedEnd = null;
-    long timeStart = 0;
-    long timeEnd = 0;
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     final Calendar myCalendar = Calendar.getInstance();
+
+    private FirebaseUser user;
+    private DatabaseReference reference, referenceVacation;
+    private String userID;
 
     Button applyButton = null;
 
@@ -68,6 +74,12 @@ public class VacationFragment extends Fragment {
 
         // days duration
         numberOfDays = binding.textVacationDays;
+
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
+        referenceVacation = reference.child("vacationLeaves");
+        userID = user.getUid();
 
         // calendar popup
         DatePickerDialog.OnDateSetListener dateStart = new DatePickerDialog.OnDateSetListener() {

@@ -19,6 +19,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
@@ -64,6 +66,9 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String password = editTextPassword.getText().toString().trim();
         String age = editTextAge.getText().toString().trim();
         String fullName = editTextFullName.getText().toString().trim();
+        List<List<String>> vacationLeaves = new ArrayList<List<String>>();
+        List<List<String>> sickLeaves = new ArrayList<List<String>>();
+
 
         if(fullName.isEmpty()){
             editTextFullName.setError("Full Name is required");
@@ -108,7 +113,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(task.isSuccessful()){
-                            Employee employee = new Employee(fullName, age, email);
+                            Employee employee = new Employee(fullName, age, email, vacationLeaves, sickLeaves);
 
                             FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees")
                                     .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
@@ -118,7 +123,6 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                             if(task.isSuccessful()){
                                                 Toast.makeText(RegisterUser.this, "Employee Registered Successfully", Toast.LENGTH_LONG).show();
                                                 startActivity(new Intent(RegisterUser.this, LogIn.class));
-                                                //TODO: redirect to login layout
                                             }
                                             else{
                                                 Toast.makeText(RegisterUser.this, "Employee Registration Failed", Toast.LENGTH_LONG).show();
