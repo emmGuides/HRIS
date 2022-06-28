@@ -80,12 +80,6 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
             return;
         }
 
-        if(password.length() < 6){
-            editTextPassword.setError("Password length too small");
-            editTextPassword.requestFocus();
-            return;
-        }
-
         progressBar.setVisibility(View.VISIBLE);
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

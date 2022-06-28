@@ -12,12 +12,10 @@ public class Employee {
 
     }
 
-    public Employee(String fullName, String age, String email, List< List<String> > vacationLeaves, List< List<String> > sickLeaves){
+    public Employee(String fullName, String age, String email){
         this.fullName = fullName;
         this.age = age;
         this.email = email;
-        this.vacationLeaves = vacationLeaves;
-        this.sickLeaves = sickLeaves;
     }
 
 }

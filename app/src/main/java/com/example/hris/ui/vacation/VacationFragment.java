@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,35 +25,40 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class VacationFragment extends Fragment {
 
     private FragmentVacationBinding binding;
     // calendar popup
-    EditText editTextStart = null;
-    EditText editTextEnd = null;
-    EditText details = null;
+    EditText editTextStart;
+    EditText editTextEnd;
+    EditText details;
     TextView numberOfDays;
+    ProgressBar progressBar;
+
     String startDate;
     String endDate;
     String additionalDetails;
     Thread thread;
     int differenceInDates = 0;
-    Date formattedStart = null;
-    Date formattedEnd = null;
+    Date formattedStart;
+    Date formattedEnd;
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-    final Calendar myCalendar = Calendar.getInstance();
+    Calendar myCalendar = Calendar.getInstance();
+    String dateToday = dateFormat.format(myCalendar.getTime());
 
     private FirebaseUser user;
     private DatabaseReference reference, referenceVacation;
     private String userID;
+    DatabaseReference masterList;
 
-    Button applyButton = null;
+    Button applyButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -80,6 +86,7 @@ public class VacationFragment extends Fragment {
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         referenceVacation = reference.child("vacationLeaves");
         userID = user.getUid();
+        masterList = reference.child(userID).child("vacationLeaves");
 
         // calendar popup
         DatePickerDialog.OnDateSetListener dateStart = new DatePickerDialog.OnDateSetListener() {
@@ -107,7 +114,12 @@ public class VacationFragment extends Fragment {
         editTextStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(getContext(),dateStart,myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(getContext(),
+                        dateStart,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH))
+                        .show();
             }
         });
 
@@ -115,7 +127,12 @@ public class VacationFragment extends Fragment {
         editTextEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(getContext(),dateEnd,myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(getContext(),
+                        dateEnd,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH))
+                        .show();
             }
         });
 
@@ -142,11 +159,9 @@ public class VacationFragment extends Fragment {
                 }
 
                 //TODO submit dates and details to firebase
-                Toast.makeText(getContext(), "Vacation Leave Applied", Toast.LENGTH_LONG).show();
-                /*String yeah = "timeEnd: " + timeEnd + " timeStart: " + timeStart + "\nstartDate: " + startDate + " endDate: " + endDate
-                        + "\nformattedStart: " + formattedStart.getTime() + " formattedEnd: " + formattedEnd.getTime();
-                Toast.makeText(getContext(), yeah, Toast.LENGTH_SHORT).show();
-                */
+                // Toast.makeText(getContext(), "Vacation Leave Applied", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.VISIBLE);
+                sendToDatabase();
             }
 
         });
@@ -233,6 +248,19 @@ public class VacationFragment extends Fragment {
             }
     }
 
+    public void sendToDatabase (){
+
+        List <String> toAdd = new ArrayList<>();
+        toAdd.add(dateToday); toAdd.add(startDate); toAdd.add(endDate); toAdd.add(additionalDetails); toAdd.add(String.valueOf(differenceInDates));
+        reference.child(userID).child("vacationLeaves").push().setValue(toAdd);
+        toAdd.clear();
+
+        Toast.makeText(getContext(), "Vacation Leave Applied", Toast.LENGTH_LONG).show();
+
+        progressBar.setVisibility(View.GONE);
+        editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
+
+    }
 
     @Override
     public void onDestroyView() {
@@ -242,4 +270,41 @@ public class VacationFragment extends Fragment {
         Toast.makeText(getContext(), "thread interrupted", Toast.LENGTH_SHORT).show();
     }
 
+
+    /*
+        masterList.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (List<String> strings : (List<List<String>>) Objects.requireNonNull(snapshot.getValue())) {
+                    Toast.makeText(getContext(), strings.toString(), Toast.LENGTH_SHORT).show();
+                    allDates.add(strings);
+                    Toast.makeText(getContext(), allDates.toString(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
+        List<String> toBeAdded = new ArrayList<String>();
+        toBeAdded.add("File Date"); toBeAdded.add(startDate);
+        toBeAdded.add(endDate); toBeAdded.add(additionalDetails);
+        allDates.add(toBeAdded);
+        String finalS = "allDates final result:\n" + allDates.toString();
+        Toast.makeText(getContext(), finalS, Toast.LENGTH_SHORT).show();
+        /*
+        reference.child(userID).child("vacationLeaves").setValue(allDates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(getContext(), "Vacation Dates added", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        allDates.clear();*/
 }
