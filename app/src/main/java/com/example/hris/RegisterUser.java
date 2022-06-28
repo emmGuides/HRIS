@@ -67,6 +67,11 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String password = editTextPassword.getText().toString().trim();
         String age = editTextAge.getText().toString().trim();
         String fullName = editTextFullName.getText().toString().trim();
+        List <List<String>> vacationLeaves = new ArrayList<>();
+        List <List<String>> sickLeaves = new ArrayList<>();
+        List <String> format = new ArrayList<>();
+        format.add("input date"); format.add("start date"); format.add("end date"); format.add("message");
+        vacationLeaves.add(0, format);
 
         if(fullName.isEmpty()){
             editTextFullName.setError("Full Name is required");
@@ -111,7 +116,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(task.isSuccessful()){
-                            Employee employee = new Employee(fullName, age, email);
+                            Employee employee = new Employee(fullName, age, email, vacationLeaves, sickLeaves);
 
                             FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees")
                                     .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())

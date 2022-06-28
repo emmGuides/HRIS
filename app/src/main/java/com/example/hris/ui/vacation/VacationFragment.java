@@ -160,7 +160,7 @@ public class VacationFragment extends Fragment {
 
                 //TODO submit dates and details to firebase
                 // Toast.makeText(getContext(), "Vacation Leave Applied", Toast.LENGTH_LONG).show();
-                progressBar.setVisibility(View.VISIBLE);
+                //progressBar.setVisibility(View.VISIBLE);
                 sendToDatabase();
             }
 
@@ -250,15 +250,15 @@ public class VacationFragment extends Fragment {
 
     public void sendToDatabase (){
 
-        List <String> toAdd = new ArrayList<>();
-        toAdd.add(dateToday); toAdd.add(startDate); toAdd.add(endDate); toAdd.add(additionalDetails); toAdd.add(String.valueOf(differenceInDates));
-        reference.child(userID).child("vacationLeaves").push().setValue(toAdd);
-        toAdd.clear();
+        // List <String> toAdd = new ArrayList<>();
+        // toAdd.add(dateToday); toAdd.add(startDate); toAdd.add(endDate); toAdd.add(additionalDetails); toAdd.add(String.valueOf(differenceInDates));
+        // reference.child(userID).child("vacationLeaves").push().setValue(toAdd);
+        // toAdd.clear();
 
         Toast.makeText(getContext(), "Vacation Leave Applied", Toast.LENGTH_LONG).show();
 
-        progressBar.setVisibility(View.GONE);
-        editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
+        // progressBar.setVisibility(View.GONE);
+        // editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
 
     }
 
