@@ -32,7 +32,7 @@ import java.util.Date;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-<<<<<<< HEAD
+
     TextView timeInsOuts;
     Button timeInOutButton;
     TextView homeGreeting;
@@ -40,8 +40,6 @@ public class HomeFragment extends Fragment {
     DatabaseReference reference;
     String userID;
     Date currentTime;
-=======
->>>>>>> parent of 0d64fbc (Greet user, mock announcements, attendance)
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,16 +52,16 @@ public class HomeFragment extends Fragment {
         //final TextView textView = binding.textHome;
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-<<<<<<< HEAD
-        timeInsOuts = (EditText) binding.TimeInsOuts;
-        timeInOutButton = (Button) binding.TimeInsOutsButton;
+
+        timeInsOuts = binding.TimeInsOuts;
+        timeInOutButton = binding.TimeInsOutsButton;
         homeGreeting = binding.greetUser;
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
 
-        currentTime = Calendar.getInstance().getTime();
+        // currentTime = Calendar.getInstance().getTime();
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -98,9 +96,7 @@ public class HomeFragment extends Fragment {
         });
 
          */
-=======
 
->>>>>>> parent of 0d64fbc (Greet user, mock announcements, attendance)
         return root;
     }
 
