@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.Employee;
+import com.example.hris.R;
 import com.example.hris.databinding.FragmentHomeBinding;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -98,12 +99,13 @@ public class HomeFragment extends Fragment {
                 if(trim.isEmpty()){
                     String currTime = sdf.format(currentTime.getTime());
                     timeInsOuts.setText("Timed in:  "+currTime);
-                    Toast.makeText(getContext(), "Timed In done", Toast.LENGTH_SHORT).show();
-                    // timeInOutButton.setImageDrawable(Drawable "timeintimeout_button_red.svg");
+                    Snackbar.make(getView(),"Timed In Done", Snackbar.LENGTH_LONG).show();
+                    timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
                 } else {
                     String currTime = sdf.format(currentTime.getTime());
                     timeInsOuts.setText("Timed out:  "+currTime);
-                    Toast.makeText(getContext(), "Timed Out done", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
+                    timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
                 }
 
             }
