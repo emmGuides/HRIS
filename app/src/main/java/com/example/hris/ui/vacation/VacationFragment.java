@@ -42,7 +42,6 @@ public class VacationFragment extends Fragment {
     EditText editTextEnd;
     EditText details;
     TextView numberOfDays;
-    ProgressBar progressBar;
 
     String startDate;
     String endDate;
