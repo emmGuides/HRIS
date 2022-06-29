@@ -6,8 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.Employee;
-import com.example.hris.R;
 import com.example.hris.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,7 +32,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     TextView timeInsOuts;
-    Button timeInOutButton;
+    ImageButton timeInOutButton;
     TextView homeGreeting;
     FirebaseUser user;
     DatabaseReference reference;
