@@ -113,7 +113,6 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"
-        android:text="Time In mock"
         android:textAlignment="textEnd"
         android:paddingEnd="20dp"
         android:textAllCaps="true"

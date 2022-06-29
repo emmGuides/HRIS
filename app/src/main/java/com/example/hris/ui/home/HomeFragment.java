@@ -1,6 +1,7 @@
 package com.example.hris.ui.home;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +63,7 @@ public class HomeFragment extends Fragment {
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
 
-        currentTime = Calendar.getInstance().getTime();
+
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -89,12 +90,22 @@ public class HomeFragment extends Fragment {
         });
 
         timeInOutButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                String currTime = sdf.format(currentTime.getTime());
-                timeInsOuts.setText("Timed in:  "+currTime);
-                // timeInsOuts.setText(currentTime.toString());
-                Toast.makeText(getContext(), "set current time done", Toast.LENGTH_SHORT).show();
+                String trim = timeInsOuts.getText().toString().trim();
+                currentTime = Calendar.getInstance().getTime();
+                if(trim.isEmpty()){
+                    String currTime = sdf.format(currentTime.getTime());
+                    timeInsOuts.setText("Timed in:  "+currTime);
+                    Toast.makeText(getContext(), "Timed In done", Toast.LENGTH_SHORT).show();
+                    // timeInOutButton.setImageDrawable(Drawable "timeintimeout_button_red.svg");
+                } else {
+                    String currTime = sdf.format(currentTime.getTime());
+                    timeInsOuts.setText("Timed out:  "+currTime);
+                    Toast.makeText(getContext(), "Timed Out done", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
