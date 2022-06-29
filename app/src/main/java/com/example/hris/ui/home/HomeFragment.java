@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -38,6 +39,8 @@ public class HomeFragment extends Fragment {
     DatabaseReference reference;
     String userID;
     Date currentTime;
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,7 +62,7 @@ public class HomeFragment extends Fragment {
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
 
-        // currentTime = Calendar.getInstance().getTime();
+        currentTime = Calendar.getInstance().getTime();
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -84,16 +87,16 @@ public class HomeFragment extends Fragment {
 
 
         });
-        /*
+
         timeInOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                timeInsOuts.setText(currentTime.toString());
+                String currTime = sdf.format(currentTime.getTime());
+                timeInsOuts.setText("Timed in:  "+currTime);
+                // timeInsOuts.setText(currentTime.toString());
                 Toast.makeText(getContext(), "set current time done", Toast.LENGTH_SHORT).show();
             }
         });
-
-         */
 
         return root;
     }
