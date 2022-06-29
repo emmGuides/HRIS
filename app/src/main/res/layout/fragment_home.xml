@@ -113,15 +113,15 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"
-        android:textAlignment="textEnd"
+        android:textAlignment="center"
         android:paddingEnd="20dp"
         android:paddingTop="10dp"
-        android:textAllCaps="true"
         android:textSize="18sp"
+        android:backgroundTint="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/attendance_body"
-        tools:ignore="HardcodedText,TextContrastCheck" />
+        tools:ignore="HardcodedText,RtlSymmetry,TextContrastCheck" />
 
     <!--Button
         android:background="@drawable/extraroundbutton"
