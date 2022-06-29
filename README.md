@@ -59,7 +59,7 @@
 		- Successfully established Firebase DB connection for dates and details in Sick Leave request Form.
 		- YouTube Demo link: https://youtu.be/taxS_z-l2Ro
 		
-	June 29, 2022:
+      June 29, 2022:
 		- Added homescreen basic layout
 		- added dummy placeholders for announcements and attendance
 		- added button to display time ins (current time on click) 
