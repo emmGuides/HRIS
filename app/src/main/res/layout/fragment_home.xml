@@ -122,10 +122,11 @@
 
     <Button
         android:id="@+id/Time_ins_outs_Button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:background="@drawable/extraroundbutton"
         android:backgroundTint="@color/black"
+        android:layout_marginLeft="-20dp"
         android:text="K"
         app:circularflow_defaultRadius="10dp"
         app:layout_constraintBottom_toBottomOf="@id/Time_ins_outs"
