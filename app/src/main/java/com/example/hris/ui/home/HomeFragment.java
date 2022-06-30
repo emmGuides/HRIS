@@ -27,8 +27,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -41,7 +43,9 @@ public class HomeFragment extends Fragment {
     TextView totalTimedIn;
 
     FirebaseUser user;
-    DatabaseReference reference;
+    DatabaseReference reference, timeInOutDBReference;
+    List<String> toAdd = new ArrayList<>();
+
     String userID;
     Date currentTime;
     Date timeInTime;
@@ -65,8 +69,6 @@ public class HomeFragment extends Fragment {
         //final TextView textView = binding.textHome;
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-
-
         timeInsOuts = binding.TimeInsOuts;
         timeInOutButton = binding.TimeInsOutsButton;
         DateDisplay = binding.dateDisplay;
@@ -81,6 +83,7 @@ public class HomeFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
+        // timeInOutDBReference = reference.child(userID).child("Time_ins_outs");
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -132,7 +135,7 @@ public class HomeFragment extends Fragment {
                     Long.toString(minutes);
                     Long.toString(hours);
                     String display = "Timed in for: " + hours + "h " + minutes%60 + "m " + seconds%60 + "s";
-
+                    // String timeInDurationDB = hours+" "+minutes+" "+seconds;
 
                     totalTimedIn.setText(display);
                     timeInsOuts.setText("Timed out:  "+currTime);
@@ -140,15 +143,25 @@ public class HomeFragment extends Fragment {
 
                     Snackbar.make(requireView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
                     timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
+                    /*
+                    toAdd.add(timeInTime.toString());
+                    toAdd.add(timeOutTime.toString());
+                    toAdd.add(timeInDurationDB);
+
+                     */
+
+                    // send to DB:
+                    //reference.child(userID).child("Time_ins_outs").child(formattedDate).setValue(toAdd);
 
 
                     // testing out homeViewModel
                     // LiveData<String> test = homeViewModel.getText();
                     // homeViewModel.getText().observe(getViewLifecycleOwner(), totalTimedIn::setText);
-                }
+               }
 
             }
         });
+
         return root;
     }
 
