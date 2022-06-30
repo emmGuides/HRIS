@@ -51,7 +51,11 @@ public class VacationFragment extends Fragment {
     int differenceInDates = 0;
     Date formattedStart;
     Date formattedEnd;
+
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat dateWord = new SimpleDateFormat("MMMM dd, yyyy");
+
     Calendar myCalendar = Calendar.getInstance();
     String dateToday = dateFormat.format(myCalendar.getTime());
 
@@ -256,7 +260,7 @@ public class VacationFragment extends Fragment {
         toAdd.add(endDate);
         toAdd.add(additionalDetails);
         toAdd.add(String.valueOf(differenceInDates));
-        masterList.push().setValue(toAdd);
+        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAdd);
         toAdd.clear();
 
         // Snackbar.make(requireView(), "Vacation Leave Applied!", Snackbar.LENGTH_LONG).show();
@@ -274,41 +278,4 @@ public class VacationFragment extends Fragment {
         Toast.makeText(getContext(), "thread interrupted", Toast.LENGTH_SHORT).show();
     }
 
-
-    /*
-        masterList.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (List<String> strings : (List<List<String>>) Objects.requireNonNull(snapshot.getValue())) {
-                    Toast.makeText(getContext(), strings.toString(), Toast.LENGTH_SHORT).show();
-                    allDates.add(strings);
-                    Toast.makeText(getContext(), allDates.toString(), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-
-        List<String> toBeAdded = new ArrayList<String>();
-        toBeAdded.add("File Date"); toBeAdded.add(startDate);
-        toBeAdded.add(endDate); toBeAdded.add(additionalDetails);
-        allDates.add(toBeAdded);
-        String finalS = "allDates final result:\n" + allDates.toString();
-        Toast.makeText(getContext(), finalS, Toast.LENGTH_SHORT).show();
-        /*
-        reference.child(userID).child("vacationLeaves").setValue(allDates).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(getContext(), "Vacation Dates added", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        allDates.clear();*/
 }

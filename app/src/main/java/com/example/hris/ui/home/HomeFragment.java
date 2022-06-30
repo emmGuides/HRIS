@@ -97,7 +97,13 @@ public class HomeFragment extends Fragment {
 
                     String fullName = userProfile.fullName;
                     String fullEmail = userProfile.email;
-                    String firstName = fullName.substring(0, fullName.indexOf(' '));
+                    String firstName;
+                    try{
+                        firstName = fullName.substring(0, fullName.indexOf(' '));
+                    } catch (Exception e) {
+                        firstName = fullName;
+                    }
+
 
                     homeGreeting.setText("Good day, "+ firstName);
                 }
@@ -137,7 +143,7 @@ public class HomeFragment extends Fragment {
                     Long.toString(minutes);
                     Long.toString(hours);
                     String display = "Timed in for: " + hours + "h " + minutes%60 + "m " + seconds%60 + "s";
-                    String timeInDurationDB = hours+" "+minutes+" "+seconds;
+                    String timeInDurationDB = hours+" "+minutes%60+" "+seconds%60;
 
                     totalTimedIn.setText(display);
                     timeInsOuts.setText("Timed out:  "+currTime);
@@ -151,10 +157,10 @@ public class HomeFragment extends Fragment {
                     toAdd.add(timeInDurationDB);
 
                     Toast.makeText(getContext(), toAdd.toString(), Toast.LENGTH_LONG).show();
-                    
+
                     // send to DB:
                     reference.child(userID).child("Time_ins_outs").child(formattedDate).setValue(toAdd);
-
+                    toAdd.clear();
 
                     // testing out homeViewModel
                     // LiveData<String> test = homeViewModel.getText();

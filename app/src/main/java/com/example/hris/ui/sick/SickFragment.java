@@ -48,7 +48,10 @@ public class SickFragment extends Fragment {
     int differenceInDates = 0;
     Date formattedStart = null;
     Date formattedEnd = null;
+
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat dateWord = new SimpleDateFormat("MMMM dd, yyyy");
     String dateToday = dateFormat.format(myCalendar.getTime());
 
     private DatabaseReference reference, masterList;
@@ -235,7 +238,7 @@ public class SickFragment extends Fragment {
         toAdd.add(endDate);
         toAdd.add(additionalDetails);
         toAdd.add(String.valueOf(differenceInDates));
-        masterList.push().setValue(toAdd);
+        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAdd);
         toAdd.clear();
 
         // Snackbar.make(requireView(), "Vacation Leave Applied!", Snackbar.LENGTH_LONG).show();
