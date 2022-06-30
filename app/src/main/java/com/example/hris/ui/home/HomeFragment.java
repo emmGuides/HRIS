@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment {
                     Long.toString(minutes);
                     Long.toString(hours);
                     String display = "Timed in for: " + hours + "h " + minutes%60 + "m " + seconds%60 + "s";
-                    // String timeInDurationDB = hours+" "+minutes+" "+seconds;
+                    String timeInDurationDB = hours+" "+minutes+" "+seconds;
 
                     totalTimedIn.setText(display);
                     timeInsOuts.setText("Timed out:  "+currTime);
@@ -145,15 +145,17 @@ public class HomeFragment extends Fragment {
 
                     Snackbar.make(requireView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
                     timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
-                    /*
-                    toAdd.add(timeInTime.toString());
-                    toAdd.add(timeOutTime.toString());
+
+                    toAdd.add(time.format(timeInTime.getTime()));
+                    toAdd.add(time.format(timeOutTime.getTime()));
                     toAdd.add(timeInDurationDB);
 
-                     */
+                    Toast.makeText(getContext(), toAdd.toString(), Toast.LENGTH_LONG).show();
+
+
 
                     // send to DB:
-                    //reference.child(userID).child("Time_ins_outs").child(formattedDate).setValue(toAdd);
+                    reference.child(userID).child("Time_ins_outs").child(formattedDate).setValue(toAdd);
 
 
                     // testing out homeViewModel
