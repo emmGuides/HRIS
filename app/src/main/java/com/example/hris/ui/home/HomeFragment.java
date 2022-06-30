@@ -151,9 +151,7 @@ public class HomeFragment extends Fragment {
                     toAdd.add(timeInDurationDB);
 
                     Toast.makeText(getContext(), toAdd.toString(), Toast.LENGTH_LONG).show();
-
-
-
+                    
                     // send to DB:
                     reference.child(userID).child("Time_ins_outs").child(formattedDate).setValue(toAdd);
 
