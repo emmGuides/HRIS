@@ -37,13 +37,19 @@ public class HomeFragment extends Fragment {
     TextView timeInsOuts;
     ImageButton timeInOutButton;
     TextView homeGreeting;
+    TextView DateDisplay;
     FirebaseUser user;
     DatabaseReference reference;
     String userID;
     Date currentTime;
+    
     @SuppressLint("SimpleDateFormat")
-    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    SimpleDateFormat time = new SimpleDateFormat("HH:mm");
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat date = new SimpleDateFormat("MMMM dd, yyyy");
 
+
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -56,15 +62,19 @@ public class HomeFragment extends Fragment {
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
 
+
         timeInsOuts = binding.TimeInsOuts;
         timeInOutButton = binding.TimeInsOutsButton;
+        DateDisplay = binding.dateDisplay;
         homeGreeting = binding.greetUser;
+
+        currentTime = Calendar.getInstance().getTime();
+        String formattedDate = date.format(currentTime);
+        DateDisplay.setText("Today is " + formattedDate);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
-
-
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -97,12 +107,12 @@ public class HomeFragment extends Fragment {
                 String trim = timeInsOuts.getText().toString().trim();
                 currentTime = Calendar.getInstance().getTime();
                 if(trim.isEmpty()){
-                    String currTime = sdf.format(currentTime.getTime());
+                    String currTime = time.format(currentTime.getTime());
                     timeInsOuts.setText("Timed in:  "+currTime);
                     Snackbar.make(getView(),"Timed In Done", Snackbar.LENGTH_LONG).show();
                     timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
                 } else {
-                    String currTime = sdf.format(currentTime.getTime());
+                    String currTime = time.format(currentTime.getTime());
                     timeInsOuts.setText("Timed out:  "+currTime);
                     Snackbar.make(getView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
                     timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);

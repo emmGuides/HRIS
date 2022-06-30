@@ -29,7 +29,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.097"
+        app:layout_constraintVertical_bias="0.174"
         tools:ignore="HardcodedText,RtlSymmetry" />
 
     <TextView
@@ -52,7 +52,7 @@
         android:id="@+id/mock_announcements"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="-5dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/announcement_header"
@@ -60,16 +60,17 @@
         />
 
     <TextView
-        android:paddingStart="50dp"
-        android:textSize="20sp"
+        android:textAlignment="textEnd"
+        android:id="@+id/date_display"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/date_display"
-        app:layout_constraintBottom_toTopOf="@id/attendance_header"
+        android:layout_marginTop="1dp"
         android:minHeight="40dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:paddingEnd="30dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/greet_user"
         tools:ignore="RtlSymmetry" />
 
@@ -77,7 +78,8 @@
         android:id="@+id/attendance_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="-5dp"
         android:minHeight="40dp"
         android:text="Attendance"
         android:textSize="18sp"
@@ -97,7 +99,7 @@
         app:layout_constraintTop_toBottomOf="@+id/attendance_header"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="-5dp"
         tools:ignore="ContentDescription" />
 
     <TextView
