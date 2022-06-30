@@ -3,7 +3,9 @@ package com.example.hris;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -30,10 +32,14 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private EditText editTextFullName, editTextAge, editTextEmail, editTextPassword;
     private ProgressBar progressBar;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
+
+        // Lock to Portrait
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mAuth = FirebaseAuth.getInstance();
         TextView banner = (TextView) findViewById(R.id.banner);
