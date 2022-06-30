@@ -1,7 +1,6 @@
 package com.example.hris.ui.home;
 
 import android.annotation.SuppressLint;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.Employee;
@@ -110,16 +110,20 @@ public class HomeFragment extends Fragment {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+
                 String trim = timeInsOuts.getText().toString().trim();
                 currentTime = Calendar.getInstance().getTime();
-
                 String currTime = time.format(currentTime.getTime());
+
                 if(trim.isEmpty()){
+
                     timeInTime = currentTime;
                     timeInsOuts.setText("Timed in:  "+currTime);
-                    Snackbar.make(getView(),"Timed In Done", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(requireView(),"Timed In Done", Snackbar.LENGTH_LONG).show();
                     timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
+
                 } else {
+
                     timeOutTime = currentTime;
                     long seconds = (timeOutTime.getTime() - timeInTime.getTime())/(1000);
                     long minutes = seconds / 60;
@@ -128,25 +132,29 @@ public class HomeFragment extends Fragment {
                     Long.toString(minutes);
                     Long.toString(hours);
                     String display = "Timed in for: " + hours + "h " + minutes%60 + "m " + seconds%60 + "s";
-                    //Toast.makeText(getContext(), display, Toast.LENGTH_LONG).show();
+
+
                     totalTimedIn.setText(display);
                     timeInsOuts.setText("Timed out:  "+currTime);
+
+
                     Snackbar.make(requireView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
                     timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
+
+
+                    // testing out homeViewModel
+                    // LiveData<String> test = homeViewModel.getText();
+                    // homeViewModel.getText().observe(getViewLifecycleOwner(), totalTimedIn::setText);
                 }
 
             }
         });
-
         return root;
     }
-
-
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
-
 }
