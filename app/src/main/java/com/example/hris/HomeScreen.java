@@ -1,8 +1,6 @@
 package com.example.hris;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -41,7 +39,6 @@ public class HomeScreen extends AppCompatActivity {
     private DatabaseReference reference;
     private String userID;
 
-    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +47,6 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarHomeScreen.toolbar);
-
-        // Lock to Portrait
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //fab
         /*
