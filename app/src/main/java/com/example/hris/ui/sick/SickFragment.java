@@ -82,7 +82,7 @@ public class SickFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
-        masterList = reference.child(userID).child("sickLeaves");
+        masterList = reference.child(userID).child("Sick Leaves");
 
         // calendar popup
         DatePickerDialog.OnDateSetListener dateStart = new DatePickerDialog.OnDateSetListener() {

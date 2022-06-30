@@ -74,14 +74,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String age = editTextAge.getText().toString().trim();
         String fullName = editTextFullName.getText().toString().trim();
 
-        /*List <List<String>> vacationLeaves = new ArrayList<>();
-        List <List<String>> sickLeaves = new ArrayList<>();
-        List <String> format = new ArrayList<>();
-        format.add("input date"); format.add("start date"); format.add("end date"); format.add("message");
-        vacationLeaves.add(0, format);
 
-
-         */
         if(fullName.isEmpty()){
             editTextFullName.setError("Full Name is required");
             editTextFullName.requestFocus();
@@ -128,7 +121,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                             Employee employee = new Employee(fullName, age, email);
 
                             FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees")
-                                    .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+                                    .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("User Details")
                                     .setValue(employee).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

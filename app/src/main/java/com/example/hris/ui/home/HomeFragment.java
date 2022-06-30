@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
 
-        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(userID).child("User Details").addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -155,7 +155,7 @@ public class HomeFragment extends Fragment {
 
 
                     // send to DB:
-                    reference.child(userID).child("Time_ins_outs").child(formattedDate).setValue(toAdd);
+                    reference.child(userID).child("Time Ins and Outs").child(formattedDate).setValue(toAdd);
                     toAdd.clear();
 
                 }
