@@ -1,11 +1,11 @@
 package com.example.hris.ui.home;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.Employee;
+import com.example.hris.R;
 import com.example.hris.databinding.FragmentHomeBinding;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,11 +37,23 @@ public class HomeFragment extends Fragment {
     TextView timeInsOuts;
     ImageButton timeInOutButton;
     TextView homeGreeting;
+    TextView DateDisplay;
+    TextView totalTimedIn;
+
     FirebaseUser user;
     DatabaseReference reference;
     String userID;
     Date currentTime;
+    Date timeInTime;
+    Date timeOutTime;
 
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat time = new SimpleDateFormat("HH:mm");
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat date = new SimpleDateFormat("MMMM dd, yyyy");
+
+
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -51,15 +66,21 @@ public class HomeFragment extends Fragment {
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
 
+
         timeInsOuts = binding.TimeInsOuts;
         timeInOutButton = binding.TimeInsOutsButton;
+        DateDisplay = binding.dateDisplay;
         homeGreeting = binding.greetUser;
+
+        currentTime = Calendar.getInstance().getTime();
+        String formattedDate = date.format(currentTime);
+        DateDisplay.setText("Today is " + formattedDate);
+
+        totalTimedIn = binding.totalTimedIn;
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
-
-        // currentTime = Calendar.getInstance().getTime();
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -84,16 +105,38 @@ public class HomeFragment extends Fragment {
 
 
         });
-        /*
+
         timeInOutButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                timeInsOuts.setText(currentTime.toString());
-                Toast.makeText(getContext(), "set current time done", Toast.LENGTH_SHORT).show();
+                String trim = timeInsOuts.getText().toString().trim();
+                currentTime = Calendar.getInstance().getTime();
+
+                String currTime = time.format(currentTime.getTime());
+                if(trim.isEmpty()){
+                    timeInTime = currentTime;
+                    timeInsOuts.setText("Timed in:  "+currTime);
+                    Snackbar.make(getView(),"Timed In Done", Snackbar.LENGTH_LONG).show();
+                    timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
+                } else {
+                    timeOutTime = currentTime;
+                    long seconds = (timeOutTime.getTime() - timeInTime.getTime())/(1000);
+                    long minutes = seconds / 60;
+                    long hours = minutes / 60;
+                    Long.toString(seconds);
+                    Long.toString(minutes);
+                    Long.toString(hours);
+                    String display = "Timed in for: " + hours + "h " + minutes%60 + "m " + seconds%60 + "s";
+                    //Toast.makeText(getContext(), display, Toast.LENGTH_LONG).show();
+                    totalTimedIn.setText(display);
+                    timeInsOuts.setText("Timed out:  "+currTime);
+                    Snackbar.make(requireView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
+                    timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
+                }
+
             }
         });
-
-         */
 
         return root;
     }

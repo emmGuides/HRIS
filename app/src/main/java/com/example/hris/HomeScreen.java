@@ -48,7 +48,8 @@ public class HomeScreen extends AppCompatActivity {
 
         setSupportActionBar(binding.appBarHomeScreen.toolbar);
 
-
+        //fab
+        /*
         binding.appBarHomeScreen.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +57,8 @@ public class HomeScreen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+         */
 
         // Employee name and email
         NavigationView navigationViewer = (NavigationView) findViewById(R.id.nav_view);
