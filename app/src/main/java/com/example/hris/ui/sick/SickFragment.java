@@ -2,7 +2,6 @@ package com.example.hris.ui.sick;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -241,7 +240,6 @@ public class SickFragment extends Fragment {
         masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAdd);
         toAdd.clear();
 
-        // Snackbar.make(requireView(), "Vacation Leave Applied!", Snackbar.LENGTH_LONG).show();
         Toast.makeText(getContext(), "Sick Leave Applied!", Toast.LENGTH_LONG).show();
         editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
 
@@ -251,6 +249,5 @@ public class SickFragment extends Fragment {
         super.onDestroyView();
         binding = null;
         thread.interrupt();
-        Toast.makeText(getContext(), "thread interrupted", Toast.LENGTH_SHORT).show();
     }
 }

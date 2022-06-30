@@ -20,7 +20,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.databinding.FragmentVacationBinding;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +31,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class VacationFragment extends Fragment {
 
@@ -163,18 +161,10 @@ public class VacationFragment extends Fragment {
                 }
 
                 //TODO submit dates and details to firebase
-                // Toast.makeText(getContext(), "Vacation Leave Applied", Toast.LENGTH_LONG).show();
-                //progressBar.setVisibility(View.VISIBLE);
                 sendToDatabase();
             }
 
         });
-
-        /* TODO: use ViewModelProperly
-        final TextView textView = binding.textVacationDays;
-        vacationViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        */
-
 
         thread = new Thread() {
             @Override
@@ -263,7 +253,6 @@ public class VacationFragment extends Fragment {
         masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAdd);
         toAdd.clear();
 
-        // Snackbar.make(requireView(), "Vacation Leave Applied!", Snackbar.LENGTH_LONG).show();
         Toast.makeText(getContext(), "Vacation Leave Applied!", Toast.LENGTH_LONG).show();
 
         editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
@@ -275,7 +264,6 @@ public class VacationFragment extends Fragment {
         super.onDestroyView();
         binding = null;
         thread.interrupt();
-        Toast.makeText(getContext(), "thread interrupted", Toast.LENGTH_SHORT).show();
     }
 
 }

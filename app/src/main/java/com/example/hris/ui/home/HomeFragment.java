@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.Employee;
@@ -66,10 +65,9 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
-
-        //final TextView textView = binding.textHome;
-        //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        // homeViewModel format, in case
+        // final TextView textView = binding.textHome;
+        // homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         timeInsOuts = binding.TimeInsOuts;
         timeInOutButton = binding.TimeInsOutsButton;
@@ -85,7 +83,6 @@ public class HomeFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
-        // timeInOutDBReference = reference.child(userID).child("Time_ins_outs");
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -156,16 +153,12 @@ public class HomeFragment extends Fragment {
                     toAdd.add(time.format(timeOutTime.getTime()));
                     toAdd.add(timeInDurationDB);
 
-                    Toast.makeText(getContext(), toAdd.toString(), Toast.LENGTH_LONG).show();
 
                     // send to DB:
                     reference.child(userID).child("Time_ins_outs").child(formattedDate).setValue(toAdd);
                     toAdd.clear();
 
-                    // testing out homeViewModel
-                    // LiveData<String> test = homeViewModel.getText();
-                    // homeViewModel.getText().observe(getViewLifecycleOwner(), totalTimedIn::setText);
-               }
+                }
 
             }
         });
