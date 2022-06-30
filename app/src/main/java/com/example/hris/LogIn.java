@@ -3,7 +3,9 @@ package com.example.hris;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -28,10 +30,15 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        // portrait lock
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         register = (TextView) findViewById(R.id.register);
         register.setOnClickListener(this);
