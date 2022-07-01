@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,6 +51,7 @@ public class HomeFragment extends Fragment {
     Date currentTime;
     Date timeInTime;
     Date timeOutTime;
+    long timeInFromDB;
 
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat time = new SimpleDateFormat("HH:mm");
@@ -94,13 +96,13 @@ public class HomeFragment extends Fragment {
                 if(userProfile != null){
 
                     String fullName = userProfile.fullName;
-                    String fullEmail = userProfile.email;
                     String firstName;
                     try{
                         firstName = fullName.substring(0, fullName.indexOf(' '));
                     } catch (Exception e) {
                         firstName = fullName;
                     }
+
 
 
                     homeGreeting.setText("Good day, "+ firstName);
@@ -120,11 +122,39 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     try{
-                        String displayers = Objects.requireNonNull(snapshot.getValue()).toString();
+                        try{
+                            // Time in and out
+                            String displayers = Objects.requireNonNull(snapshot.getValue()).toString();
+                            displayers = displayers.substring(1, displayers.length() - 1);
+                            String[] strArray = displayers.split(" ");
 
-                        Toast.makeText(getContext(), displayers, Toast.LENGTH_LONG).show();
+                            timeInsOuts.setText("Timed out:  "+strArray[2].substring(0, strArray[2].length() - 1));
+                            totalTimedIn.setText("Total Timed In: " + strArray[3] +" "+ strArray[4] + " " + strArray[5]);
+
+
+                        } catch (Exception e) {
+                            System.out.println("BRAP LINE 134, Time in onli");
+                            try{
+                                // on time in only
+                                String trim = timeInsOuts.getText().toString().trim();
+                                if(!trim.isEmpty()){
+
+                                }
+                                String displayers = Objects.requireNonNull(snapshot.getValue()).toString();
+                                displayers = displayers.substring(1, displayers.length() - 1);
+                                String[] strArray = displayers.split(" ");
+
+                                timeInsOuts.setText("Timed In:  "+ strArray[0].substring(0, strArray[0].length() - 1));
+                                timeInFromDB = Long.parseLong(strArray[1]);
+
+                            } catch (Exception d) {
+                                System.out.println("BRAP LINE 143");
+                            }
+
+                        }
 
                     } catch(Exception e) {
+                        System.out.println("BRAP LINE 149");
                         // Handle Exception
                     }
                 }
@@ -135,6 +165,7 @@ public class HomeFragment extends Fragment {
                 }
             });
         } catch (Exception e) {
+            System.out.println("BRAP LINE 159");
             Toast.makeText(getContext(), "WHOOPSIE! something went wrong!", Toast.LENGTH_LONG).show();
         }
 
@@ -157,34 +188,48 @@ public class HomeFragment extends Fragment {
                     timeInsOuts.setText("Timed in:  "+currTime);
                     Snackbar.make(requireView(),"Timed In Done", Snackbar.LENGTH_LONG).show();
                     timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
+                    toAdd.add(time.format(timeInTime.getTime()));
+                    toAdd.add(Long.toString(timeInTime.getTime()));
+
+                    // send to DB:
+                    Toast.makeText(getContext(), "LINE 192", Toast.LENGTH_LONG).show();
+                    reference.child(userID).child("Time Ins and Outs").child(formattedDate).setValue(toAdd);
+                    toAdd.clear();
 
                 } else {
-
                     timeOutTime = currentTime;
-                    long seconds = (timeOutTime.getTime() - timeInTime.getTime())/(1000);
+                    long seconds = (timeOutTime.getTime() - timeInFromDB)/(1000);
                     long minutes = seconds / 60;
                     long hours = minutes / 60;
                     Long.toString(seconds);
                     Long.toString(minutes);
                     Long.toString(hours);
                     String display = "Timed in for: " + hours + "h " + minutes%60 + "m " + seconds%60 + "s";
-                    String timeInDurationDB = hours+" "+minutes%60+" "+seconds%60;
+                    String timeInDurationDB = hours+"h "+minutes%60+"m "+seconds%60+"s ";
 
                     totalTimedIn.setText(display);
                     timeInsOuts.setText("Timed out:  "+currTime);
 
-
                     Snackbar.make(requireView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
                     timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
 
-                    toAdd.add(time.format(timeInTime.getTime()));
+                    toAdd.add(time.format(timeInFromDB));
+                    toAdd.add(Long.toString(timeInFromDB));
                     toAdd.add(time.format(timeOutTime.getTime()));
                     toAdd.add(timeInDurationDB);
-
+                    toAdd.add("false");
 
                     // send to DB:
+                    Toast.makeText(getContext(), "LINE 219", Toast.LENGTH_LONG).show();
                     reference.child(userID).child("Time Ins and Outs").child(formattedDate).setValue(toAdd);
+
                     toAdd.clear();
+
+
+                    System.out.println("BRAP LINE 214");
+
+
+
 
                 }
 
@@ -193,6 +238,8 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+
+
 
     @Override
     public void onDestroyView() {
