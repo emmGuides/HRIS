@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.Employee;
 import com.example.hris.R;
@@ -25,7 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -44,30 +42,31 @@ public class HomeFragment extends Fragment {
     TextView totalTimedIn;
 
     FirebaseUser user;
-    DatabaseReference reference, timeInOutDBReference;
+    DatabaseReference reference;
     List<String> toAdd = new ArrayList<>();
 
     String userID;
     Date currentTime;
     Date timeInTime;
     Date timeOutTime;
-    long timeInFromDB = 69;
+    long timeInFromDB = 69; //nice
 
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat time = new SimpleDateFormat("HH:mm");
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat date = new SimpleDateFormat("MMMM dd, yyyy");
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat greet = new SimpleDateFormat("HH");
 
 
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // HomeViewModel homeViewModel =
+        //                new ViewModelProvider(this).get(HomeViewModel.class);
         // homeViewModel format, in case
         // final TextView textView = binding.textHome;
         // homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
@@ -92,13 +91,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 try{
+                    // sets Employee's timed in time from DB
                     String displayers = Objects.requireNonNull(snapshot.getValue()).toString();
                     displayers = displayers.substring(1, displayers.length() - 1);
                     String[] strArray = displayers.split(" ");
                     timeInFromDB = Long.parseLong(strArray[1].substring(0, strArray[1].length()-1));
                 }
                 catch (Exception e) {
-
+                    // Handle Exception: Not needed as of now.
                 }
             }
 
@@ -119,15 +119,23 @@ public class HomeFragment extends Fragment {
 
                     String fullName = userProfile.fullName;
                     String firstName;
+
                     try{
                         firstName = fullName.substring(0, fullName.indexOf(' '));
                     } catch (Exception e) {
                         firstName = fullName;
                     }
 
+                    if (Integer.parseInt(greet.format(currentTime.getTime()).toString()) < 13){
+                        homeGreeting.setText("Good Morning, "+ firstName);
+                    }
+                    else if (Integer.parseInt(greet.format(currentTime.getTime()).toString()) < 18) {
+                        homeGreeting.setText("Good Afternoon, "+ firstName);
+                    }
+                    else {
+                        homeGreeting.setText("Good Evening, "+ firstName);
+                    }
 
-
-                    homeGreeting.setText("Good day, "+ firstName);
                 }
             }
 
@@ -135,8 +143,6 @@ public class HomeFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), "Something Wrong Happened", Toast.LENGTH_LONG).show();
             }
-
-
         });
 
         try{
@@ -160,9 +166,6 @@ public class HomeFragment extends Fragment {
                             try{
                                 // on time in only
                                 String trim = timeInsOuts.getText().toString().trim();
-                                if(!trim.isEmpty()){
-
-                                }
                                 String displayers = Objects.requireNonNull(snapshot.getValue()).toString();
                                 displayers = displayers.substring(1, displayers.length() - 1);
                                 String[] strArray = displayers.split(" ");
@@ -171,14 +174,13 @@ public class HomeFragment extends Fragment {
                                 timeInFromDB = Long.parseLong(strArray[1]);
 
                             } catch (Exception d) {
-                                System.out.println("BRAP LINE 143");
+                                // Handle Exception: Not needed as of now.
                             }
 
                         }
 
                     } catch(Exception e) {
-                        System.out.println("BRAP LINE 149");
-                        // Handle Exception
+                        // Handle Exception: Not needed as of now.
                     }
                 }
 
@@ -188,67 +190,56 @@ public class HomeFragment extends Fragment {
                 }
             });
         } catch (Exception e) {
-            System.out.println("BRAP LINE 159");
-            Toast.makeText(getContext(), "WHOOPSIE! something went wrong!", Toast.LENGTH_LONG).show();
+            // Handle Exception
+            Toast.makeText(getContext(), "WHOOPS! something went wrong!", Toast.LENGTH_LONG).show();
         }
 
 
+        timeInOutButton.setOnClickListener(view -> {
 
+            String trim = timeInsOuts.getText().toString().trim();
+            currentTime = Calendar.getInstance().getTime();
+            String currTime = time.format(currentTime.getTime());
 
+            if(trim.isEmpty()){
 
-        timeInOutButton.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View view) {
+                timeInTime = currentTime;
+                timeInsOuts.setText("Timed in:  " + currTime);
+                Snackbar.make(requireView(),"Employee Timed In", Snackbar.LENGTH_LONG).show();
+                // timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
+                toAdd.add(time.format(timeInTime.getTime()));
+                toAdd.add(Long.toString(timeInTime.getTime()));
 
-                String trim = timeInsOuts.getText().toString().trim();
-                currentTime = Calendar.getInstance().getTime();
-                String currTime = time.format(currentTime.getTime());
+                // send to DB:
 
-                if(trim.isEmpty()){
+            } else {
 
-                    timeInTime = currentTime;
-                    timeInsOuts.setText("Timed in:  "+currTime);
-                    Snackbar.make(requireView(),"Timed In Done", Snackbar.LENGTH_LONG).show();
-                    timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
-                    toAdd.add(time.format(timeInTime.getTime()));
-                    toAdd.add(Long.toString(timeInTime.getTime()));
+                timeOutTime = currentTime;
 
-                    // send to DB:
-                    reference.child(userID).child("Time Ins and Outs").child(formattedDate).setValue(toAdd);
-                    toAdd.clear();
+                long seconds = (timeOutTime.getTime() - timeInFromDB)/(1000);
+                long minutes = seconds / 60;
+                long hours = minutes / 60;
+                Long.toString(seconds);
+                Long.toString(minutes);
+                Long.toString(hours);
+                String timeInDurationDB = hours + "h " + minutes%60 + "m " + seconds%60 + "s ";
 
-                } else {
+                timeInsOuts.setText("Timed out:  "+ currTime);
 
-                    timeOutTime = currentTime;
+                Snackbar.make(requireView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
+                // timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
 
+                toAdd.add(time.format(timeInFromDB));
+                toAdd.add(Long.toString(timeInFromDB));
+                toAdd.add(time.format(timeOutTime.getTime()));
+                toAdd.add(timeInDurationDB);
 
-                    long seconds = (timeOutTime.getTime() - timeInFromDB)/(1000);
-                    long minutes = seconds / 60;
-                    long hours = minutes / 60;
-                    Long.toString(seconds);
-                    Long.toString(minutes);
-                    Long.toString(hours);
-                    String timeInDurationDB = hours+"h "+minutes%60+"m "+seconds%60+"s ";
-
-                    timeInsOuts.setText("Timed out:  "+currTime);
-
-                    Snackbar.make(requireView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
-                    timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
-
-                    toAdd.add(time.format(timeInFromDB));
-                    toAdd.add(Long.toString(timeInFromDB));
-                    toAdd.add(time.format(timeOutTime.getTime()));
-                    toAdd.add(timeInDurationDB);
-
-                    // send to DB:
-                    reference.child(userID).child("Time Ins and Outs").child(formattedDate).setValue(toAdd);
-
-                    toAdd.clear();
-
-                }
+                // send to DB:
 
             }
+            reference.child(userID).child("Time Ins and Outs").child(formattedDate).setValue(toAdd);
+            toAdd.clear();
+
         });
 
         return root;
