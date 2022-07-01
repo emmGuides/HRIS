@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
     Date currentTime;
     Date timeInTime;
     Date timeOutTime;
-    long timeInFromDB;
+    long timeInFromDB = 69;
 
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat time = new SimpleDateFormat("HH:mm");
@@ -86,6 +86,28 @@ public class HomeFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
+
+
+        reference.child(userID).child("Time Ins and Outs").child(formattedDate).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try{
+                    String displayers = Objects.requireNonNull(snapshot.getValue()).toString();
+                    displayers = displayers.substring(1, displayers.length() - 1);
+                    String[] strArray = displayers.split(" ");
+                    timeInFromDB = Long.parseLong(strArray[1].substring(0, strArray[1].length()-1));
+                }
+                catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         reference.child(userID).child("User Details").addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -122,6 +144,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     try{
+
                         try{
                             // Time in and out
                             String displayers = Objects.requireNonNull(snapshot.getValue()).toString();
@@ -133,7 +156,7 @@ public class HomeFragment extends Fragment {
 
 
                         } catch (Exception e) {
-                            System.out.println("BRAP LINE 134, Time in onli");
+
                             try{
                                 // on time in only
                                 String trim = timeInsOuts.getText().toString().trim();
@@ -192,22 +215,22 @@ public class HomeFragment extends Fragment {
                     toAdd.add(Long.toString(timeInTime.getTime()));
 
                     // send to DB:
-                    Toast.makeText(getContext(), "LINE 192", Toast.LENGTH_LONG).show();
                     reference.child(userID).child("Time Ins and Outs").child(formattedDate).setValue(toAdd);
                     toAdd.clear();
 
                 } else {
+
                     timeOutTime = currentTime;
+
+
                     long seconds = (timeOutTime.getTime() - timeInFromDB)/(1000);
                     long minutes = seconds / 60;
                     long hours = minutes / 60;
                     Long.toString(seconds);
                     Long.toString(minutes);
                     Long.toString(hours);
-                    String display = "Timed in for: " + hours + "h " + minutes%60 + "m " + seconds%60 + "s";
                     String timeInDurationDB = hours+"h "+minutes%60+"m "+seconds%60+"s ";
 
-                    totalTimedIn.setText(display);
                     timeInsOuts.setText("Timed out:  "+currTime);
 
                     Snackbar.make(requireView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
@@ -217,19 +240,11 @@ public class HomeFragment extends Fragment {
                     toAdd.add(Long.toString(timeInFromDB));
                     toAdd.add(time.format(timeOutTime.getTime()));
                     toAdd.add(timeInDurationDB);
-                    toAdd.add("false");
 
                     // send to DB:
-                    Toast.makeText(getContext(), "LINE 219", Toast.LENGTH_LONG).show();
                     reference.child(userID).child("Time Ins and Outs").child(formattedDate).setValue(toAdd);
 
                     toAdd.clear();
-
-
-                    System.out.println("BRAP LINE 214");
-
-
-
 
                 }
 
