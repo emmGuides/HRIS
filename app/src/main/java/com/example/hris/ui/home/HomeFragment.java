@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
@@ -113,6 +114,33 @@ public class HomeFragment extends Fragment {
 
 
         });
+
+        try{
+            reference.child(userID).child("Time Ins and Outs").child(formattedDate).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    try{
+                        String displayers = Objects.requireNonNull(snapshot.getValue()).toString();
+
+                        Toast.makeText(getContext(), displayers, Toast.LENGTH_LONG).show();
+
+                    } catch(Exception e) {
+                        // Handle Exception
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "WHOOPSIE! something went wrong!", Toast.LENGTH_LONG).show();
+        }
+
+
+
+
 
         timeInOutButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
