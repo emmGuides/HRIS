@@ -68,3 +68,19 @@
 		- Added GitHub branch time-ins-outs to facilitate changes around time ins and outs
 		- Demo Link: https://youtu.be/_WtjdjNkip4
 		
+      June 30, 2022:
+		- modified homepage to have ScrollView
+		- locked all views to portrait
+		- overhauled home screen UI
+		- Added today's date display
+		- now displays current timed in duration (time out minus time in)
+		- Time ins, out, duration of time in, added in DB with key(child) as current date
+		- organized keys for vacation and sick leaves in DB
+		- organized registered users' details under "User Details" child in DB
+		
+      July 1, 2022:
+		- Added read operations for time ins and outs
+		- Refactored some parts of the code
+		- Fixed a bug found yesterday
+		- reformatted pushed DB values to contain Date datatypes
+      
