@@ -120,5 +120,8 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         });
     }
 
+    public void onBackPressed() {
+        Toast.makeText(LogIn.this, "Register or Log in to proceed", Toast.LENGTH_SHORT).show();
+    }
 
 }

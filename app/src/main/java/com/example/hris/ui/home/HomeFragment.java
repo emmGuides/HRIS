@@ -303,7 +303,4 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
 
-    public void onBackPressed() {
-        dialog_timeOut.show();
-    }
 }
