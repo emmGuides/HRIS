@@ -1,11 +1,13 @@
 package com.example.hris;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,8 +42,9 @@ public class HomeScreen extends AppCompatActivity {
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
-
-    @SuppressLint("SourceLockedOrientationActivity")
+    Dialog dialog;
+    Button cancel, okay;
+    @SuppressLint({"SourceLockedOrientationActivity", "UseCompatLoadingForDrawables"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,34 @@ public class HomeScreen extends AppCompatActivity {
 
         // portrait lock
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        dialog = new Dialog(HomeScreen.this);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_backgroud));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        okay = dialog.findViewById(R.id.btn_okay);
+        cancel = dialog.findViewById(R.id.btn_cancel);
+
+        okay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(getApplicationContext(), "User has logged out", Toast.LENGTH_LONG).show();
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(HomeScreen.this, LogIn.class));
+                dialog.dismiss();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
 
 
         //fab
@@ -105,9 +136,7 @@ public class HomeScreen extends AppCompatActivity {
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "User has logged out", Toast.LENGTH_LONG).show();
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(HomeScreen.this, LogIn.class));
+                dialog.show();
             }
         });
 

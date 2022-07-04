@@ -2,4 +2,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <color name="background">#000000</color>
     <color name="custTextColor">#FFF</color>
+    <color name="darkerTextColor">#FFF</color>
+    <color name="dialogNightDay">#353536</color>
 </resources>

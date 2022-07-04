@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background">#FFFFFFFF</color>
     <color name="custTextColor">#808080</color>
+    <color name="darkerTextColor">#000</color>
+    <color name="dialogNightDay">#FFF</color>
 </resources>
