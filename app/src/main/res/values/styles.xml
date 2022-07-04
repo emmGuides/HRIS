@@ -10,5 +10,5 @@
         <item name="spinBars">true</item>
         <item name="color">@android:color/black</item>
     </style>
-    
+
 </resources>
