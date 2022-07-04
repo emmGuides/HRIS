@@ -302,4 +302,8 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    public void onBackPressed() {
+        dialog_timeOut.show();
+    }
 }

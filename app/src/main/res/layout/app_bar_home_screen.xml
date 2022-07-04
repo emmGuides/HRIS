@@ -8,8 +8,8 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:background="@drawable/appbar_10"
+        android:layout_height="65dp"
+        android:background="@drawable/appbar_12"
         android:theme="@style/Theme.Hris.AppBarOverlay"
         app:titleTextColor="@color/darkerTextColor"
         >

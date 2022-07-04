@@ -44,6 +44,8 @@ public class HomeScreen extends AppCompatActivity {
     Dialog dialog;
     Button cancel, okay;
     @SuppressLint({"SourceLockedOrientationActivity", "UseCompatLoadingForDrawables"})
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,6 +169,5 @@ public class HomeScreen extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
 
 }
