@@ -52,6 +52,7 @@ public class HomeFragment extends Fragment {
     Date currentTime;
     Date timeInTime;
     Date timeOutTime;
+    String formattedDate;
     long timeInFromDB = 69; //nice
 
     Dialog dialog_timeIn, dialog_timeOut;
@@ -83,7 +84,7 @@ public class HomeFragment extends Fragment {
         homeGreeting = binding.greetUser;
 
         currentTime = Calendar.getInstance().getTime();
-        String formattedDate = date.format(currentTime);
+        formattedDate = date.format(currentTime);
         DateDisplay.setText("Today is " + formattedDate);
 
         totalTimedIn = binding.totalTimedIn;
@@ -95,7 +96,7 @@ public class HomeFragment extends Fragment {
 
         // dialog time in
         dialog_timeIn = new Dialog(getContext());
-        dialog_timeIn.setContentView(R.layout.custom_dialog_log_out);
+        dialog_timeIn.setContentView(R.layout.custom_dialog_time_in);
         dialog_timeIn.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
         dialog_timeIn.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog_timeIn.setCancelable(true);
@@ -103,11 +104,18 @@ public class HomeFragment extends Fragment {
 
         // dialog time out
         dialog_timeOut = new Dialog(getContext());
-        dialog_timeOut.setContentView(R.layout.custom_dialog_log_out);
+        dialog_timeOut.setContentView(R.layout.custom_dialog_time_out);
         dialog_timeOut.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
         dialog_timeOut.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog_timeOut.setCancelable(true);
         dialog_timeOut.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        // dialog buttons
+        okay_timeIn = dialog_timeIn.findViewById(R.id.btn_okay);
+        cancel_timeIn = dialog_timeIn.findViewById(R.id.btn_cancel);
+
+        okay_timeOut = dialog_timeOut.findViewById(R.id.btn_okay);
+        cancel_timeOut = dialog_timeOut.findViewById(R.id.btn_cancel);
 
         reference.child(userID).child("Time Ins and Outs").child(formattedDate).addValueEventListener(new ValueEventListener() {
             @Override
@@ -218,56 +226,76 @@ public class HomeFragment extends Fragment {
 
 
         timeInOutButton.setOnClickListener(view -> {
-
             String trim = timeInsOuts.getText().toString().trim();
-            currentTime = Calendar.getInstance().getTime();
-            String currTime = time.format(currentTime.getTime());
-
             if(trim.isEmpty()){
-
-                timeInTime = currentTime;
-                timeInsOuts.setText("Timed in:  " + currTime);
-                Snackbar.make(requireView(),"Employee Timed In", Snackbar.LENGTH_LONG).show();
-                // timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
-                toAdd.add(time.format(timeInTime.getTime()));
-                toAdd.add(Long.toString(timeInTime.getTime()));
-
-                // send to DB:
-
+                dialog_timeIn.show();
             } else {
-
-                timeOutTime = currentTime;
-
-                long seconds = (timeOutTime.getTime() - timeInFromDB)/(1000);
-                long minutes = seconds / 60;
-                long hours = minutes / 60;
-                Long.toString(seconds);
-                Long.toString(minutes);
-                Long.toString(hours);
-                String timeInDurationDB = hours + "h " + minutes%60 + "m " + seconds%60 + "s ";
-
-                timeInsOuts.setText("Timed out:  "+ currTime);
-
-                Snackbar.make(requireView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
-                // timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
-
-                toAdd.add(time.format(timeInFromDB));
-                toAdd.add(Long.toString(timeInFromDB));
-                toAdd.add(time.format(timeOutTime.getTime()));
-                toAdd.add(timeInDurationDB);
-
-                // send to DB:
-
+                dialog_timeOut.show();
             }
-            reference.child(userID).child("Time Ins and Outs").child(formattedDate).setValue(toAdd);
-            toAdd.clear();
-
         });
+
+        okay_timeIn.setOnClickListener(view -> {
+            timeInOutFunction();
+            dialog_timeIn.dismiss();
+        });
+
+        cancel_timeIn.setOnClickListener(view -> dialog_timeIn.dismiss());
+
+        okay_timeOut.setOnClickListener(view -> {
+            timeInOutFunction();
+            dialog_timeOut.dismiss();
+        });
+
+        cancel_timeOut.setOnClickListener(view -> dialog_timeOut.dismiss());
+
 
         return root;
     }
 
+    public void timeInOutFunction() {
+        String trim = timeInsOuts.getText().toString().trim();
+        currentTime = Calendar.getInstance().getTime();
+        String currTime = time.format(currentTime.getTime());
 
+        if(trim.isEmpty()){
+
+            timeInTime = currentTime;
+            timeInsOuts.setText("Timed in:  " + currTime);
+            Snackbar.make(requireView(),"Employee Timed In", Snackbar.LENGTH_LONG).show();
+            // timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
+            toAdd.add(time.format(timeInTime.getTime()));
+            toAdd.add(Long.toString(timeInTime.getTime()));
+
+            // send to DB:
+
+        } else {
+
+            timeOutTime = currentTime;
+
+            long seconds = (timeOutTime.getTime() - timeInFromDB)/(1000);
+            long minutes = seconds / 60;
+            long hours = minutes / 60;
+            Long.toString(seconds);
+            Long.toString(minutes);
+            Long.toString(hours);
+            String timeInDurationDB = hours + "h " + minutes%60 + "m " + seconds%60 + "s ";
+
+            timeInsOuts.setText("Timed out:  "+ currTime);
+
+            Snackbar.make(requireView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
+            // timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
+
+            toAdd.add(time.format(timeInFromDB));
+            toAdd.add(Long.toString(timeInFromDB));
+            toAdd.add(time.format(timeOutTime.getTime()));
+            toAdd.add(timeInDurationDB);
+
+            // send to DB:
+
+        }
+        reference.child(userID).child("Time Ins and Outs").child(formattedDate).setValue(toAdd);
+        toAdd.clear();
+    }
 
     @Override
     public void onDestroyView() {
