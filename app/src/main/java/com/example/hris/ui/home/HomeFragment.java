@@ -1,10 +1,12 @@
 package com.example.hris.ui.home;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.hris.Employee;
+import com.example.hris.HomeScreen;
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentHomeBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -51,6 +54,9 @@ public class HomeFragment extends Fragment {
     Date timeOutTime;
     long timeInFromDB = 69; //nice
 
+    Dialog dialog_timeIn, dialog_timeOut;
+    Button cancel_timeIn, cancel_timeOut, okay_timeIn, okay_timeOut;
+
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat time = new SimpleDateFormat("HH:mm");
     @SuppressLint("SimpleDateFormat")
@@ -59,7 +65,7 @@ public class HomeFragment extends Fragment {
     SimpleDateFormat greet = new SimpleDateFormat("HH");
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -86,6 +92,22 @@ public class HomeFragment extends Fragment {
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
 
+
+        // dialog time in
+        dialog_timeIn = new Dialog(getContext());
+        dialog_timeIn.setContentView(R.layout.custom_dialog_log_out);
+        dialog_timeIn.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        dialog_timeIn.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog_timeIn.setCancelable(true);
+        dialog_timeIn.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        // dialog time out
+        dialog_timeOut = new Dialog(getContext());
+        dialog_timeOut.setContentView(R.layout.custom_dialog_log_out);
+        dialog_timeOut.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        dialog_timeOut.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog_timeOut.setCancelable(true);
+        dialog_timeOut.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
         reference.child(userID).child("Time Ins and Outs").child(formattedDate).addValueEventListener(new ValueEventListener() {
             @Override
