@@ -1,23 +1,18 @@
 package com.example.hris.ui.home;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 
 import com.example.hris.Employee;
-import com.example.hris.HomeScreen;
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentHomeBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -56,9 +51,6 @@ public class HomeFragment extends Fragment {
     Date timeOutTime;
     long timeInFromDB = 69; //nice
 
-    Dialog dialog;
-    Button cancel, okay;
-
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat time = new SimpleDateFormat("HH:mm");
     @SuppressLint("SimpleDateFormat")
@@ -67,7 +59,7 @@ public class HomeFragment extends Fragment {
     SimpleDateFormat greet = new SimpleDateFormat("HH");
 
 
-    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -94,16 +86,6 @@ public class HomeFragment extends Fragment {
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
 
-
-        dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.custom_dialog_time_in);
-        dialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.setCancelable(true);
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-
-        okay = dialog.findViewById(R.id.btn_okay);
-        cancel = dialog.findViewById(R.id.btn_cancel);
 
         reference.child(userID).child("Time Ins and Outs").child(formattedDate).addValueEventListener(new ValueEventListener() {
             @Override
@@ -144,7 +126,7 @@ public class HomeFragment extends Fragment {
                         firstName = fullName;
                     }
 
-                    if (Integer.parseInt(greet.format(currentTime.getTime()).toString()) < 12){
+                    if (Integer.parseInt(greet.format(currentTime.getTime()).toString()) < 13){
                         homeGreeting.setText("Good Morning, "+ firstName);
                     }
                     else if (Integer.parseInt(greet.format(currentTime.getTime()).toString()) < 18) {

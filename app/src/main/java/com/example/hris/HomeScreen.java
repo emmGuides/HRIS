@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -56,9 +57,9 @@ public class HomeScreen extends AppCompatActivity {
         // portrait lock
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         dialog = new Dialog(HomeScreen.this);
-        dialog.setContentView(R.layout.custom_dialog_log_out);
+        dialog.setContentView(R.layout.custom_dialog);
         dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_backgroud));
-        // dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
