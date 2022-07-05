@@ -13,5 +13,5 @@
     <string name="menu_teams">Teams</string>
     <string name="menu_vacation">Vacation Leave</string>
     <string name="menu_sick">Sick Leave</string>
-    <string name="menu_profile">User Profile</string>
+    <string name="menu_profile">My Profile</string>
 </resources>

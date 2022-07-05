@@ -41,6 +41,7 @@ public class HomeScreen extends AppCompatActivity {
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
+
     Dialog dialog;
     Button cancel, okay;
     @SuppressLint({"SourceLockedOrientationActivity", "UseCompatLoadingForDrawables"})
@@ -107,8 +108,8 @@ public class HomeScreen extends AppCompatActivity {
         TextView userName = (TextView) headerView.findViewById(R.id.navBarName);
         TextView userEmail = (TextView) headerView.findViewById(R.id.navBarEmail);
 
-        userName.setText("placeholder name");
-        userEmail.setText("placeholder email");
+        userName.setText("user's name");
+        userEmail.setText("User's email");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
