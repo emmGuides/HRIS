@@ -24,7 +24,7 @@
         android:elevation="2dp"
         android:gravity="right"
         android:paddingEnd="30dp"
-        android:text="Good day, User"
+        android:hint="Good day!"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/announcement_header"
@@ -77,6 +77,15 @@
         app:layout_constraintTop_toBottomOf="@id/greet_user"
         tools:ignore="RtlSymmetry" />
 
+    <View
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/barColor"
+        app:layout_constraintTop_toBottomOf="@+id/date_display"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <TextView
         android:id="@+id/attendance_header"
         android:layout_width="371dp"
@@ -104,8 +113,10 @@
         tools:ignore="ContentDescription" />
 
     <TextView
+        android:hint="You haven't timed in yet..."
         android:id="@+id/Time_ins_outs"
-        android:layout_width="250dp"
+        android:minWidth="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"
@@ -132,6 +143,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Time_ins_outs"
         tools:ignore="HardcodedText,RtlSymmetry" />
+
+    <View
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/barColor"
+        app:layout_constraintTop_toBottomOf="@+id/total_timed_in"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageButton
         android:id="@+id/Time_ins_outs_Button"

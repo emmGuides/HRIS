@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.hris.ui.profile.ProfileFragment"
-        android:label="User Profile"
+        android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment

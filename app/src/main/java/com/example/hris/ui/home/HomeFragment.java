@@ -38,6 +38,7 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
+
     TextView timeInsOuts;
     ImageButton timeInOutButton;
     TextView homeGreeting;

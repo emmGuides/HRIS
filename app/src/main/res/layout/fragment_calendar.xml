@@ -20,6 +20,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:layout_marginTop="-100dp"
+        android:id="@+id/construction"
+        android:contentDescription="Construction emoji"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/under_construction"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/construction"
+        android:text="CALENDAR FRAGMENT IS UNDER CONSTRUCTION"
+        android:textSize="30dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="@color/custTextColor"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
