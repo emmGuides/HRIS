@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hris.databinding.ActivityHomeScreenBinding;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,6 +45,9 @@ public class HomeScreen extends AppCompatActivity {
     private String userID;
     Dialog dialog;
     Button cancel, okay;
+
+    ImageView profile_image;
+
     @SuppressLint({"SourceLockedOrientationActivity", "UseCompatLoadingForDrawables"})
 
 
@@ -66,8 +71,12 @@ public class HomeScreen extends AppCompatActivity {
         dialog.setCancelable(true);
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
+        profile_image = binding.getRoot().findViewById(R.id.employee_image);
+
         okay = dialog.findViewById(R.id.btn_okay);
         cancel = dialog.findViewById(R.id.btn_cancel);
+
+
 
         okay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +86,7 @@ public class HomeScreen extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(HomeScreen.this, LogIn.class));
                 dialog.dismiss();
+
             }
         });
 
@@ -87,10 +97,8 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
-
-
-        //fab
         /*
+        //fab
         binding.appBarHomeScreen.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,8 +106,7 @@ public class HomeScreen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-         */
+        */
 
         // Employee name and email
         NavigationView navigationViewer = (NavigationView) findViewById(R.id.nav_view);
@@ -160,6 +167,7 @@ public class HomeScreen extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home_screen, menu);
+        
         return true;
     }
 
@@ -169,5 +177,7 @@ public class HomeScreen extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
 
 }
