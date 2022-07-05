@@ -84,3 +84,19 @@
 		- Fixed a bug found yesterday
 		- reformatted pushed DB values to contain Date datatypes
       
+      July 4, 2022:
+      		- added confirmation dialog when user logs out
+		- added confirmation dialog when user times in
+		- added confirmation dialog when user times out
+		- changed appbar text color, icon colors
+		- changed appbar background
+		- changed home screen's draft format
+		- added on back pressed methods on some views to cover an app vulnerability
+      
+      July 5, 2022:
+       		- Created User Profile Fragment
+		- added user profile fragment to the navigation drawer
+		- added icon to the user profile item
+		- added placeholder images for Teams and Calendar fragments
+		- created DB Read methods for the user profile fragment details (name, age, email)
+		- slightly modified homescreen UI
