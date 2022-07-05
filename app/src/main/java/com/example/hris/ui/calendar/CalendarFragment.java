@@ -18,15 +18,18 @@ public class CalendarFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        /*
         CalendarViewModel galleryViewModel =
                 new ViewModelProvider(this).get(CalendarViewModel.class);
+        final TextView textView = binding.textCalendar;
+        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+         */
 
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        final TextView textView = binding.textCalendar;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
+
     }
 
     @Override

@@ -11,27 +11,30 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.HomeFragment"
+    >
 
 
     <TextView
-        android:layout_marginTop="20dp"
         android:id="@+id/greet_user"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="100dp"
+        android:elevation="2dp"
+        android:gravity="right"
         android:paddingEnd="30dp"
         android:text="Good day, User"
-        android:textAlignment="textEnd"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/announcement_header"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.174"
-        tools:ignore="HardcodedText,RtlSymmetry" />
+        app:layout_constraintVertical_bias="0.176"
+        tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
+
 
     <TextView
         android:textColor="@color/custTextColor"
