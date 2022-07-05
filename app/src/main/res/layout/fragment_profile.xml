@@ -83,8 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/email_desc"
         app:layout_constraintBottom_toBottomOf="@+id/email_desc"
-        android:gravity="start"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold"
         android:minWidth="150dp"/>
