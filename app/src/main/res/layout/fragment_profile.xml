@@ -56,7 +56,7 @@
     <View
         android:layout_width="300dp"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
+        android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/name_actual"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -91,7 +91,7 @@
     <View
         android:layout_width="300dp"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
+        android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/email_actual"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -128,7 +128,7 @@
     <View
         android:layout_width="300dp"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
+        android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/age_actual"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

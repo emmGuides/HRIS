@@ -4,4 +4,5 @@
     <color name="custTextColor">#FFF</color>
     <color name="darkerTextColor">#FFF</color>
     <color name="dialogNightDay">#353536</color>
+    <color name="barColor">#3a3a3b</color>
 </resources>
