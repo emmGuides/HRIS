@@ -100,3 +100,11 @@
 		- added placeholder images for Teams and Calendar fragments
 		- created DB Read methods for the user profile fragment details (name, age, email)
 		- slightly modified homescreen UI
+		
+      July 6, 2022:
+      		- fixed layout on User Profile Fragment
+		- Added User Details edit buttons
+		- Added Dialog boxes that ask for new details to be updated
+		- Added checks for EditText fields on Name and Age Dialog
+		- Users can now Change name and age since it is also updated in the DB
+		- Email and Password updates pushed behind schedule since they require authentication.
