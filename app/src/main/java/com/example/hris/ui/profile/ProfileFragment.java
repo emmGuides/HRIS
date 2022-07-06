@@ -3,22 +3,21 @@ package com.example.hris.ui.profile;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.Employee;
-import com.example.hris.HomeScreen;
 import com.example.hris.R;
-import com.example.hris.databinding.FragmentCalendarBinding;
 import com.example.hris.databinding.FragmentProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,10 +34,13 @@ public class ProfileFragment extends Fragment {
     ImageView editName, editAge, editEmail, editPassword;
     Dialog changeName, changeAge, changeEmail, changePassword;
     Button okayName, cancelName, okayAge, cancelAge, okayEmail, cancelEmail, okayPassword, cancelPassword;
+    EditText emailEditText, nameEditText, ageEditText, passwordEditText_New, passwordEditText_Old;
 
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
+
+    String user_oldFullName, user_oldEmail, user_oldAge, user_oldPassword;
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -93,6 +95,7 @@ public class ProfileFragment extends Fragment {
         changePassword.setCancelable(true);
         changePassword.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
+        // Dialog Confirm and Cancel buttons
         okayName = changeName.findViewById(R.id.btn_okay);
         cancelName = changeName.findViewById(R.id.btn_cancel);
 
@@ -105,19 +108,28 @@ public class ProfileFragment extends Fragment {
         okayPassword = changePassword.findViewById(R.id.btn_okay);
         cancelPassword = changePassword.findViewById(R.id.btn_cancel);
 
+        // Dialog EditTexts
+        emailEditText = changeEmail.findViewById(R.id.newEmail_input);
+        nameEditText = changeName.findViewById(R.id.newName_input);
+        ageEditText = changeAge.findViewById(R.id.newAge_input);
+        passwordEditText_New = changePassword.findViewById(R.id.newPassword_input);
+        passwordEditText_Old = changePassword.findViewById(R.id.oldPassword_input);
+
+
         reference.child(userID).child("User Details").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Employee userProfile = snapshot.getValue(Employee.class);
 
                 if(userProfile != null){
-                    String fullName = userProfile.fullName;
-                    String fullEmail = userProfile.email;
-                    String Age = userProfile.age;
+                    user_oldFullName = userProfile.fullName;
+                    user_oldEmail = userProfile.email;
+                    user_oldAge = userProfile.age;
+                    // user_oldPassword = userProfile
 
-                    name.setText(fullName);
-                    email.setText(fullEmail);
-                    age.setText(Age);
+                    name.setText(user_oldFullName);
+                    email.setText(user_oldEmail);
+                    age.setText(user_oldAge);
                 }
             }
 
@@ -156,24 +168,44 @@ public class ProfileFragment extends Fragment {
         editPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "EDIT PASSSWORD", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "EDIT PASSWORD", Toast.LENGTH_SHORT).show();
                 changePassword.show();
             }
 
         });
 
+        // Name buttons
         okayName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String newName = nameEditText.getText().toString().trim();
+                if(newName.isEmpty()){
+                    nameEditText.setError("Name should not be empty!");
+                    nameEditText.requestFocus();
+                    return;
+                }
+                String disp = "Name updated to "+newName;
+                reference.child(userID).child("User Details").child("fullName").setValue(newName);
+                Toast.makeText(getContext(), disp, Toast.LENGTH_LONG).show();
                 changeName.dismiss();
             }
         });
 
         cancelName.setOnClickListener(view -> changeName.dismiss());
 
+        // Age buttons
         okayAge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String newAge = ageEditText.getText().toString().trim();
+                if(newAge.isEmpty()){
+                    ageEditText.setError("Age cannot be empty");
+                    ageEditText.requestFocus();
+                    return;
+                }
+                String disp = "Age updated to " + newAge;
+                reference.child(userID).child("User Details").child("age").setValue(newAge);
+                Toast.makeText(getContext(), disp, Toast.LENGTH_LONG).show();
                 changeAge.dismiss();
             }
         });
@@ -183,6 +215,20 @@ public class ProfileFragment extends Fragment {
         okayEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String email = emailEditText.getText().toString().trim();
+                String oldEmail = user_oldEmail;
+
+                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    emailEditText.setError("Invalid Email Format");
+                    emailEditText.requestFocus();
+                    return;
+                }
+                if(email.equals(oldEmail)){
+                    emailEditText.setError("New and Old email should not be the same.");
+                    emailEditText.requestFocus();
+                    return;
+                }
+                Toast.makeText(getContext(), "Emails will be able to be updated in Future Updates", Toast.LENGTH_SHORT).show();
                 changeEmail.dismiss();
             }
         });
@@ -192,6 +238,7 @@ public class ProfileFragment extends Fragment {
         okayPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getContext(), "Passwords will be able to be updated in Future Updates", Toast.LENGTH_SHORT).show();
                 changePassword.dismiss();
             }
         });
