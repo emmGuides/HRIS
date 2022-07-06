@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     TextView name, age, email, password;
+    ImageView editName, editAge, editEmail, editPassword;
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
@@ -41,6 +43,11 @@ public class ProfileFragment extends Fragment {
         age = binding.ageActual;
         email = binding.emailActual;
         password = binding.passwordActual;
+
+        editName = binding.editName;
+        editAge = binding.editAge;
+        editEmail = binding.editEmail;
+        editPassword = binding.editPassword;
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
@@ -65,6 +72,34 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), "Something Wrong Happened", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        editName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "EDIT NAME", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        editAge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "EDIT AGE", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        editEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "EDIT EMAIL", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        editPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "EDIT PASSSWORD", Toast.LENGTH_SHORT).show();
             }
         });
 
