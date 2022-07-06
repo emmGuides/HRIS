@@ -253,6 +253,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    @SuppressLint("SetTextI18n")
     public void timeInOutFunction() {
         String trim = timeInsOuts.getText().toString().trim();
         currentTime = Calendar.getInstance().getTime();
@@ -266,8 +267,6 @@ public class HomeFragment extends Fragment {
             // timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
             toAdd.add(time.format(timeInTime.getTime()));
             toAdd.add(Long.toString(timeInTime.getTime()));
-
-            // send to DB:
 
         } else {
 
@@ -291,9 +290,10 @@ public class HomeFragment extends Fragment {
             toAdd.add(time.format(timeOutTime.getTime()));
             toAdd.add(timeInDurationDB);
 
-            // send to DB:
+
 
         }
+        // send to DB:
         reference.child(userID).child("Time Ins and Outs").child(formattedDate).setValue(toAdd);
         toAdd.clear();
     }
