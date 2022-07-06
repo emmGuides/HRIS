@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class ProfileFragment extends Fragment {
     TextView name, age, email, password;
     ImageView editName, editAge, editEmail, editPassword;
     Dialog changeName, changeAge, changeEmail, changePassword;
+    Button okayName, cancelName, okayAge, cancelAge, okayEmail, cancelEmail, okayPassword, cancelPassword;
 
     private FirebaseUser user;
     private DatabaseReference reference;
@@ -91,6 +93,18 @@ public class ProfileFragment extends Fragment {
         changePassword.setCancelable(true);
         changePassword.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
+        okayName = changeName.findViewById(R.id.btn_okay);
+        cancelName = changeName.findViewById(R.id.btn_cancel);
+
+        okayAge = changeAge.findViewById(R.id.btn_okay);
+        cancelAge = changeAge.findViewById(R.id.btn_cancel);
+
+        okayEmail = changeEmail.findViewById(R.id.btn_okay);
+        cancelEmail = changeEmail.findViewById(R.id.btn_cancel);
+
+        okayPassword = changePassword.findViewById(R.id.btn_okay);
+        cancelPassword = changePassword.findViewById(R.id.btn_cancel);
+
         reference.child(userID).child("User Details").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -113,10 +127,11 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
+
         editName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Toast.makeText(getContext(), "EDIT NAME", Toast.LENGTH_SHORT).show();
                 changeName.show();
             }
@@ -144,7 +159,46 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getContext(), "EDIT PASSSWORD", Toast.LENGTH_SHORT).show();
                 changePassword.show();
             }
+
         });
+
+        okayName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeName.dismiss();
+            }
+        });
+
+        cancelName.setOnClickListener(view -> changeName.dismiss());
+
+        okayAge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeAge.dismiss();
+            }
+        });
+
+        cancelAge.setOnClickListener(view -> changeAge.dismiss());
+
+        okayEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeEmail.dismiss();
+            }
+        });
+
+        cancelEmail.setOnClickListener(view -> changeEmail.dismiss());
+
+        okayPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changePassword.dismiss();
+            }
+        });
+
+        cancelPassword.setOnClickListener(view -> changePassword.dismiss());
+
+
 
         return root;
     }
