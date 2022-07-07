@@ -28,7 +28,7 @@ public class CalendarFragment extends Fragment {
 
     private FirebaseUser user;
     private DatabaseReference reference;
-    private String userID, timeIn, timeOut;
+    private String userID, timeIn, timeOut, totalTimedIn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,10 +55,13 @@ public class CalendarFragment extends Fragment {
                     timeIn = dateThisSnapperino[0].substring(1);
                     try{
                         timeOut = dateThisSnapperino[2];
+                        totalTimedIn = dateThisSnapperino[3].substring(0, dateThisSnapperino[3].length() - 1);
                     } catch(Exception e){
                         timeOut = "Not Timed Out";
+                        totalTimedIn = "-";
                     }
-                    String disp = "Date: "+ dateThisSnap + "\nTime In: " + timeIn + "\nTime Out: " + timeOut;
+                    String disp = "Date: "+ dateThisSnap + "\nTime In: " + timeIn + "\nTime Out: " + timeOut
+                            + "\nTotal Timed in: " + totalTimedIn;
                     Toast.makeText(getContext(), disp,Toast.LENGTH_SHORT).show();
 
                 }
