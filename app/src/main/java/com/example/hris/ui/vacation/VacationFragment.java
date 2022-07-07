@@ -160,7 +160,6 @@ public class VacationFragment extends Fragment {
                     return;
                 }
 
-                //TODO submit dates and details to firebase
                 sendToDatabase();
             }
 

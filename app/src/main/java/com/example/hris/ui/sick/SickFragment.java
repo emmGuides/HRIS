@@ -148,7 +148,6 @@ public class SickFragment extends Fragment {
                     details.requestFocus();
                     return;
                 }
-                //TODO submit dates and location to firebase
                 sendToDatabase();
             }
         });

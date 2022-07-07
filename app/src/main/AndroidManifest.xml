@@ -14,9 +14,6 @@
         android:theme="@style/Theme.Hris"
         tools:targetApi="31">
         <activity
-            android:name=".for_test_only_final"
-            android:exported="false" />
-        <activity
             android:name=".HomeScreen"
             android:exported="false"
             android:label="@string/title_activity_home_screen"
