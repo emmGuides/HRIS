@@ -38,6 +38,7 @@ public class CalendarFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        
         /*
         CalendarViewModel galleryViewModel =
                 new ViewModelProvider(this).get(CalendarViewModel.class);
@@ -78,13 +79,13 @@ public class CalendarFragment extends Fragment {
                     timeInOutList.add(disp);
                     disp = "";
                 }
-            ///////
+            /*
             try{
                 Toast.makeText(getContext(), timeInOutList.toString().substring(1, timeInOutList.toString().length() - 1) , Toast.LENGTH_SHORT).show();
             } catch (Exception ignored){
 
             }
-            //////
+            */
 
             }
 
