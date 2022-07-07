@@ -31,6 +31,7 @@ public class CalendarFragment extends Fragment {
     private DatabaseReference reference;
     private String userID, timeIn, timeOut, totalTimedIn;
     TextView timeInOutLog;
+    String disp;
     ArrayList<String> timeInOutList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -67,7 +68,7 @@ public class CalendarFragment extends Fragment {
                         timeOut = "Not Timed Out";
                         totalTimedIn = "-";
                     }
-                    String disp = "Date: "+ dateThisSnap + "\nTime In: " + timeIn + "\nTime Out: " + timeOut
+                    disp = "Date: "+ dateThisSnap + "\nTime In: " + timeIn + "\nTime Out: " + timeOut
                             + "\nTotal Timed in: " + totalTimedIn;
                     try{
                         //Toast.makeText(requireContext(), disp,Toast.LENGTH_SHORT).show();
@@ -75,6 +76,7 @@ public class CalendarFragment extends Fragment {
 
                     }
                     timeInOutList.add(disp);
+                    disp = "";
                 }
             ///////
             try{
@@ -92,7 +94,6 @@ public class CalendarFragment extends Fragment {
             }
         });
         timeInOutLog.setText(timeInOutList.toString().substring(1, timeInOutList.toString().length() - 1));
-        timeInOutLog.setText("BOOBA");
         return root;
 
     }
