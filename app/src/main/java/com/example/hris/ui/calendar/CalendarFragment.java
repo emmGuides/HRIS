@@ -30,9 +30,13 @@ public class CalendarFragment extends Fragment {
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID, timeIn, timeOut, totalTimedIn;
+    TextView timeInOutLog;
+    ArrayList<String> timeInOutList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentCalendarBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
         /*
         CalendarViewModel galleryViewModel =
                 new ViewModelProvider(this).get(CalendarViewModel.class);
@@ -44,6 +48,8 @@ public class CalendarFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
+
+        timeInOutLog = binding.timeInsOutsLOG;
 
         reference.child(userID).child("Time Ins and Outs").addValueEventListener(new ValueEventListener() {
             @Override
@@ -64,11 +70,19 @@ public class CalendarFragment extends Fragment {
                     String disp = "Date: "+ dateThisSnap + "\nTime In: " + timeIn + "\nTime Out: " + timeOut
                             + "\nTotal Timed in: " + totalTimedIn;
                     try{
-                        Toast.makeText(requireContext(), disp,Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(requireContext(), disp,Toast.LENGTH_SHORT).show();
                     } catch (Exception ignored) {
 
                     }
+                    timeInOutList.add(disp);
                 }
+            ///////
+            try{
+                Toast.makeText(getContext(), timeInOutList.toString().substring(1, timeInOutList.toString().length() - 1) , Toast.LENGTH_SHORT).show();
+            } catch (Exception ignored){
+
+            }
+            //////
 
             }
 
@@ -77,9 +91,8 @@ public class CalendarFragment extends Fragment {
 
             }
         });
-
-        binding = FragmentCalendarBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        timeInOutLog.setText(timeInOutList.toString().substring(1, timeInOutList.toString().length() - 1));
+        timeInOutLog.setText("BOOBA");
         return root;
 
     }
