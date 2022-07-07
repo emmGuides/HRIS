@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.hris.HomeScreen;
 import com.example.hris.databinding.FragmentCalendarBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -62,8 +63,11 @@ public class CalendarFragment extends Fragment {
                     }
                     String disp = "Date: "+ dateThisSnap + "\nTime In: " + timeIn + "\nTime Out: " + timeOut
                             + "\nTotal Timed in: " + totalTimedIn;
-                    Toast.makeText(getContext(), disp,Toast.LENGTH_SHORT).show();
+                    try{
+                        Toast.makeText(requireContext(), disp,Toast.LENGTH_SHORT).show();
+                    } catch (Exception ignored) {
 
+                    }
                 }
 
             }
