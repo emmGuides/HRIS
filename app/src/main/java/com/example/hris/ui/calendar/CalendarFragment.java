@@ -38,7 +38,7 @@ public class CalendarFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        
+
         /*
         CalendarViewModel galleryViewModel =
                 new ViewModelProvider(this).get(CalendarViewModel.class);
@@ -47,6 +47,7 @@ public class CalendarFragment extends Fragment {
 
          */
 
+        // Authenticated user ID and Firebase Reference
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
@@ -69,6 +70,8 @@ public class CalendarFragment extends Fragment {
                         timeOut = "Not Timed Out";
                         totalTimedIn = "-";
                     }
+
+                    // for checking only
                     disp = "Date: "+ dateThisSnap + "\nTime In: " + timeIn + "\nTime Out: " + timeOut
                             + "\nTotal Timed in: " + totalTimedIn;
                     try{
@@ -79,7 +82,8 @@ public class CalendarFragment extends Fragment {
                     timeInOutList.add(disp);
                     disp = "";
                 }
-            /*
+
+            /* // for checking only
             try{
                 Toast.makeText(getContext(), timeInOutList.toString().substring(1, timeInOutList.toString().length() - 1) , Toast.LENGTH_SHORT).show();
             } catch (Exception ignored){
