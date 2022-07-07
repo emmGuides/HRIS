@@ -31,7 +31,6 @@ public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     TextView name, age, email, password;
-    ImageView editName, editAge, editEmail, editPassword;
     Dialog changeName, changeAge, changeEmail, changePassword;
     Button okayName, cancelName, okayAge, cancelAge, okayEmail, cancelEmail, okayPassword, cancelPassword;
     EditText emailEditText, nameEditText, ageEditText, passwordEditText_New, passwordEditText_Old;
@@ -53,11 +52,6 @@ public class ProfileFragment extends Fragment {
         age = binding.ageActual;
         email = binding.emailActual;
         password = binding.passwordActual;
-
-        editName = binding.editName;
-        editAge = binding.editAge;
-        editEmail = binding.editEmail;
-        editPassword = binding.editPassword;
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
@@ -140,38 +134,36 @@ public class ProfileFragment extends Fragment {
         });
 
 
-
-        editName.setOnClickListener(new View.OnClickListener() {
+        email.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "EDIT NAME", Toast.LENGTH_SHORT).show();
-                changeName.show();
-            }
-        });
-
-        editAge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "EDIT AGE", Toast.LENGTH_SHORT).show();
-                changeAge.show();
-            }
-        });
-
-        editEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "EDIT EMAIL", Toast.LENGTH_SHORT).show();
+            public boolean onLongClick(View view) {
                 changeEmail.show();
+                return false;
             }
         });
 
-        editPassword.setOnClickListener(new View.OnClickListener() {
+        name.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "EDIT PASSWORD", Toast.LENGTH_SHORT).show();
-                changePassword.show();
+            public boolean onLongClick(View view) {
+                changeName.show();
+                return false;
             }
+        });
 
+        age.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                changeAge.show();
+                return false;
+            }
+        });
+
+        password.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                changePassword.show();
+                return false;
+            }
         });
 
         // Name buttons

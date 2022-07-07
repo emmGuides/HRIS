@@ -30,7 +30,7 @@
     <TextView
         android:id="@+id/name_desc"
         android:text="Name:"
-        android:layout_marginStart="-90dp"
+        android:layout_marginStart="-80dp"
         android:layout_marginTop="60dp"
         android:textAlignment="viewStart"
         android:textStyle="bold"
@@ -42,8 +42,9 @@
         tools:ignore="HardcodedText" />
 
     <TextView
+        android:clickable="true"
         android:id="@+id/name_actual"
-        android:layout_width="180dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="-20dp"
         android:minWidth="150dp"
@@ -56,25 +57,10 @@
         app:layout_constraintHorizontal_bias="0.234"
         app:layout_constraintStart_toEndOf="@+id/name_desc"
         app:layout_constraintTop_toTopOf="@+id/name_desc"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:focusable="true" />
 
 
-    <ImageView
-        android:id="@+id/edit_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="1dp"
-        android:contentDescription="edit name"
-        android:src="@drawable/edit_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/name_actual"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/name_actual"
-        app:layout_constraintTop_toTopOf="@+id/name_actual"
-        app:layout_constraintVertical_bias="0.533"
-        tools:ignore="HardcodedText" />
 
     <View
         android:layout_width="300dp"
@@ -83,12 +69,12 @@
         android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/name_actual"
         app:layout_constraintStart_toStartOf="@id/name_desc"
-        app:layout_constraintEnd_toEndOf="@id/edit_name"/>
+        app:layout_constraintEnd_toEndOf="@id/name_actual"/>
 
     <TextView
         android:id="@+id/email_desc"
         android:text="Email:"
-        android:layout_marginStart="-90dp"
+        android:layout_marginStart="-80dp"
         android:layout_marginTop="20dp"
         android:textAlignment="viewStart"
         android:textStyle="bold"
@@ -101,7 +87,8 @@
 
     <TextView
         android:id="@+id/email_actual"
-        android:layout_width="180dp"
+        android:clickable="true"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="-20dp"
         android:minWidth="150dp"
@@ -114,24 +101,9 @@
         app:layout_constraintHorizontal_bias="0.234"
         app:layout_constraintStart_toEndOf="@+id/email_desc"
         app:layout_constraintTop_toTopOf="@+id/email_desc"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:focusable="true" />
 
-    <ImageView
-        android:id="@+id/edit_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="1dp"
-        android:contentDescription="edit email"
-        android:src="@drawable/edit_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/email_actual"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/email_actual"
-        app:layout_constraintTop_toTopOf="@+id/email_actual"
-        app:layout_constraintVertical_bias="0.466"
-        tools:ignore="HardcodedText" />
 
     <View
         android:layout_width="300dp"
@@ -140,12 +112,12 @@
         android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/email_actual"
         app:layout_constraintStart_toStartOf="@id/email_desc"
-        app:layout_constraintEnd_toEndOf="@id/edit_email"/>
+        app:layout_constraintEnd_toEndOf="@id/email_actual"/>
 
     <TextView
         android:id="@+id/Age_desc"
         android:text="Age:"
-        android:layout_marginStart="-90dp"
+        android:layout_marginStart="-80dp"
         android:layout_marginTop="20dp"
         android:textAlignment="viewStart"
         android:textStyle="bold"
@@ -158,36 +130,21 @@
 
     <TextView
         android:id="@+id/age_actual"
-        android:layout_width="180dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="-20dp"
         android:minHeight="40dp"
         android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="@+id/Age_desc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.234"
         app:layout_constraintStart_toEndOf="@+id/Age_desc"
         app:layout_constraintTop_toTopOf="@+id/Age_desc"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageView
-        android:id="@+id/edit_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="1dp"
-        android:contentDescription="edit age"
-        android:src="@drawable/edit_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/age_actual"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/age_actual"
-        app:layout_constraintTop_toTopOf="@+id/age_actual"
-        app:layout_constraintVertical_bias="0.466"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintVertical_bias="1.0"
+        android:focusable="true" />
 
     <View
         android:layout_width="300dp"
@@ -196,13 +153,13 @@
         android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/age_actual"
         app:layout_constraintStart_toStartOf="@id/Age_desc"
-        app:layout_constraintEnd_toEndOf="@id/edit_age"/>
+        app:layout_constraintEnd_toEndOf="@id/age_actual"/>
 
     <TextView
         android:id="@+id/Password_desc"
         android:text="Password:"
-        android:layout_marginStart="-90dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="-80dp"
+        android:layout_marginTop="20dp"
         android:textAlignment="viewStart"
         android:textStyle="bold"
         android:textSize="16sp"
@@ -214,8 +171,9 @@
 
 
     <TextView
+        android:clickable="true"
         android:id="@+id/password_actual"
-        android:layout_width="180dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="-20dp"
         android:minHeight="40dp"
@@ -227,24 +185,44 @@
         app:layout_constraintHorizontal_bias="0.234"
         app:layout_constraintStart_toEndOf="@+id/Password_desc"
         app:layout_constraintTop_toTopOf="@+id/Password_desc"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:focusable="true" />
 
     <ImageView
-        android:id="@+id/edit_password"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:paddingEnd="2dp"
+        android:id="@+id/info_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="1dp"
-        android:contentDescription="edit password"
-        android:src="@drawable/edit_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/password_actual"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/password_actual"
-        app:layout_constraintTop_toTopOf="@id/password_actual"
-        app:layout_constraintVertical_bias="0.6"
-        tools:ignore="HardcodedText" />
+        android:layout_marginEnd="1dp"
+        android:src="@drawable/info_icon_svg"
+        app:layout_constraintBottom_toBottomOf="@+id/info_message"
+        app:layout_constraintEnd_toStartOf="@+id/info_message"
+        app:layout_constraintTop_toTopOf="@+id/info_message"
+        tools:ignore="ContentDescription,RtlSymmetry" />
+
+    <TextView
+        android:layout_marginStart="15dp"
+        android:id="@+id/info_message"
+        android:layout_width="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="10dp"
+        android:minHeight="10dp"
+        android:text="Hold down on a field to update it."
+        android:textAlignment="center"
+        android:textColor="@color/custTextColor"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/user_Icon"
+        app:layout_constraintStart_toStartOf="@+id/user_Icon"
+        app:layout_constraintTop_toBottomOf="@+id/Password_desc"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="HardcodedText,RtlSymmetry" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
