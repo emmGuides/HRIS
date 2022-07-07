@@ -140,6 +140,37 @@ public class ProfileFragment extends Fragment {
         });
 
 
+        email.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                changeEmail.show();
+                return false;
+            }
+        });
+
+        name.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                changeName.show();
+                return false;
+            }
+        });
+
+        age.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                changeAge.show();
+                return false;
+            }
+        });
+
+        password.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                changePassword.show();
+                return false;
+            }
+        });
 
         editName.setOnClickListener(new View.OnClickListener() {
             @Override
