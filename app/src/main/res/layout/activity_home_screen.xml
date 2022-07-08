@@ -23,15 +23,29 @@
         app:headerLayout="@layout/nav_header_home_screen"
         app:menu="@menu/activity_main_drawer" >
 
-
         <ImageView
-            android:id="@+id/logOutButton"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:id="@+id/logOutIcon"
             android:layout_gravity="bottom"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginBottom="37.5dp"
+            android:src="@drawable/ic_logout"
+            android:contentDescription="Log Out Icon"
+            tools:ignore="ContentDescription,HardcodedText" />
+
+        <Button
+            android:id="@+id/logOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="50dp"
             android:layout_marginBottom="30dp"
-            app:srcCompat="@drawable/ic_logout" />
+            android:text="Log out"
+            android:textColor="@color/darkerTextColor"
+            android:background="@android:color/transparent"
+            android:textAllCaps="false"
+            tools:ignore="HardcodedText" />
 
     </com.google.android.material.navigation.NavigationView>
 

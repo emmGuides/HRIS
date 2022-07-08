@@ -36,7 +36,8 @@ public class HomeScreen extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeScreenBinding binding;
-    private ImageView signOut;
+    private Button signOut;
+    private ImageView signOut_icon;
 
     private FirebaseUser user;
     private DatabaseReference reference;
@@ -58,6 +59,7 @@ public class HomeScreen extends AppCompatActivity {
 
         // portrait lock
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 
         // dialog
         dialog = new Dialog(HomeScreen.this);
@@ -136,13 +138,11 @@ public class HomeScreen extends AppCompatActivity {
         });
 
 
-        signOut = (ImageView) findViewById(R.id.logOutButton);
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.show();
-            }
-        });
+        signOut = (Button) findViewById(R.id.logOutButton);
+        signOut.setOnClickListener(view -> dialog.show());
+
+        signOut_icon = (ImageView) findViewById(R.id.logOutIcon);
+        signOut_icon.setOnClickListener(view -> dialog.show());
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
