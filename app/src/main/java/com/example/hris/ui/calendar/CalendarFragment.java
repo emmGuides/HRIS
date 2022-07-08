@@ -38,7 +38,7 @@ public class CalendarFragment extends Fragment {
     private DatabaseReference reference;
     private String userID, timeIn, timeOut, totalTimedIn;
     ListView timeInOutLog, vacationLeaveLog, sickLeaveLog;
-    String disp, ret;
+    String disp, ret_timeInOut, ret_vacation;
     ArrayList<String> timeInOutList = new ArrayList<>();
     ArrayList<String> vacationLeavesList = new ArrayList<>();
     ArrayList<String> sickLeavesList = new ArrayList<>();
@@ -78,18 +78,18 @@ public class CalendarFragment extends Fragment {
                 // String dateAdded = TextUtils.join(", ", (Iterable) snapshot.getValue());
 
                 try{
-                    ret = "\nDate: " + snapshot.getKey()
+                    ret_timeInOut = "\nDate: " + snapshot.getKey()
                                 + "\n\n\t\t\tTime In: " + master.get(0)
                                 + "\n\t\t\tTime Out: " + master.get(2)
                                 + "\n\t\t\tDuration: " + master.get(3) + "\n";
                 } catch (Exception e) {
-                    ret = "\nDate: " + snapshot.getKey()
+                    ret_timeInOut = "\nDate: " + snapshot.getKey()
                                 + "\n\t\t\tTime In: " + master.get(0)
                                 + "\n\t\t\tTime Out: Not Timed out yet\n";
                 }
 
 
-                timeInOutList.add(ret);
+                timeInOutList.add(ret_timeInOut);
                 arrayAdapter_timeInOut.notifyDataSetChanged();
             }
 
@@ -139,8 +139,71 @@ public class CalendarFragment extends Fragment {
         });
 
 
-        //addValueEventListener HERE
+        reference.child(userID).child("Vacation Leaves").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                ArrayList<String> master = (ArrayList<String>) snapshot.getValue();
 
+                try{
+                    ret_vacation = "\nDate Filed: " + snapshot.getKey()
+                            + "\n\n\n\t\t\tFrom: " + master.get(1)
+                            + "\n\t\t\tTo: " + master.get(2)
+                            + "\n\t\t\tNumber of Days: " + master.get(4)
+                            + "\n\n\t\t\tAdditional Details: \n\t\t\t" + master.get(3) +"\n";
+                } catch (Exception e) {
+                    ret_vacation = "Something wrong happened.";
+                }
+
+
+                vacationLeavesList.add(ret_vacation);
+                arrayAdapter_vacation.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                arrayAdapter_vacation.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        // fix scrolling of vacation leave list view
+        vacationLeaveLog.setOnTouchListener(new ListView.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
 
         // timeInOutLog.setText(timeInOutList.toString().substring(1, timeInOutList.toString().length() - 1));
         return root;
