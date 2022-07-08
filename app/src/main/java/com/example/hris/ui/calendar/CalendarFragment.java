@@ -1,13 +1,17 @@
 package com.example.hris.ui.calendar;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,6 +19,7 @@ import com.example.hris.HomeScreen;
 import com.example.hris.databinding.FragmentCalendarBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,9 +35,10 @@ public class CalendarFragment extends Fragment {
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID, timeIn, timeOut, totalTimedIn;
-    TextView timeInOutLog;
+    ListView timeInOutLog;
     String disp;
     ArrayList<String> timeInOutList = new ArrayList<>();
+    ArrayAdapter<String> arrayAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,43 +59,29 @@ public class CalendarFragment extends Fragment {
         userID = user.getUid();
 
         timeInOutLog = binding.timeInsOutsLOG;
+        arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, timeInOutList);
+        timeInOutLog.setAdapter(arrayAdapter);
 
-        reference.child(userID).child("Time Ins and Outs").addValueEventListener(new ValueEventListener() {
+        reference.child(userID).child("Time Ins and Outs").addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    String dateAdded = TextUtils.join(", ", (Iterable) snapshot.getValue());
+                    timeInOutList.add(dateAdded);
+                    arrayAdapter.notifyDataSetChanged();
+            }
 
-                for(DataSnapshot dataSnapshot1  : snapshot.getChildren()){
-                    String dateThisSnap = String.valueOf(dataSnapshot1.getKey());
-                    String[] dateThisSnapperino = String.valueOf(dataSnapshot1.getValue()).split(", ");
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    arrayAdapter.notifyDataSetChanged();
+            }
 
-                    timeIn = dateThisSnapperino[0].substring(1);
-                    try{
-                        timeOut = dateThisSnapperino[2];
-                        totalTimedIn = dateThisSnapperino[3].substring(0, dateThisSnapperino[3].length() - 1);
-                    } catch(Exception e){
-                        timeOut = "Not Timed Out";
-                        totalTimedIn = "-";
-                    }
-
-                    // for checking only
-                    disp = "Date: "+ dateThisSnap + "\nTime In: " + timeIn + "\nTime Out: " + timeOut
-                            + "\nTotal Timed in: " + totalTimedIn;
-                    try{
-                        //Toast.makeText(requireContext(), disp,Toast.LENGTH_SHORT).show();
-                    } catch (Exception ignored) {
-
-                    }
-                    timeInOutList.add(disp);
-                    disp = "";
-                }
-
-            /* // for checking only
-            try{
-                Toast.makeText(getContext(), timeInOutList.toString().substring(1, timeInOutList.toString().length() - 1) , Toast.LENGTH_SHORT).show();
-            } catch (Exception ignored){
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
 
             }
-            */
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
             }
 
@@ -98,7 +90,12 @@ public class CalendarFragment extends Fragment {
 
             }
         });
-        timeInOutLog.setText(timeInOutList.toString().substring(1, timeInOutList.toString().length() - 1));
+
+
+        //addValueEventListener HERE
+
+
+        // timeInOutLog.setText(timeInOutList.toString().substring(1, timeInOutList.toString().length() - 1));
         return root;
 
     }
