@@ -37,10 +37,13 @@ public class CalendarFragment extends Fragment {
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID, timeIn, timeOut, totalTimedIn;
-    ListView timeInOutLog;
+    ListView timeInOutLog, vacationLeaveLog, sickLeaveLog;
     String disp, ret;
     ArrayList<String> timeInOutList = new ArrayList<>();
-    ArrayAdapter<String> arrayAdapter;
+    ArrayList<String> vacationLeavesList = new ArrayList<>();
+    ArrayList<String> sickLeavesList = new ArrayList<>();
+    ArrayAdapter<String> arrayAdapter_timeInOut, arrayAdapter_vacation;
+    TextView emptyListTimeInOut_TextView, emptyListVacation_TextView;
 
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -48,48 +51,51 @@ public class CalendarFragment extends Fragment {
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        /*
-        CalendarViewModel galleryViewModel =
-                new ViewModelProvider(this).get(CalendarViewModel.class);
-        final TextView textView = binding.textCalendar;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-         */
+        emptyListTimeInOut_TextView = binding.emptyListTimeInOut;
+        emptyListVacation_TextView = binding.emptyListVacation;
 
         // Authenticated user ID and Firebase Reference
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
 
+        // set up and adapter for time ins and outs
         timeInOutLog = binding.timeInsOutsLOG;
-        arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, timeInOutList);
-        timeInOutLog.setAdapter(arrayAdapter);
+        arrayAdapter_timeInOut = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, timeInOutList);
+        timeInOutLog.setAdapter(arrayAdapter_timeInOut);
+        timeInOutLog.setEmptyView(emptyListTimeInOut_TextView);
+
+        // set up and adapter for vacation leave requests
+        vacationLeaveLog = binding.VacationLeavesLog;
+        arrayAdapter_vacation = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, vacationLeavesList);
+        vacationLeaveLog.setAdapter(arrayAdapter_vacation);
+        vacationLeaveLog.setEmptyView(emptyListVacation_TextView);
 
         reference.child(userID).child("Time Ins and Outs").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    ArrayList<String> master = (ArrayList<String>) snapshot.getValue();
-                    String dateAdded = TextUtils.join(", ", (Iterable) snapshot.getValue());
+                ArrayList<String> master = (ArrayList<String>) snapshot.getValue();
+                // String dateAdded = TextUtils.join(", ", (Iterable) snapshot.getValue());
 
-                    try{
-                        ret = "\nDate: " + snapshot.getKey()
+                try{
+                    ret = "\nDate: " + snapshot.getKey()
                                 + "\n\n\t\t\tTime In: " + master.get(0)
                                 + "\n\t\t\tTime Out: " + master.get(2)
                                 + "\n\t\t\tDuration: " + master.get(3) + "\n";
-                    } catch (Exception e) {
-                        ret = "\nDate: " + snapshot.getKey()
+                } catch (Exception e) {
+                    ret = "\nDate: " + snapshot.getKey()
                                 + "\n\t\t\tTime In: " + master.get(0)
                                 + "\n\t\t\tTime Out: Not Timed out yet\n";
-                    }
+                }
 
 
-                    timeInOutList.add(ret);
-                    arrayAdapter.notifyDataSetChanged();
+                timeInOutList.add(ret);
+                arrayAdapter_timeInOut.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    arrayAdapter.notifyDataSetChanged();
+                    arrayAdapter_timeInOut.notifyDataSetChanged();
             }
 
             @Override
@@ -108,6 +114,7 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+        // fix scrolling of time ins and outs list view
         timeInOutLog.setOnTouchListener(new ListView.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
