@@ -65,8 +65,15 @@ public class CalendarFragment extends Fragment {
         reference.child(userID).child("Time Ins and Outs").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    ArrayList<String> master = (ArrayList<String>) snapshot.getValue();
                     String dateAdded = TextUtils.join(", ", (Iterable) snapshot.getValue());
-                    timeInOutList.add(dateAdded);
+
+                    String ret = "\nDate: " + snapshot.getKey()
+                            + "\n\t\t\tTime In: " + master.get(0)
+                            + "\n\t\t\tTime Out: " + master.get(2)
+                            + "\n\t\t\tDuration: " + master.get(3) + "\n";
+
+                    timeInOutList.add(ret);
                     arrayAdapter.notifyDataSetChanged();
             }
 
