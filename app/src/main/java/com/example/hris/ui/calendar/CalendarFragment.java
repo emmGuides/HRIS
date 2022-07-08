@@ -38,12 +38,12 @@ public class CalendarFragment extends Fragment {
     private DatabaseReference reference;
     private String userID, timeIn, timeOut, totalTimedIn;
     ListView timeInOutLog, vacationLeaveLog, sickLeaveLog;
-    String disp, ret_timeInOut, ret_vacation;
+    String ret_timeInOut, ret_vacation, ret_sick;
     ArrayList<String> timeInOutList = new ArrayList<>();
     ArrayList<String> vacationLeavesList = new ArrayList<>();
     ArrayList<String> sickLeavesList = new ArrayList<>();
-    ArrayAdapter<String> arrayAdapter_timeInOut, arrayAdapter_vacation;
-    TextView emptyListTimeInOut_TextView, emptyListVacation_TextView;
+    ArrayAdapter<String> arrayAdapter_timeInOut, arrayAdapter_vacation, arrayAdapter_sick;
+    TextView emptyListTimeInOut_TextView, emptyListVacation_TextView, emptyListSick_TextView;
 
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,6 +53,7 @@ public class CalendarFragment extends Fragment {
 
         emptyListTimeInOut_TextView = binding.emptyListTimeInOut;
         emptyListVacation_TextView = binding.emptyListVacation;
+        emptyListSick_TextView = binding.emptyListSick;
 
         // Authenticated user ID and Firebase Reference
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -70,6 +71,12 @@ public class CalendarFragment extends Fragment {
         arrayAdapter_vacation = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, vacationLeavesList);
         vacationLeaveLog.setAdapter(arrayAdapter_vacation);
         vacationLeaveLog.setEmptyView(emptyListVacation_TextView);
+
+        // set up and adapter for sick leave requests
+        sickLeaveLog = binding.SickLeavesLog;
+        arrayAdapter_sick = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sickLeavesList);
+        sickLeaveLog.setAdapter(arrayAdapter_sick);
+        sickLeaveLog.setEmptyView(emptyListSick_TextView);
 
         reference.child(userID).child("Time Ins and Outs").addChildEventListener(new ChildEventListener() {
             @Override
@@ -205,7 +212,71 @@ public class CalendarFragment extends Fragment {
             }
         });
 
-        // timeInOutLog.setText(timeInOutList.toString().substring(1, timeInOutList.toString().length() - 1));
+        reference.child(userID).child("Sick Leaves").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                ArrayList<String> master = (ArrayList<String>) snapshot.getValue();
+
+                try{
+                    ret_sick = "\nDate Filed: " + snapshot.getKey()
+                            + "\n\n\n\t\t\tFrom: " + master.get(1)
+                            + "\n\t\t\tTo: " + master.get(2)
+                            + "\n\t\t\tNumber of Days: " + master.get(4)
+                            + "\n\n\t\t\tAdditional Details: \n\t\t\t" + master.get(3) +"\n";
+                } catch (Exception e) {
+                    ret_sick = "Something wrong happened.";
+                }
+
+
+                sickLeavesList.add(ret_sick);
+                arrayAdapter_sick.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                arrayAdapter_sick.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        // fix scrolling of Sick leave list view
+        sickLeaveLog.setOnTouchListener(new ListView.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
+
         return root;
 
     }
