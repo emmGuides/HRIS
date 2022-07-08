@@ -1,8 +1,10 @@
 package com.example.hris.ui.calendar;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -36,10 +38,11 @@ public class CalendarFragment extends Fragment {
     private DatabaseReference reference;
     private String userID, timeIn, timeOut, totalTimedIn;
     ListView timeInOutLog;
-    String disp;
+    String disp, ret;
     ArrayList<String> timeInOutList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
 
+    @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
@@ -68,10 +71,17 @@ public class CalendarFragment extends Fragment {
                     ArrayList<String> master = (ArrayList<String>) snapshot.getValue();
                     String dateAdded = TextUtils.join(", ", (Iterable) snapshot.getValue());
 
-                    String ret = "\nDate: " + snapshot.getKey()
-                            + "\n\t\t\tTime In: " + master.get(0)
-                            + "\n\t\t\tTime Out: " + master.get(2)
-                            + "\n\t\t\tDuration: " + master.get(3) + "\n";
+                    try{
+                        ret = "\nDate: " + snapshot.getKey()
+                                + "\n\n\t\t\tTime In: " + master.get(0)
+                                + "\n\t\t\tTime Out: " + master.get(2)
+                                + "\n\t\t\tDuration: " + master.get(3) + "\n";
+                    } catch (Exception e) {
+                        ret = "\nDate: " + snapshot.getKey()
+                                + "\n\t\t\tTime In: " + master.get(0)
+                                + "\n\t\t\tTime Out: Not Timed out yet\n";
+                    }
+
 
                     timeInOutList.add(ret);
                     arrayAdapter.notifyDataSetChanged();
@@ -95,6 +105,29 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        timeInOutLog.setOnTouchListener(new ListView.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
             }
         });
 
