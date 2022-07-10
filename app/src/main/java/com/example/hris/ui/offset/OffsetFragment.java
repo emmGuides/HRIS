@@ -1,4 +1,4 @@
-package com.example.hris.ui.overtime;
+package com.example.hris.ui.offset;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.hris.databinding.FragmentOvertimeBinding;
+import com.example.hris.databinding.FragmentOffsetBinding;
 
-public class OvertimeFragment extends Fragment {
+public class OffsetFragment extends Fragment {
 
-    private FragmentOvertimeBinding binding;
+    private FragmentOffsetBinding binding;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentOvertimeBinding.inflate(inflater, container, false);
+        binding = FragmentOffsetBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
 
