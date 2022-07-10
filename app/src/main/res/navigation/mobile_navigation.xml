@@ -41,4 +41,11 @@
         android:label="@string/menu_sick"
         tools:layout="@layout/fragment_sick" />
 
+    <fragment
+        android:id="@+id/nav_overtime"
+        android:name="com.example.hris.ui.overtime.OvertimeFragment"
+        android:label="Overtime"
+        tools:layout="@layout/fragment_overtime"
+        />
+
 </navigation>
