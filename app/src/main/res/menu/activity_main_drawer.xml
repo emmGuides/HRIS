@@ -34,12 +34,12 @@
             />
         <item
             android:id="@+id/nav_overtime"
-            android:icon="@drawable/edit_icon"
+            android:icon="@drawable/overtime_clear_icon"
             android:title="@string/overtime"
             />
         <item
             android:id="@+id/nav_offset"
-            android:icon="@drawable/edit_icon"
+            android:icon="@drawable/offset_icon"
             android:title="@string/offset"
             />
     </group>
