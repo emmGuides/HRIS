@@ -32,5 +32,15 @@
             android:icon="@drawable/sick_icon"
             android:title="@string/menu_sick"
             />
+        <item
+            android:id="@+id/nav_overtime"
+            android:icon="@drawable/overtime_clear_icon"
+            android:title="@string/overtime"
+            />
+        <item
+            android:id="@+id/nav_offset"
+            android:icon="@drawable/offset_icon"
+            android:title="@string/offset"
+            />
     </group>
 </menu>

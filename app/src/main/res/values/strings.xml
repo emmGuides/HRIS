@@ -14,4 +14,6 @@
     <string name="menu_vacation">Vacation Leave</string>
     <string name="menu_sick">Sick Leave</string>
     <string name="menu_profile">My Profile</string>
+    <string name="overtime">Overtime</string>
+    <string name="offset">Offset</string>
 </resources>

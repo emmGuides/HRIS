@@ -5,4 +5,5 @@
     <color name="darkerTextColor">#FFF</color>
     <color name="dialogNightDay">#353536</color>
     <color name="barColor">#3a3a3b</color>
+    <color name="lineColorPale">#3a3a3b</color>
 </resources>
