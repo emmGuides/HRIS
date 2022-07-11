@@ -30,7 +30,7 @@
             android:id="@+id/offset_Team"
             android:hint="Team Name"
             android:inputType="text"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="120dp"
             android:layout_width="300dp"
             android:layout_height="48dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
             tools:ignore="HardcodedText" />
 
         <EditText
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:id="@+id/offset_TeamLeader"
             android:hint="Team Leader Name"
             android:layout_width="300dp"
@@ -52,7 +52,7 @@
         <EditText
             android:hint="Total Hours to Offset"
             android:layout_width="300dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:layout_height="48dp"
             android:id="@+id/offset_totalHours"
             android:inputType="number"
@@ -67,7 +67,7 @@
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:layout_width="300dp"
             android:layout_height="48dp"
             android:id="@+id/offset_Date"
@@ -79,7 +79,7 @@
 
         <EditText
             android:inputType="text"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:id="@+id/offset_reason"
             android:layout_width="300dp"
             android:layout_height="48dp"
@@ -93,7 +93,7 @@
             android:id="@+id/offset_apply"
             android:layout_width="300dp"
             android:layout_height="70dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="44dp"
             android:backgroundTint="#6499C3"
             android:text="Apply"
             android:textColor="@color/white"
