@@ -83,6 +83,56 @@ public class OvertimeFragment extends Fragment {
             }
         });
 
+        applyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overtimeDateS = overtimeDate.getText().toString().trim();
+                titlePositionS = titlePosition.getText().toString().trim();
+                teamOvertimeS = teamOvertime.getText().toString().trim();
+                reasonOvertimeS = reasonOvertime.getText().toString().trim();
+                hoursOvertimeS = hoursOvertime.getText().toString().trim();
+                approvedByS = approvedByOvertime.getText().toString().trim();
+
+                if(overtimeDateS.isEmpty()){
+                    titlePosition.setError("Date is Required Above");
+                    titlePosition.requestFocus();
+                    return;
+                }
+
+                if(titlePositionS.isEmpty()){
+                    titlePosition.setError("Your Position is required");
+                    titlePosition.requestFocus();
+                    return;
+                }
+
+                if(teamOvertimeS.isEmpty()){
+                    teamOvertime.setError("You must indicate your Team.");
+                    teamOvertime.requestFocus();
+                    return;
+                }
+
+                if(reasonOvertimeS.isEmpty()){
+                    reasonOvertime.setError("Reason for Overtime is Required");
+                    reasonOvertime.requestFocus();
+                    return;
+                }
+
+                if(hoursOvertimeS.isEmpty()){
+                    hoursOvertime.setError("Please indicate the number of hours");
+                    hoursOvertime.requestFocus();
+                    return;
+                }
+
+                if(approvedByS.isEmpty()){
+                    approvedByOvertime.setError("Please indicate who approved this overtime.");
+                    approvedByOvertime.requestFocus();
+                    return;
+                }
+
+                Toast.makeText(getActivity(), "Send to DB here!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         return root;
     }
@@ -93,6 +143,8 @@ public class OvertimeFragment extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
         overtimeDate.setText(dateFormat.format(myCalendar.getTime()));
     }
+
+
 
     public void sendToDatabase (){
 
