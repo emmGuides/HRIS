@@ -13,11 +13,24 @@
     android:layout_height="wrap_content"
     tools:context=".ui.overtime.OvertimeFragment">
 
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:layout_width="148dp"
+        android:layout_height="148dp"
+        android:layout_marginBottom="50dp"
+        android:alpha="0.5"
+        android:src="@drawable/overtime_bg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/overtime_Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.939"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <EditText
         android:id="@+id/overtime_Date"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="120dp"
         android:hint="Date of Overtime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
