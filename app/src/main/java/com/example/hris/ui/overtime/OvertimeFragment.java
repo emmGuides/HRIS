@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -128,7 +129,7 @@ public class OvertimeFragment extends Fragment {
                     approvedByOvertime.requestFocus();
                     return;
                 }
-
+                sendToDatabase();
                 Toast.makeText(getActivity(), "Send to DB here!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -148,6 +149,15 @@ public class OvertimeFragment extends Fragment {
 
     public void sendToDatabase (){
 
+        HashMap<String,String> toAddMap=new HashMap<String,String>();
+        toAddMap.put("Date Applied", dateToday);
+        toAddMap.put("Date of Overtime", overtimeDateS);
+        toAddMap.put("Title", titlePositionS);
+        toAddMap.put("Team", teamOvertimeS);
+        toAddMap.put("Reason", reasonOvertimeS);
+        toAddMap.put("Hours", hoursOvertimeS);
+        toAddMap.put("Approved By", approvedByS);
+
         List<String> toAdd = new ArrayList<>();
         toAdd.add(dateToday);
         toAdd.add(overtimeDateS);
@@ -156,10 +166,13 @@ public class OvertimeFragment extends Fragment {
         toAdd.add(reasonOvertimeS);
         toAdd.add(hoursOvertimeS);
         toAdd.add(approvedByS);
-        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAdd);
-        toAdd.clear();
 
-        Toast.makeText(getContext(), "Sick Leave Applied!", Toast.LENGTH_LONG).show();
+        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAddMap);
+
+        Toast.makeText(getContext(), toAdd.toString(), Toast.LENGTH_LONG).show();
+        toAdd.clear();
+        toAddMap.clear();
+
         overtimeDate.setText(""); titlePosition.setText(""); teamOvertime.setText("");
         reasonOvertime.setText(""); hoursOvertime.setText(""); approvedByOvertime.setText("");
 
