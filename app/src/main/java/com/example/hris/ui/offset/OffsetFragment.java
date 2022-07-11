@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class OffsetFragment extends Fragment {
@@ -78,6 +79,49 @@ public class OffsetFragment extends Fragment {
             }
         });
 
+        applyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                offset_teamNameS = offset_teamName.getText().toString().trim();
+                offset_teamLeaderS = offset_teamLeader.getText().toString().trim();
+                offset_hoursS = offset_hours.getText().toString().trim();
+                offset_dateS = offset_date.getText().toString().trim();
+                offset_reasonS = offset_reason.getText().toString().trim();
+
+                if(offset_teamNameS.isEmpty()){
+                    offset_teamName.setError("Team name is required!");
+                    offset_teamName.requestFocus();
+                    return;
+                }
+
+                if(offset_teamLeaderS.isEmpty()){
+                    offset_teamLeader.setError("Team Leader's name is required!");
+                    offset_teamLeader.requestFocus();
+                    return;
+                }
+
+                if(offset_dateS.isEmpty()){
+                    offset_reason.setError("Date above is required!");
+                    offset_reason.requestFocus();
+                    return;
+                }
+
+                if(offset_hoursS.isEmpty()){
+                    offset_hours.setError("Number Hours required!");
+                    offset_hours.requestFocus();
+                    return;
+                }
+
+                if(offset_reasonS.isEmpty()){
+                    offset_reason.setError("Reason is required!");
+                    offset_reason.requestFocus();
+                    return;
+                }
+
+                sendToDatabase();
+            }
+        });
+
 
         return root;
     }
@@ -89,6 +133,20 @@ public class OffsetFragment extends Fragment {
         offset_date.setText(dateFormat.format(myCalendar.getTime()));
     }
 
+    private void sendToDatabase(){
+        HashMap<String,String> toAddMap=new HashMap<String,String>();
+
+        toAddMap.put("Date Applied", dateToday);
+        toAddMap.put("Employee", user.getDisplayName());
+        toAddMap.put("Team Name", offset_teamNameS);
+        toAddMap.put("Team Leader", offset_teamLeaderS);
+        toAddMap.put("Hours", offset_hoursS);
+        toAddMap.put("Date of Offset", offset_dateS);
+        toAddMap.put("Reason", offset_reasonS);
+
+        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAddMap);
+        toAddMap.clear();
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
