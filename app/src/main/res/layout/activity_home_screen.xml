@@ -38,7 +38,8 @@
             android:layout_width="200dp"
             android:layout_height="1dp"
             android:background="@color/lineColorPale"
-            android:layout_marginTop="655dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="80dp"
             android:layout_marginStart="35dp"
             />
 
