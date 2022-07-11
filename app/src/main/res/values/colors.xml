@@ -8,8 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background">#FFFFFFFF</color>
-    <color name="custTextColor">#808080</color>
+    <color name="custTextColor">#909090</color>
     <color name="barColor">#cdcfd1</color>
     <color name="darkerTextColor">#000</color>
     <color name="dialogNightDay">#FFF</color>
+    <color name="lineColorPale">#999999</color>
 </resources>
