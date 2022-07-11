@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -100,15 +101,15 @@ public class OffsetFragment extends Fragment {
                     return;
                 }
 
-                if(offset_dateS.isEmpty()){
-                    offset_reason.setError("Date above is required!");
-                    offset_reason.requestFocus();
-                    return;
-                }
-
                 if(offset_hoursS.isEmpty()){
                     offset_hours.setError("Number Hours required!");
                     offset_hours.requestFocus();
+                    return;
+                }
+
+                if(offset_dateS.isEmpty()){
+                    offset_reason.setError("Date above is required!");
+                    offset_reason.requestFocus();
                     return;
                 }
 
@@ -135,9 +136,9 @@ public class OffsetFragment extends Fragment {
 
     private void sendToDatabase(){
         HashMap<String,String> toAddMap=new HashMap<String,String>();
+        String userName = user.getDisplayName();
 
         toAddMap.put("Date Applied", dateToday);
-        toAddMap.put("Employee", user.getDisplayName());
         toAddMap.put("Team Name", offset_teamNameS);
         toAddMap.put("Team Leader", offset_teamLeaderS);
         toAddMap.put("Hours", offset_hoursS);
@@ -146,6 +147,11 @@ public class OffsetFragment extends Fragment {
 
         masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAddMap);
         toAddMap.clear();
+
+        Toast.makeText(getActivity(), "Offset Added!", Toast.LENGTH_LONG).show();
+        offset_teamName.setText(""); offset_teamLeader.setText(""); offset_hours.setText("");
+        offset_date.setText(""); offset_reason.setText("");
+
     }
     @Override
     public void onDestroyView() {

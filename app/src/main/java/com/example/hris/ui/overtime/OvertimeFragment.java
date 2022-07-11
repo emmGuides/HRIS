@@ -158,19 +158,10 @@ public class OvertimeFragment extends Fragment {
         toAddMap.put("Hours", hoursOvertimeS);
         toAddMap.put("Approved By", approvedByS);
 
-        List<String> toAdd = new ArrayList<>();
-        toAdd.add(dateToday);
-        toAdd.add(overtimeDateS);
-        toAdd.add(titlePositionS);
-        toAdd.add(teamOvertimeS);
-        toAdd.add(reasonOvertimeS);
-        toAdd.add(hoursOvertimeS);
-        toAdd.add(approvedByS);
-
         masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAddMap);
 
-        Toast.makeText(getContext(), toAdd.toString(), Toast.LENGTH_LONG).show();
-        toAdd.clear();
+        Toast.makeText(getContext(), "Overtime Added!", Toast.LENGTH_LONG).show();
+
         toAddMap.clear();
 
         overtimeDate.setText(""); titlePosition.setText(""); teamOvertime.setText("");
