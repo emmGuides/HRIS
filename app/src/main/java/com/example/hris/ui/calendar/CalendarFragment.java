@@ -35,6 +35,7 @@ import java.util.ArrayList;
 
 public class CalendarFragment extends Fragment {
 
+
     private FragmentCalendarBinding binding;
 
     private FirebaseUser user;
@@ -95,7 +96,14 @@ public class CalendarFragment extends Fragment {
         arrayAdapter_timeInOut = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, timeInOutList);
         timeInOutLog.setAdapter(arrayAdapter_timeInOut);
         timeInOutLog.setEmptyView(emptyListTimeInOut_TextView);
-        
+        // Confirm
+        timeInOutLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timeInOutLogDialog.dismiss();
+            }
+        });
+
         //button on click
         timeInOutLog_BUTTON.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,8 +126,8 @@ public class CalendarFragment extends Fragment {
                                 + "\n\t\t\tDuration: " + master.get(3) + "\n";
                 } catch (Exception e) {
                     ret_timeInOut = "\nDate: " + snapshot.getKey()
-                                + "\n\t\t\tTime In: " + master.get(0)
-                                + "\n\t\t\tTime Out: Not Timed out yet\n";
+                                + "\n\n\t\t\tTime In: " + master.get(0)
+                                + "\n\t\t\tTime Out: Not Timed out.\n";
                 }
 
 
