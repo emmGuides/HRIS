@@ -70,12 +70,6 @@ public class CalendarFragment extends Fragment {
 
 
 
-        // set up and adapter for vacation leave requests
-        vacationLeaveLog = binding.VacationLeavesLog;
-        arrayAdapter_vacation = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, vacationLeavesList);
-        vacationLeaveLog.setAdapter(arrayAdapter_vacation);
-        vacationLeaveLog.setEmptyView(emptyListVacation_TextView);
-
         // set up and adapter for sick leave requests
         sickLeaveLog = binding.SickLeavesLog;
         arrayAdapter_sick = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sickLeavesList);
@@ -104,11 +98,41 @@ public class CalendarFragment extends Fragment {
             }
         });
 
-        //button on click
+        // show dialog button on click time in and out
         timeInOutLog_BUTTON.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 timeInOutLogDialog.show();
+            }
+        });
+
+
+        // Vacation Leave log Dialog
+        vacationLeaveLog_BUTTON = binding.VacationLogBUTTON;
+        vacationLeaveLogDialog = new Dialog(getContext());
+        vacationLeaveLogDialog.setContentView(R.layout.custom_dialog_vacation_leave_log);
+        vacationLeaveLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        vacationLeaveLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        vacationLeaveLogDialog.setCancelable(true);
+        vacationLeaveLogDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        //List View
+        vacationLeaveLog = vacationLeaveLogDialog.findViewById(R.id.vacationLeaveLOG_inDialog);
+        // Set up adapter for vacation leave log
+        arrayAdapter_vacation = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, vacationLeavesList);
+        vacationLeaveLog.setAdapter(arrayAdapter_vacation);
+        vacationLeaveLog.setEmptyView(emptyListVacation_TextView);
+        // Confirm
+        vacationLeaveLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vacationLeaveLogDialog.dismiss();
+            }
+        });
+
+        vacationLeaveLog_BUTTON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vacationLeaveLogDialog.show();
             }
         });
 
