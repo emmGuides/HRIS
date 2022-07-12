@@ -59,22 +59,12 @@ public class CalendarFragment extends Fragment {
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        emptyListTimeInOut_TextView = binding.emptyListTimeInOut;
-        emptyListVacation_TextView = binding.emptyListVacation;
-        emptyListSick_TextView = binding.emptyListSick;
 
         // Authenticated user ID and Firebase Reference
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
 
-
-
-        // set up and adapter for sick leave requests
-        sickLeaveLog = binding.SickLeavesLog;
-        arrayAdapter_sick = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sickLeavesList);
-        sickLeaveLog.setAdapter(arrayAdapter_sick);
-        sickLeaveLog.setEmptyView(emptyListSick_TextView);
 
         // timeInOutLog Dialog
         timeInOutLog_BUTTON = binding.timeInOutLogBUTTON;
@@ -89,7 +79,7 @@ public class CalendarFragment extends Fragment {
         // set up and adapter for time ins and outs
         arrayAdapter_timeInOut = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, timeInOutList);
         timeInOutLog.setAdapter(arrayAdapter_timeInOut);
-        timeInOutLog.setEmptyView(emptyListTimeInOut_TextView);
+        timeInOutLog.setEmptyView(timeInOutLogDialog.findViewById(R.id.emptyListTimeInOut_TextView));
         // Confirm
         timeInOutLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +110,7 @@ public class CalendarFragment extends Fragment {
         // Set up adapter for vacation leave log
         arrayAdapter_vacation = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, vacationLeavesList);
         vacationLeaveLog.setAdapter(arrayAdapter_vacation);
-        vacationLeaveLog.setEmptyView(emptyListVacation_TextView);
+        vacationLeaveLog.setEmptyView(vacationLeaveLogDialog.findViewById(R.id.emptyListVacation_TextView));
         // Confirm
         vacationLeaveLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +125,36 @@ public class CalendarFragment extends Fragment {
                 vacationLeaveLogDialog.show();
             }
         });
+
+        // Sick Leave log Dialog
+        sickLeaveLog_BUTTON = binding.SickLogBUTTON;
+        sickLeaveLogDialog = new Dialog(getContext());
+        sickLeaveLogDialog.setContentView(R.layout.custom_dialog_sick_leave_log);
+        sickLeaveLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        sickLeaveLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        sickLeaveLogDialog.setCancelable(true);
+        sickLeaveLogDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        //List View
+        sickLeaveLog = sickLeaveLogDialog.findViewById(R.id.sickLeaveLOG_inDialog);
+        // Set up adapter for vacation leave log
+        arrayAdapter_sick = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sickLeavesList);
+        sickLeaveLog.setAdapter(arrayAdapter_sick);
+        sickLeaveLog.setEmptyView(sickLeaveLogDialog.findViewById(R.id.emptyListSick_TextView));
+        // Confirm
+        sickLeaveLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sickLeaveLogDialog.dismiss();
+            }
+        });
+
+        sickLeaveLog_BUTTON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sickLeaveLogDialog.show();
+            }
+        });
+
 
         //
         reference.child(userID).child("Time Ins and Outs").addChildEventListener(new ChildEventListener() {

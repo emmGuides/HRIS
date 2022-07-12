@@ -10,13 +10,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/vacationLeaveLog_dialogLabel"
+        android:id="@+id/sickLeaveLog_dialogLabel"
         android:layout_width="300dp"
         android:layout_height="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Vacation Leave Log"
+        android:text="Sick Leave Log"
         android:textStyle="bold"
         android:textAlignment="center"
         android:textSize="18sp"
@@ -40,16 +40,30 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:text="Swipe up or down to view more"
-        app:layout_constraintTop_toBottomOf="@+id/vacationLeaveLog_dialogLabel"
-        app:layout_constraintStart_toStartOf="@+id/vacationLeaveLog_dialogLabel"
-        app:layout_constraintEnd_toEndOf="@+id/vacationLeaveLog_dialogLabel"
+        app:layout_constraintTop_toBottomOf="@+id/sickLeaveLog_dialogLabel"
+        app:layout_constraintStart_toStartOf="@+id/sickLeaveLog_dialogLabel"
+        app:layout_constraintEnd_toEndOf="@+id/sickLeaveLog_dialogLabel"
         android:textStyle="italic"
         android:textAlignment="center"
         tools:ignore="HardcodedText" />
 
 
+    <ListView
+        android:id="@+id/sickLeaveLOG_inDialog"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:padding="10dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/btn_okay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoIn_Dialog"
+        tools:ignore="NestedScrolling">
+
+    </ListView>
+
     <TextView
-        android:id="@+id/emptyListVacation_TextView"
+        android:id="@+id/emptyListSick_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -64,20 +78,6 @@
         android:textAlignment="center"
         tools:ignore="HardcodedText" />
 
-    <ListView
-        android:id="@+id/vacationLeaveLOG_inDialog"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
-        android:padding="10dp"
-        android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@+id/infoIn_Dialog"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="NestedScrolling">
-
-    </ListView>
-
-
 
     <Button
         android:id="@+id/btn_okay"
@@ -86,7 +86,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="316dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="26dp"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="@color/barColor"
         android:stateListAnimator="@null"
         android:text="Confirm"
