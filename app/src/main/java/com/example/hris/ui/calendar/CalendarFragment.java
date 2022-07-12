@@ -1,6 +1,7 @@
 package com.example.hris.ui.calendar;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.HomeScreen;
+import com.example.hris.R;
 import com.example.hris.databinding.FragmentCalendarBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,13 +42,17 @@ public class CalendarFragment extends Fragment {
     private String userID, timeIn, timeOut, totalTimedIn;
     ListView timeInOutLog, vacationLeaveLog, sickLeaveLog;
     String ret_timeInOut, ret_vacation, ret_sick;
+    Dialog timeInOutLogDialog, vacationLeaveLogDialog, sickLeaveLogDialog, overtimeLogDialog, offsetLogDialog;
+    Button timeInOutLog_BUTTON, vacationLeaveLog_BUTTON, sickLeaveLog_BUTTON, overtimeLog_BUTTON, offsetLog_BUTTON;
+
     ArrayList<String> timeInOutList = new ArrayList<>();
     ArrayList<String> vacationLeavesList = new ArrayList<>();
     ArrayList<String> sickLeavesList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter_timeInOut, arrayAdapter_vacation, arrayAdapter_sick;
+
     TextView emptyListTimeInOut_TextView, emptyListVacation_TextView, emptyListSick_TextView;
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "UseCompatLoadingForDrawables"})
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
@@ -60,11 +67,7 @@ public class CalendarFragment extends Fragment {
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
 
-        // set up and adapter for time ins and outs
-        timeInOutLog = binding.timeInsOutsLOG;
-        arrayAdapter_timeInOut = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, timeInOutList);
-        timeInOutLog.setAdapter(arrayAdapter_timeInOut);
-        timeInOutLog.setEmptyView(emptyListTimeInOut_TextView);
+
 
         // set up and adapter for vacation leave requests
         vacationLeaveLog = binding.VacationLeavesLog;
@@ -78,6 +81,30 @@ public class CalendarFragment extends Fragment {
         sickLeaveLog.setAdapter(arrayAdapter_sick);
         sickLeaveLog.setEmptyView(emptyListSick_TextView);
 
+        // timeInOutLog Dialog
+        timeInOutLog_BUTTON = binding.timeInOutLogBUTTON;
+        timeInOutLogDialog = new Dialog(getContext());
+        timeInOutLogDialog.setContentView(R.layout.custom_dialog_time_in_out_log);
+        timeInOutLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        timeInOutLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        timeInOutLogDialog.setCancelable(true);
+        timeInOutLogDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        //ListView
+        timeInOutLog = timeInOutLogDialog.findViewById(R.id.timeInsOutsLOG_inDialog);
+        // set up and adapter for time ins and outs
+        arrayAdapter_timeInOut = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, timeInOutList);
+        timeInOutLog.setAdapter(arrayAdapter_timeInOut);
+        timeInOutLog.setEmptyView(emptyListTimeInOut_TextView);
+        
+        //button on click
+        timeInOutLog_BUTTON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timeInOutLogDialog.show();
+            }
+        });
+
+        //
         reference.child(userID).child("Time Ins and Outs").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
