@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:maxWidth="300dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
+    android:layout_height="wrap_content"
+    android:background="@color/dialogNightDay"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/vacationLeaveLog_dialogLabel"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Vacation Leave Log"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:layout_marginTop="30dp"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/infoIn_Dialog_icon"
+        android:layout_marginEnd="5dp"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@drawable/info_icon_svg"
+        app:layout_constraintTop_toTopOf="@+id/infoIn_Dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/infoIn_Dialog"
+        app:layout_constraintEnd_toStartOf="@+id/infoIn_Dialog"
+        />
+
+    <TextView
+        android:id="@+id/infoIn_Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="Swipe up or down to view more"
+        app:layout_constraintTop_toBottomOf="@+id/vacationLeaveLog_dialogLabel"
+        app:layout_constraintStart_toStartOf="@+id/vacationLeaveLog_dialogLabel"
+        app:layout_constraintEnd_toEndOf="@+id/vacationLeaveLog_dialogLabel"
+        android:textStyle="italic"
+        android:textAlignment="center"
+        tools:ignore="HardcodedText" />
+
+
+    <TextView
+        android:id="@+id/emptyListVacation_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="- No data found. -"
+        android:textStyle="italic"
+        android:textColor="@color/custTextColor"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@id/infoIn_Dialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_okay"
+        android:textAlignment="center"
+        tools:ignore="HardcodedText" />
+
+    <ListView
+        android:id="@+id/vacationLeaveLOG_inDialog"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:padding="10dp"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/infoIn_Dialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="NestedScrolling">
+
+    </ListView>
+
+
+
+    <Button
+        android:id="@+id/btn_okay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="316dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="26dp"
+        android:backgroundTint="@color/barColor"
+        android:stateListAnimator="@null"
+        android:text="Confirm"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textColor="@color/darkerTextColor"
+        app:layout_constraintTop_toBottomOf="@+id/infoIn_Dialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="HardcodedText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
