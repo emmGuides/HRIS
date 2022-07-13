@@ -15,77 +15,250 @@
     tools:context=".ui.calendar.CalendarFragment">
 
 
+    <ImageView
+        android:id="@+id/timeInOut_img_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/time_in_time_out_btnimage_for_calendar"
+        app:layout_constraintStart_toStartOf="@id/barLine_calendarPlaceholder"
+        app:layout_constraintTop_toBottomOf="@+id/barLine_calendarPlaceholder" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="All time Ins and Outs are here"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/timeInOutLog_BUTTON"
+        app:layout_constraintEnd_toEndOf="@+id/timeInOutLog_BUTTON"
+        app:layout_constraintBottom_toTopOf="@+id/timeInOutLog_BUTTON"
+        app:layout_constraintTop_toTopOf="@+id/timeInOut_img_calendar"
+        android:textSize="18dp"
+        />
 
     <Button
         android:id="@+id/timeInOutLog_BUTTON"
-        android:layout_width="270dp"
-        android:layout_height="48dp"
+        android:layout_width="200dp"
+        android:minHeight="50dp"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="44dp"
         android:backgroundTint="#6499C3"
         android:elegantTextHeight="true"
-        android:text="Time in and Out Log"
-        app:icon="@drawable/follow_link_"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/barLine_calendarPlaceholder"
+        android:text="View Time in and Out Log"
+        app:layout_constraintBottom_toBottomOf="@+id/timeInOut_img_calendar"
+        app:layout_constraintStart_toEndOf="@+id/timeInOut_img_calendar"
+        app:layout_constraintTop_toTopOf="@+id/timeInOut_img_calendar"
+        app:layout_constraintEnd_toEndOf="@id/barLine_calendarPlaceholder"
         tools:ignore="HardcodedText" />
+
+    <View
+        android:id="@+id/barLine_underTimeInOut"
+        android:layout_width="300dp"
+        android:maxWidth="400dp"
+        android:layout_height="1dp"
+        android:background="@color/barColor"
+        app:layout_constraintTop_toBottomOf="@+id/timeInOut_img_calendar"
+        app:layout_constraintStart_toStartOf="@id/calendar_placeholder_image"
+        app:layout_constraintEnd_toEndOf="@id/calendar_placeholder_image"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <ImageView
+        android:id="@+id/vacation_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/vacation_icon_for_calendar"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@id/barLine_underTimeInOut"
+        app:layout_constraintStart_toStartOf="@id/barLine_underTimeInOut"
+        />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="All Vacation Leaves are here"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/VacationLog_BUTTON"
+        app:layout_constraintEnd_toEndOf="@+id/VacationLog_BUTTON"
+        app:layout_constraintBottom_toTopOf="@+id/VacationLog_BUTTON"
+        app:layout_constraintTop_toTopOf="@+id/vacation_calendar"
+        android:textSize="18dp"
+        />
 
     <Button
         android:id="@+id/VacationLog_BUTTON"
-        android:layout_width="270dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="200dp"
+        android:minHeight="50dp"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:layout_marginTop="44dp"
+        android:layout_marginStart="36dp"
         android:backgroundTint="#6499C3"
         android:elegantTextHeight="true"
-        android:text="Vacation Leave Log"
-        app:icon="@drawable/follow_link_"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timeInOutLog_BUTTON"
+        android:text="View Vacation Leave Log"
+        app:layout_constraintEnd_toEndOf="@id/barLine_underTimeInOut"
+        app:layout_constraintTop_toTopOf="@id/vacation_calendar"
+        app:layout_constraintBottom_toBottomOf="@id/vacation_calendar"
+        app:layout_constraintStart_toEndOf="@id/vacation_calendar"
         tools:ignore="HardcodedText" />
+
+    <View
+        android:id="@+id/barLine_underVacation"
+        android:layout_width="300dp"
+        android:maxWidth="400dp"
+        android:layout_height="1dp"
+        android:background="@color/barColor"
+        app:layout_constraintTop_toBottomOf="@+id/vacation_calendar"
+        app:layout_constraintStart_toStartOf="@id/calendar_placeholder_image"
+        app:layout_constraintEnd_toEndOf="@id/calendar_placeholder_image"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <ImageView
+        android:id="@+id/sick_icon_calendar"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sick_icon_for_calendar"
+        app:layout_constraintStart_toStartOf="@+id/barLine_underVacation"
+        app:layout_constraintTop_toBottomOf="@id/barLine_underVacation"
+        />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="All Sick Leaves are here"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/SickLog_BUTTON"
+        app:layout_constraintEnd_toEndOf="@+id/SickLog_BUTTON"
+        app:layout_constraintBottom_toTopOf="@+id/SickLog_BUTTON"
+        app:layout_constraintTop_toTopOf="@+id/sick_icon_calendar"
+        android:textSize="18dp"
+        />
 
     <Button
         android:id="@+id/SickLog_BUTTON"
-        android:layout_width="270dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="200dp"
+        android:minHeight="50dp"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:layout_marginTop="44dp"
+        android:layout_marginStart="36dp"
         android:backgroundTint="#6499C3"
         android:elegantTextHeight="true"
-        android:text="Sick Leave Log"
-        app:icon="@drawable/follow_link_"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/VacationLog_BUTTON"
+        android:text="View Sick Leave Log"
+        app:layout_constraintStart_toEndOf="@+id/sick_icon_calendar"
+        app:layout_constraintTop_toTopOf="@id/sick_icon_calendar"
+        app:layout_constraintBottom_toBottomOf="@id/sick_icon_calendar"
+        app:layout_constraintEnd_toEndOf="@id/barLine_underVacation"
         tools:ignore="HardcodedText" />
+
+    <View
+        android:id="@+id/barLine_underSick"
+        android:layout_width="300dp"
+        android:maxWidth="400dp"
+        android:layout_height="1dp"
+        android:background="@color/barColor"
+        app:layout_constraintTop_toBottomOf="@+id/sick_icon_calendar"
+        app:layout_constraintStart_toStartOf="@id/calendar_placeholder_image"
+        app:layout_constraintEnd_toEndOf="@id/calendar_placeholder_image"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <ImageView
+        android:id="@+id/overtime_calendar_icon"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/overtime_icon_for_calendar"
+        app:layout_constraintStart_toStartOf="@id/barLine_underSick"
+        app:layout_constraintTop_toBottomOf="@id/barLine_underSick"
+        />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="All Overtimes are here"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/overtimeLog_BUTTON"
+        app:layout_constraintEnd_toEndOf="@+id/overtimeLog_BUTTON"
+        app:layout_constraintBottom_toTopOf="@+id/overtimeLog_BUTTON"
+        app:layout_constraintTop_toTopOf="@+id/overtime_calendar_icon"
+        android:textSize="18dp"
+        />
 
     <Button
         android:id="@+id/overtimeLog_BUTTON"
-        android:layout_width="270dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="200dp"
+        android:minHeight="50dp"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:layout_marginTop="44dp"
+        android:layout_marginStart="36dp"
         android:backgroundTint="#6499C3"
         android:elegantTextHeight="true"
-        android:elevation="2dp"
-        android:text="Overtime Log"
-        app:icon="@drawable/follow_link_"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/SickLog_BUTTON"
-        tools:ignore="HardcodedText" />
+        android:text="View Overtime Log"
+        app:layout_constraintEnd_toEndOf="@id/barLine_underSick"
+        app:layout_constraintStart_toEndOf="@id/overtime_calendar_icon"
+        app:layout_constraintTop_toTopOf="@id/overtime_calendar_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/overtime_calendar_icon"
+        tools:ignore="HardcodedText"
+        />
+
+    <View
+        android:id="@+id/barLine_underOvertime"
+        android:layout_width="300dp"
+        android:maxWidth="400dp"
+        android:layout_height="1dp"
+        android:background="@color/barColor"
+        app:layout_constraintTop_toBottomOf="@+id/overtime_calendar_icon"
+        app:layout_constraintStart_toStartOf="@id/calendar_placeholder_image"
+        app:layout_constraintEnd_toEndOf="@id/calendar_placeholder_image"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="All Offsets are here"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/offsetLog_BUTTON"
+        app:layout_constraintEnd_toEndOf="@+id/offsetLog_BUTTON"
+        app:layout_constraintBottom_toTopOf="@+id/offsetLog_BUTTON"
+        app:layout_constraintTop_toTopOf="@+id/offset_calendar_icon"
+        android:textSize="18dp"
+        />
+
+    <ImageView
+        android:id="@+id/offset_calendar_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/offset_calendar_icon"
+        app:layout_constraintStart_toStartOf="@id/barLine_underOvertime"
+        app:layout_constraintTop_toBottomOf="@id/barLine_underOvertime"
+        android:layout_marginTop="40dp"
+        />
 
     <Button
         android:id="@+id/offsetLog_BUTTON"
-        android:layout_width="270dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="200dp"
+        android:minHeight="50dp"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:layout_marginTop="44dp"
+        android:layout_marginStart="36dp"
         android:backgroundTint="#6499C3"
-        android:elegantTextHeight="true"
         android:text="Offset Log"
-        app:icon="@drawable/follow_link_"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/overtimeLog_BUTTON"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/barLine_underOvertime"
+        app:layout_constraintStart_toEndOf="@id/offset_calendar_icon"
+        app:layout_constraintTop_toTopOf="@id/offset_calendar_icon"
+        app:layout_constraintBottom_toBottomOf="@id/offset_calendar_icon"
         tools:ignore="HardcodedText" />
 
     <TextView
@@ -121,11 +294,8 @@
         app:layout_constraintTop_toBottomOf="@+id/calendar_placeholder_image"
         app:layout_constraintStart_toStartOf="@id/calendar_placeholder_image"
         app:layout_constraintEnd_toEndOf="@id/calendar_placeholder_image"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="50dp"
         />
-
-
 
 
 
