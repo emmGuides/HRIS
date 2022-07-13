@@ -42,8 +42,8 @@ public class CalendarFragment extends Fragment {
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID, timeIn, timeOut, totalTimedIn;
-    ListView timeInOutLog, vacationLeaveLog, sickLeaveLog, overtimeLog;
-    String ret_timeInOut, ret_vacation, ret_sick, ret_overtime;
+    ListView timeInOutLog, vacationLeaveLog, sickLeaveLog, overtimeLog, offsetLog;
+    String ret_timeInOut, ret_vacation, ret_sick, ret_overtime, ret_offset;
     Dialog timeInOutLogDialog, vacationLeaveLogDialog, sickLeaveLogDialog, overtimeLogDialog, offsetLogDialog;
     Button timeInOutLog_BUTTON, vacationLeaveLog_BUTTON, sickLeaveLog_BUTTON, overtimeLog_BUTTON, offsetLog_BUTTON;
 
@@ -51,7 +51,8 @@ public class CalendarFragment extends Fragment {
     ArrayList<String> vacationLeavesList = new ArrayList<>();
     ArrayList<String> sickLeavesList = new ArrayList<>();
     ArrayList<String> overtimeList = new ArrayList<>();
-    ArrayAdapter<String> arrayAdapter_timeInOut, arrayAdapter_vacation, arrayAdapter_sick, arrayAdapter_overtime;
+    ArrayList<String> offsetList = new ArrayList<>();
+    ArrayAdapter<String> arrayAdapter_timeInOut, arrayAdapter_vacation, arrayAdapter_sick, arrayAdapter_overtime, arrayAdapter_offset;
 
     @SuppressLint({"ClickableViewAccessibility", "UseCompatLoadingForDrawables"})
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -91,6 +92,35 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 overtimeLogDialog.show();
+            }
+        });
+
+        // offset Dialog
+        offsetLog_BUTTON = binding.offsetLogBUTTON;
+        offsetLogDialog = new Dialog(getContext());
+        offsetLogDialog.setContentView(R.layout.custom_dialog_offset);
+        offsetLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        offsetLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        offsetLogDialog.setCancelable(true);
+        offsetLogDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        // offset ListView
+        offsetLog = offsetLogDialog.findViewById(R.id.offsetLOG_inDialog);
+        // set up and adapter for offsets
+        arrayAdapter_offset = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, offsetList);
+        offsetLog.setAdapter(arrayAdapter_offset);
+        offsetLog.setEmptyView(offsetLogDialog.findViewById(R.id.emptyListOffset_TextView));
+        // confirm button in offset dialog
+        offsetLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                offsetLogDialog.dismiss();
+            }
+        });
+
+        offsetLog_BUTTON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                offsetLogDialog.show();
             }
         });
 
@@ -185,17 +215,55 @@ public class CalendarFragment extends Fragment {
         });
 
 
+        // offset list view reference
+        reference.child(userID).child("Offsets").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                try{
+                    ret_offset = "\nDate of request: " + snapshot.getKey()
+                            + "\n\n\t\t\tDate of Offset: " + ((HashMap<?, ?>) snapshot.getValue()).get("Date of Offset")
+                            + "\n\t\t\tHours: " + ((HashMap<?, ?>) snapshot.getValue()).get("Hours")
+                            + "\n\t\t\tReason: " + ((HashMap<?, ?>) snapshot.getValue()).get("Reason")
+                            + "\n\t\t\tTeam Name: " + ((HashMap<?, ?>) snapshot.getValue()).get("Team Name")
+                            + "\n\t\t\tTeam Leader: " + ((HashMap<?, ?>) snapshot.getValue()).get("Team Leader")
+                            + "\n";
+                } catch (Exception e) {
+                    ret_offset = "Retrieval Error";
+                }
+
+
+                offsetList.add(ret_offset);
+                arrayAdapter_offset.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                arrayAdapter_offset.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         // overtime list view reference
         reference.child(userID).child("Overtimes").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // HashMap<String,String> master = new HashMap<String,String>();
-                // master = (HashMap<String, String>) snapshot.getValue();
-                //ArrayList<String> master = (ArrayList<String>) snapshot.getValue();
-                // String dateAdded = TextUtils.join(", ", (Iterable) snapshot.getValue());
 
                 try{
-                    ret_overtime = "\nDate: " + snapshot.getKey()
+                    ret_overtime = "\nDate of request: " + snapshot.getKey()
                             + "\n\n\t\t\tDate of Overtime: " + ((HashMap<?, ?>) snapshot.getValue()).get("Date of Overtime")
                             + "\n\t\t\tHours: " + ((HashMap<?, ?>) snapshot.getValue()).get("Hours")
                             + "\n\t\t\tReason: " + ((HashMap<?, ?>) snapshot.getValue()).get("Reason")
@@ -203,7 +271,7 @@ public class CalendarFragment extends Fragment {
                             + "\n\t\t\tTeam: " + ((HashMap<?, ?>) snapshot.getValue()).get("Team")
                             + "\n";
                 } catch (Exception e) {
-                    ret_timeInOut = "Retrieval Error";
+                    ret_overtime = "Retrieval Error";
                 }
 
 

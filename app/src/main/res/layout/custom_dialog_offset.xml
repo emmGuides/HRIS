@@ -10,13 +10,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/overtimeLog_dialogLabel"
+        android:id="@+id/offsetLog_dialogLabel"
         android:layout_width="300dp"
         android:layout_height="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Overtime Log"
+        android:text="Offset Log"
         android:textStyle="bold"
         android:textAlignment="center"
         android:textSize="18sp"
@@ -40,9 +40,9 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:text="Swipe up or down to view more"
-        app:layout_constraintTop_toBottomOf="@+id/overtimeLog_dialogLabel"
-        app:layout_constraintStart_toStartOf="@+id/overtimeLog_dialogLabel"
-        app:layout_constraintEnd_toEndOf="@+id/overtimeLog_dialogLabel"
+        app:layout_constraintTop_toBottomOf="@+id/offsetLog_dialogLabel"
+        app:layout_constraintStart_toStartOf="@+id/offsetLog_dialogLabel"
+        app:layout_constraintEnd_toEndOf="@+id/offsetLog_dialogLabel"
         android:textStyle="italic"
         android:textAlignment="center"
         tools:ignore="HardcodedText" />
@@ -50,7 +50,7 @@
 
 
     <TextView
-        android:id="@+id/emptyListOvertime_TextView"
+        android:id="@+id/emptyListOffset_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -67,7 +67,7 @@
 
 
     <ListView
-        android:id="@+id/overtimeLOG_inDialog"
+        android:id="@+id/offsetLOG_inDialog"
         android:layout_width="350dp"
         android:layout_height="300dp"
         android:padding="10dp"
