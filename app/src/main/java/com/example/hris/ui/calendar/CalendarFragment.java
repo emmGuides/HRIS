@@ -3,7 +3,6 @@ package com.example.hris.ui.calendar;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,15 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.hris.HomeScreen;
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentCalendarBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +24,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +35,7 @@ public class CalendarFragment extends Fragment {
 
     private FirebaseUser user;
     private DatabaseReference reference;
-    private String userID, timeIn, timeOut, totalTimedIn;
+    private String userID;
     ListView timeInOutLog, vacationLeaveLog, sickLeaveLog, overtimeLog, offsetLog;
     String ret_timeInOut, ret_vacation, ret_sick, ret_overtime, ret_offset;
     Dialog timeInOutLogDialog, vacationLeaveLogDialog, sickLeaveLogDialog, overtimeLogDialog, offsetLogDialog;
