@@ -13,4 +13,5 @@
     <color name="darkerTextColor">#000</color>
     <color name="dialogNightDay">#FFF</color>
     <color name="lineColorPale">#999999</color>
+    <color name="iconCalendarColor">#32a8a4</color>
 </resources>
