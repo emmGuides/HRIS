@@ -3,7 +3,6 @@ package com.example.hris.ui.calendar;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,15 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.hris.HomeScreen;
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentCalendarBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,9 +24,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CalendarFragment extends Fragment {
 
@@ -40,18 +35,18 @@ public class CalendarFragment extends Fragment {
 
     private FirebaseUser user;
     private DatabaseReference reference;
-    private String userID, timeIn, timeOut, totalTimedIn;
-    ListView timeInOutLog, vacationLeaveLog, sickLeaveLog;
-    String ret_timeInOut, ret_vacation, ret_sick;
+    private String userID;
+    ListView timeInOutLog, vacationLeaveLog, sickLeaveLog, overtimeLog, offsetLog;
+    String ret_timeInOut, ret_vacation, ret_sick, ret_overtime, ret_offset;
     Dialog timeInOutLogDialog, vacationLeaveLogDialog, sickLeaveLogDialog, overtimeLogDialog, offsetLogDialog;
     Button timeInOutLog_BUTTON, vacationLeaveLog_BUTTON, sickLeaveLog_BUTTON, overtimeLog_BUTTON, offsetLog_BUTTON;
 
     ArrayList<String> timeInOutList = new ArrayList<>();
     ArrayList<String> vacationLeavesList = new ArrayList<>();
     ArrayList<String> sickLeavesList = new ArrayList<>();
-    ArrayAdapter<String> arrayAdapter_timeInOut, arrayAdapter_vacation, arrayAdapter_sick;
-
-    TextView emptyListTimeInOut_TextView, emptyListVacation_TextView, emptyListSick_TextView;
+    ArrayList<String> overtimeList = new ArrayList<>();
+    ArrayList<String> offsetList = new ArrayList<>();
+    ArrayAdapter<String> arrayAdapter_timeInOut, arrayAdapter_vacation, arrayAdapter_sick, arrayAdapter_overtime, arrayAdapter_offset;
 
     @SuppressLint({"ClickableViewAccessibility", "UseCompatLoadingForDrawables"})
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -64,6 +59,64 @@ public class CalendarFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
+
+        // overtime Dialog
+        overtimeLog_BUTTON = binding.overtimeLogBUTTON;
+        overtimeLogDialog = new Dialog(getContext());
+        overtimeLogDialog.setContentView(R.layout.custom_dialog_overtime);
+        overtimeLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        overtimeLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        overtimeLogDialog.setCancelable(true);
+        overtimeLogDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        // overtime ListView
+        overtimeLog = overtimeLogDialog.findViewById(R.id.overtimeLOG_inDialog);
+        // set up and adapter for overtimes
+        arrayAdapter_overtime = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, overtimeList);
+        overtimeLog.setAdapter(arrayAdapter_overtime);
+        overtimeLog.setEmptyView(overtimeLogDialog.findViewById(R.id.emptyListOvertime_TextView));
+        // confirm button in overtime dialog
+        overtimeLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overtimeLogDialog.dismiss();
+            }
+        });
+
+        overtimeLog_BUTTON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overtimeLogDialog.show();
+            }
+        });
+
+        // offset Dialog
+        offsetLog_BUTTON = binding.offsetLogBUTTON;
+        offsetLogDialog = new Dialog(getContext());
+        offsetLogDialog.setContentView(R.layout.custom_dialog_offset);
+        offsetLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        offsetLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        offsetLogDialog.setCancelable(true);
+        offsetLogDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        // offset ListView
+        offsetLog = offsetLogDialog.findViewById(R.id.offsetLOG_inDialog);
+        // set up and adapter for offsets
+        arrayAdapter_offset = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, offsetList);
+        offsetLog.setAdapter(arrayAdapter_offset);
+        offsetLog.setEmptyView(offsetLogDialog.findViewById(R.id.emptyListOffset_TextView));
+        // confirm button in offset dialog
+        offsetLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                offsetLogDialog.dismiss();
+            }
+        });
+
+        offsetLog_BUTTON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                offsetLogDialog.show();
+            }
+        });
 
 
         // timeInOutLog Dialog
@@ -156,7 +209,93 @@ public class CalendarFragment extends Fragment {
         });
 
 
-        //
+        // offset list view reference
+        reference.child(userID).child("Offsets").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                try{
+                    ret_offset = "\nDate of request: " + snapshot.getKey()
+                            + "\n\n\t\t\tDate of Offset: " + ((HashMap<?, ?>) snapshot.getValue()).get("Date of Offset")
+                            + "\n\t\t\tHours: " + ((HashMap<?, ?>) snapshot.getValue()).get("Hours")
+                            + "\n\t\t\tReason: " + ((HashMap<?, ?>) snapshot.getValue()).get("Reason")
+                            + "\n\t\t\tTeam Name: " + ((HashMap<?, ?>) snapshot.getValue()).get("Team Name")
+                            + "\n\t\t\tTeam Leader: " + ((HashMap<?, ?>) snapshot.getValue()).get("Team Leader")
+                            + "\n";
+                } catch (Exception e) {
+                    ret_offset = "Retrieval Error";
+                }
+
+
+                offsetList.add(ret_offset);
+                arrayAdapter_offset.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                arrayAdapter_offset.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        // overtime list view reference
+        reference.child(userID).child("Overtimes").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                try{
+                    ret_overtime = "\nDate of request: " + snapshot.getKey()
+                            + "\n\n\t\t\tDate of Overtime: " + ((HashMap<?, ?>) snapshot.getValue()).get("Date of Overtime")
+                            + "\n\t\t\tHours: " + ((HashMap<?, ?>) snapshot.getValue()).get("Hours")
+                            + "\n\t\t\tReason: " + ((HashMap<?, ?>) snapshot.getValue()).get("Reason")
+                            + "\n\t\t\tTitle/Position: " + ((HashMap<?, ?>) snapshot.getValue()).get("Title")
+                            + "\n\t\t\tTeam: " + ((HashMap<?, ?>) snapshot.getValue()).get("Team")
+                            + "\n";
+                } catch (Exception e) {
+                    ret_overtime = "Retrieval Error";
+                }
+
+
+                overtimeList.add(ret_overtime);
+                arrayAdapter_overtime.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                arrayAdapter_overtime.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        // time ins and outs list view reference
         reference.child(userID).child("Time Ins and Outs").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
