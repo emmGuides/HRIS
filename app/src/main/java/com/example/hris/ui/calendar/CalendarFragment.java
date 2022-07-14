@@ -367,14 +367,14 @@ public class CalendarFragment extends Fragment {
         reference.child(userID).child("Vacation Leaves").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                ArrayList<String> master = (ArrayList<String>) snapshot.getValue();
 
                 try{
                     ret_vacation = "\nDate Filed: " + snapshot.getKey()
-                            + "\n\n\n\t\t\tFrom: " + master.get(1)
-                            + "\n\t\t\tTo: " + master.get(2)
-                            + "\n\t\t\tNumber of Days: " + master.get(4)
-                            + "\n\n\t\t\tAdditional Details: \n\t\t\t" + master.get(3) +"\n";
+                            + "\n\n\n\t\t\tFrom: " + ((HashMap<?, ?>) snapshot.getValue()).get("Start Date")
+                            + "\n\t\t\tTo: " + ((HashMap<?, ?>) snapshot.getValue()).get("End Date")
+                            + "\n\t\t\tNumber of Days: " + ((HashMap<?, ?>) snapshot.getValue()).get("Leave Duration")
+                            + "\n\n\t\t\tAdditional Details: \n\t\t\t" + ((HashMap<?, ?>) snapshot.getValue()).get("Additional Details")
+                            + "\n";
                 } catch (Exception e) {
                     ret_vacation = "Something wrong happened.";
                 }
@@ -433,14 +433,15 @@ public class CalendarFragment extends Fragment {
         reference.child(userID).child("Sick Leaves").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                ArrayList<String> master = (ArrayList<String>) snapshot.getValue();
 
                 try{
                     ret_sick = "\nDate Filed: " + snapshot.getKey()
-                            + "\n\n\n\t\t\tFrom: " + master.get(1)
-                            + "\n\t\t\tTo: " + master.get(2)
-                            + "\n\t\t\tNumber of Days: " + master.get(4)
-                            + "\n\n\t\t\tAdditional Details: \n\t\t\t" + master.get(3) +"\n";
+                            + "\n\n\n\t\t\tFrom: " + ((HashMap<?, ?>) snapshot.getValue()).get("Start Date")
+                            + "\n\t\t\tTo: " + ((HashMap<?, ?>) snapshot.getValue()).get("Emd Date")
+                            + "\n\t\t\tNumber of Days: " + ((HashMap<?, ?>) snapshot.getValue()).get("Leave Duration")
+                            + "\n\n\t\t\tAvailment: \t\t\t" + ((HashMap<?, ?>) snapshot.getValue()).get("Availment")
+                            + "\n\n\t\t\tAdditional Details: \n\t\t\t" + ((HashMap<?, ?>) snapshot.getValue()).get("Details")
+                            + "\n";
                 } catch (Exception e) {
                     ret_sick = "Something wrong happened.";
                 }
