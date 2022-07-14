@@ -314,6 +314,7 @@ public class VacationFragment extends Fragment {
         masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAddMap);
 
         editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
+        teamName.setText(null); managerName.setText(null); approvedBy.setText(null);
 
     }
 

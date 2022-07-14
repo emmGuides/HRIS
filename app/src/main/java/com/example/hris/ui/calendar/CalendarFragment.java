@@ -437,10 +437,10 @@ public class CalendarFragment extends Fragment {
                 try{
                     ret_sick = "\nDate Filed: " + snapshot.getKey()
                             + "\n\n\n\t\t\tFrom: " + ((HashMap<?, ?>) snapshot.getValue()).get("Start Date")
-                            + "\n\t\t\tTo: " + ((HashMap<?, ?>) snapshot.getValue()).get("Emd Date")
+                            + "\n\t\t\tTo: " + ((HashMap<?, ?>) snapshot.getValue()).get("End Date")
                             + "\n\t\t\tNumber of Days: " + ((HashMap<?, ?>) snapshot.getValue()).get("Leave Duration")
-                            + "\n\n\t\t\tAvailment: \t\t\t" + ((HashMap<?, ?>) snapshot.getValue()).get("Availment")
-                            + "\n\n\t\t\tAdditional Details: \n\t\t\t" + ((HashMap<?, ?>) snapshot.getValue()).get("Details")
+                            + "\n\t\t\tAvailment: " + ((HashMap<?, ?>) snapshot.getValue()).get("Availment")
+                            + "\n\n\t\t\tAdditional Details: " + ((HashMap<?, ?>) snapshot.getValue()).get("Details")
                             + "\n";
                 } catch (Exception e) {
                     ret_sick = "Something wrong happened.";

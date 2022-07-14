@@ -149,7 +149,7 @@ public class HomeScreen extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_profile, R.id.nav_calendar, R.id.nav_teams, R.id.nav_sick,
+                R.id.nav_home, R.id.nav_profile, R.id.nav_calendar, R.id.nav_teams, R.id.nav_sick, R.id.nav_vacation,
                 R.id.nav_teams, R.id.nav_overtime, R.id.nav_offset, R.id.logOutButton)
                 .setOpenableLayout(drawer)
                 .build();
