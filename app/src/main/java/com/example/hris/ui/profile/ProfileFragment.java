@@ -31,9 +31,13 @@ public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     TextView name, age, email, password;
-    Dialog changeName, changeAge, changeEmail, changePassword;
-    Button okayName, cancelName, okayAge, cancelAge, okayEmail, cancelEmail, okayPassword, cancelPassword;
-    EditText emailEditText, nameEditText, ageEditText, passwordEditText_New, passwordEditText_Old;
+    Dialog changeName, changeAge, changeEmail, changePassword, changeProfile;
+    Button okayName, cancelName, okayAge, cancelAge, okayEmail, cancelEmail, okayPassword, cancelPassword,
+            okayProfile, cancelProfile;
+    EditText emailEditText, nameEditText, ageEditText, passwordEditText_New, passwordEditText_Old,
+            emailEditTextProfile, ageEditTextProfile,nameEditTextProfile, passwordEditText_NewProfile, passwordEditText_OldProfile;
+    Button editProfile;
+    Thread thread;
 
     private FirebaseUser user;
     private DatabaseReference reference;
@@ -53,9 +57,20 @@ public class ProfileFragment extends Fragment {
         email = binding.emailActual;
         password = binding.passwordActual;
 
+        editProfile = binding.editProfileBUTTON;
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
+
+        // change Entire Profile dialog
+        changeProfile = new Dialog(getContext());
+        changeProfile.setContentView(R.layout.custom_dialog_change_profile);
+        changeProfile.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        changeProfile.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        changeProfile.setCancelable(false);
+        changeProfile.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
 
         // change name dialog
         changeName = new Dialog(getContext());
@@ -102,6 +117,9 @@ public class ProfileFragment extends Fragment {
         okayPassword = changePassword.findViewById(R.id.btn_okay);
         cancelPassword = changePassword.findViewById(R.id.btn_cancel);
 
+        okayProfile = changeProfile.findViewById(R.id.btn_okay);
+        cancelProfile = changeProfile.findViewById(R.id.btn_cancel);
+
         // Dialog EditTexts
         emailEditText = changeEmail.findViewById(R.id.newEmail_input);
         nameEditText = changeName.findViewById(R.id.newName_input);
@@ -109,29 +127,55 @@ public class ProfileFragment extends Fragment {
         passwordEditText_New = changePassword.findViewById(R.id.newPassword_input);
         passwordEditText_Old = changePassword.findViewById(R.id.oldPassword_input);
 
+        emailEditTextProfile = changeProfile.findViewById(R.id.newEmail_input);
+        nameEditTextProfile = changeProfile.findViewById(R.id.newName_input);
+        ageEditTextProfile = changeProfile.findViewById(R.id.newAge_input);
+        passwordEditText_NewProfile = changeProfile.findViewById(R.id.newPassword_input);
+        passwordEditText_OldProfile = changeProfile.findViewById(R.id.oldPassword_input);
 
-        reference.child(userID).child("User Details").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Employee userProfile = snapshot.getValue(Employee.class);
 
-                if(userProfile != null){
-                    user_oldFullName = userProfile.fullName;
-                    user_oldEmail = userProfile.email;
-                    user_oldAge = userProfile.age;
-                    // user_oldPassword = userProfile
+        thread = new Thread(){
+          @Override
+          public void run(){
+              try {
+                  while (!thread.isInterrupted()) {
+                      Thread.sleep(100);
+                      requireActivity().runOnUiThread(new Runnable() {
+                          @SuppressLint("SetTextI18n")
+                          @Override
+                          public void run() {
+                              reference.child(userID).child("User Details").addListenerForSingleValueEvent(new ValueEventListener() {
+                                  @Override
+                                  public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                      Employee userProfile = snapshot.getValue(Employee.class);
 
-                    name.setText(user_oldFullName);
-                    email.setText(user_oldEmail);
-                    age.setText(user_oldAge);
-                }
-            }
+                                      if(userProfile != null){
+                                          user_oldFullName = userProfile.fullName;
+                                          user_oldEmail = userProfile.email;
+                                          user_oldAge = userProfile.age;
+                                          // user_oldPassword = userProfile
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Something Wrong Happened", Toast.LENGTH_LONG).show();
-            }
-        });
+                                          name.setText(user_oldFullName);
+                                          email.setText(user_oldEmail);
+                                          age.setText(user_oldAge);
+                                      }
+                                  }
+
+                                  @Override
+                                  public void onCancelled(@NonNull DatabaseError error) {
+                                      Toast.makeText(getContext(), "Something Wrong Happened", Toast.LENGTH_LONG).show();
+                                  }
+                              });
+                          }
+                      });
+                  }
+              }
+              catch(InterruptedException x){
+                  x.printStackTrace();
+              }
+          }
+        };
+        thread.start();
 
 
         email.setOnLongClickListener(new View.OnLongClickListener() {
@@ -246,5 +290,6 @@ public class ProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        thread.interrupt();
     }
 }
