@@ -34,18 +34,20 @@ import java.util.Locale;
 
 public class VacationFragment extends Fragment {
 
+
     private FragmentVacationBinding binding;
     // calendar popup
     EditText editTextStart;
     EditText editTextEnd;
     EditText details;
-    TextView numberOfDays;
+    EditText teamName, managerName, approvedBy;
+    TextView numberOfDays, startDateTextView, endDateTextView;
     ProgressBar progressBar;
 
     String startDate;
     String endDate;
     String additionalDetails;
-    Thread thread;
+    Thread thread, threadFields;
     int differenceInDates = 0;
     Date formattedStart;
     Date formattedEnd;
@@ -65,11 +67,15 @@ public class VacationFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        VacationViewModel vacationViewModel =
-                new ViewModelProvider(this).get(VacationViewModel.class);
-
         binding = FragmentVacationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        teamName = binding.vacationTeam;
+        managerName = binding.vacationProjectManager;
+        approvedBy = binding.vacationApprovedBy;
+
+        startDateTextView = binding.vacStartDateLabel;
+        endDateTextView = binding.vacEndDateLabel;
 
         // Button apply
         applyButton = binding.vacationApply;
@@ -143,14 +149,14 @@ public class VacationFragment extends Fragment {
             public void onClick(View view) {
 
                 if(startDate.isEmpty()){
-                    details.setError("Start Date is required");
-                    details.requestFocus();
+                    startDateTextView.setError("Start Date is required");
+                    startDateTextView.requestFocus();
                     return;
                 }
 
                 if(endDate.isEmpty()){
-                    details.setError("End Date is required");
-                    details.requestFocus();
+                    endDateTextView.setError("End Date is required");
+                    endDateTextView.requestFocus();
                     return;
                 }
 
@@ -160,7 +166,25 @@ public class VacationFragment extends Fragment {
                     return;
                 }
 
-                sendToDatabase();
+                if(teamName.getText().toString().trim().isEmpty()){
+                    teamName.setError("Team Name cannot be empty");
+                    teamName.requestFocus();
+                    return;
+                }
+
+                if(managerName.getText().toString().trim().isEmpty()){
+                    managerName.setError("Manager name cannot be empty");
+                    managerName.requestFocus();
+                    return;
+                }
+
+                if(approvedBy.getText().toString().trim().isEmpty()){
+                    approvedBy.setError("You need to indicate who approved this leave.");
+                    approvedBy.requestFocus();
+                    return;
+                }
+
+                // sendToDatabase();
             }
 
         });
@@ -192,6 +216,28 @@ public class VacationFragment extends Fragment {
                 }
             }
         };
+
+        threadFields = new Thread(){
+            @Override
+            public void run(){
+                try{
+                    while(!thread.isInterrupted()) {
+                        Thread.sleep(5000);
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void run() {
+                                startDateTextView.setError(null);
+                                endDateTextView.setError(null);
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        threadFields.start();
         thread.start();
         return root;
 
@@ -262,6 +308,7 @@ public class VacationFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        threadFields.interrupt();
         thread.interrupt();
     }
 

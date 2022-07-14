@@ -298,6 +298,7 @@ public class SickFragment extends Fragment {
         availment_button = getActivity().findViewById(availment_group.getCheckedRadioButtonId());
 
         toAddMap.put("Date of Request", dateToday);
+        toAddMap.put("User ID:", user.getUid());
         toAddMap.put("Start Date", startDate);
         toAddMap.put("End Date", endDate);
         toAddMap.put("Details", additionalDetails);
