@@ -1,41 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.vacation.VacationFragment">
 
 
     <ImageView
+        android:id="@+id/vacation_icon_bg"
         android:layout_width="148dp"
         android:layout_height="148dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="5dp"
         android:alpha="0.5"
         android:src="@drawable/coconuttree"
-        app:layout_constraintBottom_toBottomOf="@+id/vacation_start_date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.939"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/vacation_start_date"
+        app:layout_constraintHorizontal_bias="0.939" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:id="@+id/vac_start_date_label"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="7dp"
+        android:paddingStart="7dp"
+        android:layout_marginTop="100dp"
         android:text="Start Date"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/vacation_start_date"
-        app:layout_constraintEnd_toEndOf="@+id/vacation_start_date"
-        app:layout_constraintStart_toStartOf="@+id/vacation_start_date"
-        app:layout_constraintWidth="300dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         tools:ignore="HardcodedText,RtlHardcoded" />
+
 
     <EditText
         android:id="@+id/vacation_start_date"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="16dp"
         android:clickable="false"
         android:cursorVisible="false"
         android:ems="10"
@@ -44,46 +52,59 @@
         android:hint="From: DD/MM/YYYY"
         android:inputType="date"
         android:minHeight="48dp"
+        android:layout_marginTop="-10dp"
         android:textSize="18sp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/vacation_end_date"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vac_start_date_label"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="@+id/vac_start_date_label"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="Autofill,HardcodedText,TextFields" />
 
-
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
+        android:id="@+id/vac_end_date_label"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="7dp"
+        android:paddingStart="7dp"
         android:text="End Date"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/vacation_end_date"
-        app:layout_constraintEnd_toEndOf="@+id/vacation_end_date"
-        app:layout_constraintStart_toStartOf="@+id/vacation_end_date"
-        app:layout_constraintWidth="300dp"
+        app:layout_constraintTop_toBottomOf="@id/vacation_start_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
     <EditText
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
         android:id="@+id/vacation_end_date"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:layout_marginTop="-10dp"
+        android:cursorVisible="false"
         android:ems="10"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:hint="To: DD/MM/YYYY"
         android:inputType="date"
         android:minHeight="48dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/vacation_additional_details"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/vac_end_date_label"
+        app:layout_constraintTop_toBottomOf="@+id/vac_end_date_label"
         tools:ignore="Autofill,HardcodedText,TextFields" />
+
+    <TextView
+        android:id="@+id/vacation_additional_details_Label"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Additional Details"
+        android:paddingStart="7dp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@+id/vacation_end_date"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="@+id/vacation_additional_details"
+        app:layout_constraintEnd_toEndOf="@id/vacation_additional_details"
+        />
 
     <EditText
         android:id="@+id/vacation_additional_details"
@@ -91,12 +112,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:ems="10"
-        android:hint="Additional Details..."
+        android:hint="Input Additional Details..."
         android:inputType="text"
         android:minHeight="48dp"
         android:textSize="18sp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/vacation_apply"
+        android:layout_marginTop="-10dp"
+        app:layout_constraintTop_toBottomOf="@+id/vacation_additional_details_Label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="Autofill,HardcodedText,TextFields" />
@@ -115,21 +136,83 @@
         android:layout_marginBottom="150dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vacation_approvedBy"
         tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/vacation_team_Label"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Team Name"
+        android:layout_marginBottom="-10dp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/vacation_team"
+        app:layout_constraintStart_toStartOf="@id/vacation_team"
+        app:layout_constraintEnd_toEndOf="@id/vacation_team"
+        android:layout_marginStart="7dp"
+        />
+
+    <EditText
+        android:id="@+id/vacation_team"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/vacation_additional_details"
+        android:hint="Input Team Name..."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="60dp"
+        android:inputType="text"
+        />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Manager name"
+        android:textStyle="italic"
+        android:layout_marginBottom="-10dp"
+        android:layout_marginStart="7dp"
+        app:layout_constraintStart_toStartOf="@+id/vacation_projectManager"
+        app:layout_constraintBottom_toTopOf="@id/vacation_projectManager"
+        />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/vacation_projectManager"
+        android:hint="Input Project Manager Name..."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vacation_team"
+        android:layout_marginTop="60dp"
+        android:inputType="text"
+        />
+
+    <EditText
+        android:id="@+id/vacation_approvedBy"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Approved By..."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vacation_projectManager"
+        android:layout_marginTop="60dp"
+        android:inputType="text"
+        />
 
     <TextView
         android:id="@+id/text_vacation_days"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="15sp"
+        app:flow_horizontalBias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/vacation_apply"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="@+id/vacation_apply"
-        android:layout_marginTop="30dp"
+       android:layout_marginTop="30dp"
         android:layout_marginBottom="40dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
