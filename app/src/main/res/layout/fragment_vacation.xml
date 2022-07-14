@@ -17,7 +17,7 @@
         android:layout_width="148dp"
         android:layout_height="148dp"
         android:layout_marginBottom="5dp"
-        android:alpha="0.5"
+        android:alpha="0.3"
         android:src="@drawable/coconuttree"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/vacation_start_date"

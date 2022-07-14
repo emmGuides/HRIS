@@ -139,7 +139,7 @@ public class ProfileFragment extends Fragment {
           public void run(){
               try {
                   while (!thread.isInterrupted()) {
-                      Thread.sleep(100);
+                      Thread.sleep(250);
                       requireActivity().runOnUiThread(new Runnable() {
                           @SuppressLint("SetTextI18n")
                           @Override
@@ -153,7 +153,6 @@ public class ProfileFragment extends Fragment {
                                           user_oldFullName = userProfile.fullName;
                                           user_oldEmail = userProfile.email;
                                           user_oldAge = userProfile.age;
-                                          // user_oldPassword = userProfile
 
                                           name.setText(user_oldFullName);
                                           email.setText(user_oldEmail);
@@ -281,6 +280,56 @@ public class ProfileFragment extends Fragment {
 
         cancelPassword.setOnClickListener(view -> changePassword.dismiss());
 
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeProfile.show();
+            }
+        });
+
+        cancelProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeProfile.dismiss();
+            }
+        });
+
+        okayProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!nameEditTextProfile.getText().toString().trim().isEmpty()){
+                    String newName = nameEditTextProfile.getText().toString().trim();
+                    reference.child(userID).child("User Details").child("fullName").setValue(newName);
+                }
+                if(!ageEditTextProfile.getText().toString().trim().isEmpty()){
+                    String newAge = ageEditTextProfile.getText().toString().trim();
+                    reference.child(userID).child("User Details").child("age").setValue(newAge);
+                }
+                if(!emailEditTextProfile.getText().toString().trim().isEmpty()){
+                    String email = emailEditTextProfile.getText().toString().trim();
+                    String oldEmail = user_oldEmail;
+
+                    if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                        emailEditTextProfile.setError("Invalid Email Format");
+                        emailEditTextProfile.requestFocus();
+                        return;
+                    }
+                    if(email.equals(oldEmail)){
+                        emailEditTextProfile.setError("New and Old email should not be the same.");
+                        emailEditTextProfile.requestFocus();
+                        return;
+                    }
+                }
+                if(!passwordEditText_OldProfile.getText().toString().trim().isEmpty()){
+                    // change password
+                }
+                if(!passwordEditText_NewProfile.getText().toString().trim().isEmpty()){
+                    // change password
+                }
+                Toast.makeText(getActivity(), "Non empty fields updated!", Toast.LENGTH_LONG).show();
+                changeProfile.dismiss();
+            }
+        });
 
 
         return root;
