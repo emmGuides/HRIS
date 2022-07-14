@@ -16,4 +16,11 @@
     <string name="menu_profile">My Profile</string>
     <string name="overtime">Overtime</string>
     <string name="offset">Offset</string>
+    
+    <string-array name="medForm">
+        <item>Yes</item>
+        <item>No</item>
+        <item>Attach a Form</item>
+    </string-array>
+
 </resources>

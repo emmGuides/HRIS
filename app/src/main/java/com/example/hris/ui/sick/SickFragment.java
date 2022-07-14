@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,14 +42,18 @@ public class SickFragment extends Fragment {
     EditText editTextStart = null;
     EditText editTextEnd = null;
     EditText details = null;
-    TextView numberOfDays;
+    EditText approvedBy;
+    TextView numberOfDays, medFormLabel, availmentLabel, startDateLabel, endDateLabel;
     String startDate;
     String endDate;
     String additionalDetails;
-    Thread thread;
+    Thread thread, threadRadio;
     int differenceInDates = 0;
     Date formattedStart = null;
     Date formattedEnd = null;
+
+    RadioGroup medForm_group, availment_group;
+    RadioButton medForm_button, availment_button;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     @SuppressLint("SimpleDateFormat")
@@ -66,15 +73,26 @@ public class SickFragment extends Fragment {
         binding = FragmentSickBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        //radio buttons groups
+        medForm_group = binding.medFormRadioGroup;
+        availment_group = binding.availmentRadioGroup;
+        medFormLabel = binding.medFormRadioGroupLabel;
+        availmentLabel = binding.availmentRadioGroupLabel;
+
+        approvedBy = binding.sickApprovedBy;
+
+        startDateLabel = binding.startDateLabel;
+        endDateLabel = binding.endDateLabel;
+
         // calendar popup
-        editTextStart = (EditText) binding.sickStartDate;
-        editTextEnd = (EditText) binding.sickEndDate;
+        editTextStart = binding.sickStartDate;
+        editTextEnd =  binding.sickEndDate;
 
         // button
-        applyButton = (Button) binding.sickApply;
+        applyButton = binding.sickApply;
 
         //location
-        details = (EditText) binding.sickAdditionalDetails;
+        details =  binding.sickAdditionalDetails;
 
         // days duration
         numberOfDays = binding.textSickDays;
@@ -124,28 +142,47 @@ public class SickFragment extends Fragment {
 
         // applyButton
         applyButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onClick(View view) {
                 String startDate = editTextStart.getText().toString().trim();
                 String endDate = editTextEnd.getText().toString().trim();
                 String additionalDetails = details.getText().toString().trim();
-
+                String approvedByS = approvedBy.getText().toString().trim();
 
                 if(startDate.isEmpty()){
-                    details.setError("Start Date is required");
-                    details.requestFocus();
+                    startDateLabel.setError("Start Date Required");
+                    startDateLabel.requestFocus();
                     return;
                 }
 
                 if(endDate.isEmpty()){
-                    details.setError("End Date is required");
-                    details.requestFocus();
+                    endDateLabel.setError("End Date Required");
+                    endDateLabel.requestFocus();
                     return;
                 }
 
                 if(additionalDetails.isEmpty()){
                     details.setError("Details are Required");
                     details.requestFocus();
+                    return;
+                }
+
+                if(medForm_group.getCheckedRadioButtonId() == -1){
+                    medFormLabel.setError("Required");
+                    medFormLabel.requestFocus();
+                    return;
+                }
+
+                if(availment_group.getCheckedRadioButtonId() == -1){
+                    availmentLabel.setError("Required");
+                    availmentLabel.requestFocus();
+                    return;
+                }
+
+                if(approvedByS.isEmpty()){
+                    approvedBy.setError("Approval required");
+                    approvedBy.requestFocus();
                     return;
                 }
                 sendToDatabase();
@@ -162,7 +199,6 @@ public class SickFragment extends Fragment {
                             @SuppressLint("SetTextI18n")
                             @Override
                             public void run() {
-
                                 startDate = editTextStart.getText().toString().trim();
                                 endDate = editTextEnd.getText().toString().trim();
                                 additionalDetails = details.getText().toString().trim();
@@ -179,9 +215,34 @@ public class SickFragment extends Fragment {
                 }
             }
         };
+        threadRadio = new Thread(){
+            @Override
+            public void run(){
+                try{
+                    while(!thread.isInterrupted()) {
+                        Thread.sleep(5000);
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void run() {
+                                startDateLabel.setError(null);
+                                endDateLabel.setError(null);
+                                medFormLabel.setError(null);
+                                availmentLabel.setError(null);
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
         thread.start();
+        threadRadio.start();
         return root;
     }
+
+
 
     // calendar pop up
     private void updateLabelStart(){
@@ -231,16 +292,32 @@ public class SickFragment extends Fragment {
     public void sendToDatabase (){
 
         List<String> toAdd = new ArrayList<>();
+        HashMap<String, String> toAddMap = new HashMap<String, String>();
+
+        medForm_button =  getActivity().findViewById(medForm_group.getCheckedRadioButtonId());
+        availment_button = getActivity().findViewById(availment_group.getCheckedRadioButtonId());
+
+        toAddMap.put("Date of Request", dateToday);
+        toAddMap.put("User ID", user.getUid());
+        toAddMap.put("Start Date", startDate);
+        toAddMap.put("End Date", endDate);
+        toAddMap.put("Details", additionalDetails);
+        toAddMap.put("Medical Certificate", (String) medForm_button.getText());
+        toAddMap.put("Availment", (String) availment_button.getText());
+        toAddMap.put("Approved By", approvedBy.getText().toString().trim());
+        toAddMap.put("Leave Duration", String.valueOf(differenceInDates));
+
         toAdd.add(dateToday);
         toAdd.add(startDate);
         toAdd.add(endDate);
         toAdd.add(additionalDetails);
         toAdd.add(String.valueOf(differenceInDates));
-        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAdd);
+
+        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAddMap);
         toAdd.clear();
 
         Toast.makeText(getContext(), "Sick Leave Applied!", Toast.LENGTH_LONG).show();
-        editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
+        editTextStart.setText(""); editTextEnd.setText(""); details.setText(""); approvedBy.setText("");
 
     }
     @Override
@@ -248,5 +325,6 @@ public class SickFragment extends Fragment {
         super.onDestroyView();
         binding = null;
         thread.interrupt();
+        threadRadio.interrupt();
     }
 }

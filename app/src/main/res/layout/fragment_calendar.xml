@@ -38,11 +38,11 @@
 
     <Button
         android:id="@+id/timeInOutLog_BUTTON"
-        android:layout_width="200dp"
+        android:layout_width="180dp"
         android:minHeight="50dp"
         android:layout_height="wrap_content"
         android:textSize="11sp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="44dp"
         android:backgroundTint="#6499C3"
         android:elegantTextHeight="true"
@@ -90,12 +90,12 @@
 
     <Button
         android:id="@+id/VacationLog_BUTTON"
-        android:layout_width="200dp"
+        android:layout_width="180dp"
         android:minHeight="50dp"
         android:layout_height="wrap_content"
         android:textSize="11sp"
         android:layout_marginTop="44dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="30dp"
         android:backgroundTint="#6499C3"
         android:elegantTextHeight="true"
         android:text="View Vacation Leave Log"
@@ -142,12 +142,12 @@
 
     <Button
         android:id="@+id/SickLog_BUTTON"
-        android:layout_width="200dp"
+        android:layout_width="180dp"
         android:minHeight="50dp"
         android:layout_height="wrap_content"
         android:textSize="11sp"
         android:layout_marginTop="44dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="30dp"
         android:backgroundTint="#6499C3"
         android:elegantTextHeight="true"
         android:text="View Sick Leave Log"
@@ -194,12 +194,12 @@
 
     <Button
         android:id="@+id/overtimeLog_BUTTON"
-        android:layout_width="200dp"
+        android:layout_width="180dp"
         android:minHeight="50dp"
         android:layout_height="wrap_content"
         android:textSize="11sp"
         android:layout_marginTop="44dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="30dp"
         android:backgroundTint="#6499C3"
         android:elegantTextHeight="true"
         android:text="View Overtime Log"
@@ -247,12 +247,12 @@
 
     <Button
         android:id="@+id/offsetLog_BUTTON"
-        android:layout_width="200dp"
+        android:layout_width="180dp"
         android:minHeight="50dp"
         android:layout_height="wrap_content"
         android:textSize="11sp"
         android:layout_marginTop="44dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="30dp"
         android:backgroundTint="#6499C3"
         android:text="Offset Log"
         app:layout_constraintEnd_toEndOf="@id/barLine_underOvertime"
