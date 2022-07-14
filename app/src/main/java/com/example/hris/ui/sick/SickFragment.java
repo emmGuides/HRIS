@@ -310,6 +310,7 @@ public class SickFragment extends Fragment {
         toAdd.add(endDate);
         toAdd.add(additionalDetails);
         toAdd.add(String.valueOf(differenceInDates));
+
         masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAdd);
         toAdd.clear();
 
