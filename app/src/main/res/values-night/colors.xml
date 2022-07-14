@@ -7,4 +7,5 @@
     <color name="barColor">#3a3a3b</color>
     <color name="lineColorPale">#3a3a3b</color>
     <color name="iconCalendarColor">#c3e6e4</color>
+    <color name="buttonColor">#42695e</color>
 </resources>
