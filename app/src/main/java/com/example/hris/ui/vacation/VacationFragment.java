@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -184,7 +185,7 @@ public class VacationFragment extends Fragment {
                     return;
                 }
 
-                // sendToDatabase();
+                sendToDatabase();
             }
 
         });
@@ -295,10 +296,22 @@ public class VacationFragment extends Fragment {
         toAdd.add(endDate);
         toAdd.add(additionalDetails);
         toAdd.add(String.valueOf(differenceInDates));
-        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAdd);
+
         toAdd.clear();
 
+        HashMap<String, String> toAddMap = new HashMap<>();
+        toAddMap.put("Date Requested",dateToday);
+        toAddMap.put("User ID", user.getUid());
+        toAddMap.put("Start Date", startDate);
+        toAddMap.put("End Date", endDate);
+        toAddMap.put("Additional Details", additionalDetails);
+        toAddMap.put("Team Name", teamName.getText().toString().trim());
+        toAddMap.put("Project Manager", managerName.getText().toString().trim());
+        toAddMap.put("Approved By", approvedBy.getText().toString().trim());
+        toAddMap.put("Leave Duration", String.valueOf(differenceInDates));
+
         Toast.makeText(getContext(), "Vacation Leave Applied!", Toast.LENGTH_LONG).show();
+        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAddMap);
 
         editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
 

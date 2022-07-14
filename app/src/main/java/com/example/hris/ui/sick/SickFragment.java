@@ -305,6 +305,7 @@ public class SickFragment extends Fragment {
         toAddMap.put("Medical Certificate", (String) medForm_button.getText());
         toAddMap.put("Availment", (String) availment_button.getText());
         toAddMap.put("Approved By", approvedBy.getText().toString().trim());
+        toAddMap.put("Leave Duration", String.valueOf(differenceInDates));
 
         toAdd.add(dateToday);
         toAdd.add(startDate);
@@ -312,7 +313,7 @@ public class SickFragment extends Fragment {
         toAdd.add(additionalDetails);
         toAdd.add(String.valueOf(differenceInDates));
 
-        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAdd);
+        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAddMap);
         toAdd.clear();
 
         Toast.makeText(getContext(), "Sick Leave Applied!", Toast.LENGTH_LONG).show();
