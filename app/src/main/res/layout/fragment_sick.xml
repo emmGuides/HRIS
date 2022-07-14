@@ -1,33 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.vacation.VacationFragment">
 
 
     <ImageView
+        android:id="@+id/med_icon_bg_sick"
         android:layout_width="148dp"
         android:layout_height="148dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="-50dp"
         android:alpha="0.5"
         android:src="@drawable/medicine"
-        app:layout_constraintBottom_toBottomOf="@+id/sick_start_date"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/sick_start_date"
         app:layout_constraintHorizontal_bias="0.939"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/start_date_label"
         android:textStyle="italic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Start Date"
+        android:layout_marginTop="100dp"
         app:layout_constraintWidth="300dp"
         android:layout_marginLeft="7dp"
-        app:layout_constraintBottom_toTopOf="@+id/sick_start_date"
-        app:layout_constraintEnd_toEndOf="@+id/sick_start_date"
-        app:layout_constraintStart_toStartOf="@+id/sick_start_date"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
     <EditText
@@ -44,24 +55,28 @@
         android:inputType="date"
         android:minHeight="48dp"
         android:textSize="18sp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/sick_end_date"
+        android:layout_marginTop="1dp"
+        app:layout_constraintTop_toBottomOf="@+id/start_date_label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="Autofill,HardcodedText,TextFields" />
 
 
     <TextView
+        android:layout_marginTop="40dp"
+        android:id="@+id/end_date_label"
         android:textStyle="italic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="End Date"
         app:layout_constraintWidth="300dp"
         android:layout_marginLeft="7dp"
-        app:layout_constraintBottom_toTopOf="@+id/sick_end_date"
+        app:layout_constraintTop_toBottomOf="@+id/sick_start_date"
         app:layout_constraintEnd_toEndOf="@+id/sick_end_date"
         app:layout_constraintStart_toStartOf="@+id/sick_end_date"
-        tools:ignore="HardcodedText,RtlHardcoded" />
+        tools:ignore="HardcodedText,RtlHardcoded"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
 
     <EditText
         android:clickable="false"
@@ -72,13 +87,13 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="1dp"
         android:ems="10"
         android:hint="To: DD/MM/YYYY"
         android:inputType="date"
         android:minHeight="48dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/sick_additional_details"
+        app:layout_constraintTop_toBottomOf="@+id/end_date_label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="Autofill,HardcodedText,TextFields" />
@@ -93,40 +108,137 @@
         android:inputType="text"
         android:minHeight="48dp"
         android:textSize="18sp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/sick_apply"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/sick_end_date"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="Autofill,HardcodedText,TextFields" />
 
+    <TextView
+        android:id="@+id/medForm_RadioGroup_label"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Do you have a medical certificate?"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sick_additional_details"
+        android:textStyle="italic"
+        android:layout_marginTop="40dp"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        />
+
+    <RadioGroup
+        android:id="@+id/medForm_RadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/sick_additional_details"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@+id/medForm_RadioGroup_label">
+
+        <RadioButton
+            android:id="@+id/medForm_YES"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Yes" />
+
+        <RadioButton
+            android:id="@+id/medForm_NO"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="No" />
+
+        <RadioButton
+            android:id="@+id/medForm_attachAForm"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Attach a Form" />
+    </RadioGroup>
+
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_marginTop="40dp"
+        android:layout_height="wrap_content"
+        android:text="Availment"
+        android:textStyle="italic"
+        android:id="@+id/availment_radioGroup_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/medForm_RadioGroup"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        />
+
+
+    <RadioGroup
+        android:id="@+id/availment_radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="4dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/availment_radioGroup_label"
+        app:layout_constraintTop_toBottomOf="@id/availment_radioGroup_label"
+        >
+
+        <RadioButton
+            android:id="@+id/availment_WHOLEDAY"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Whole Day"
+            />
+
+        <RadioButton
+            android:id="@+id/availment_HALFDAY"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Half Day"
+            />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/sick_approved_by"
+        android:inputType="text"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:hint="Approved By..."
+        app:layout_constraintTop_toBottomOf="@id/availment_radioGroup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <Button
         android:id="@+id/sick_apply"
         android:layout_width="300dp"
         android:layout_height="70dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="#6499C3"
         android:text="Apply"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginBottom="150dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sick_approved_by"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/text_sick_days"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="40dp"
+        android:textAlignment="center"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="@+id/sick_apply"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="40dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/sick_apply"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
