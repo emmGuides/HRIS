@@ -185,7 +185,7 @@ public class SickFragment extends Fragment {
                     approvedBy.requestFocus();
                     return;
                 }
-                // sendToDatabase();
+                sendToDatabase();
             }
         });
 
@@ -298,7 +298,7 @@ public class SickFragment extends Fragment {
         availment_button = getActivity().findViewById(availment_group.getCheckedRadioButtonId());
 
         toAddMap.put("Date of Request", dateToday);
-        toAddMap.put("User ID:", user.getUid());
+        toAddMap.put("User ID", user.getUid());
         toAddMap.put("Start Date", startDate);
         toAddMap.put("End Date", endDate);
         toAddMap.put("Details", additionalDetails);
@@ -317,7 +317,7 @@ public class SickFragment extends Fragment {
         toAdd.clear();
 
         Toast.makeText(getContext(), "Sick Leave Applied!", Toast.LENGTH_LONG).show();
-        editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
+        editTextStart.setText(""); editTextEnd.setText(""); details.setText(""); approvedBy.setText("");
 
     }
     @Override
