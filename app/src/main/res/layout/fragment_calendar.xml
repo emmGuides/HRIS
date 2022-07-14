@@ -37,6 +37,8 @@
         />
 
     <Button
+        android:textColor="@color/darkerTextColor"
+        android:backgroundTint="@color/buttonColor"
         android:id="@+id/timeInOutLog_BUTTON"
         android:layout_width="180dp"
         android:minHeight="50dp"
@@ -44,7 +46,6 @@
         android:textSize="11sp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="44dp"
-        android:backgroundTint="#6499C3"
         android:elegantTextHeight="true"
         android:text="View Time in and Out Log"
         app:layout_constraintBottom_toBottomOf="@+id/timeInOut_img_calendar"
@@ -89,6 +90,8 @@
         />
 
     <Button
+        android:textColor="@color/darkerTextColor"
+        android:backgroundTint="@color/buttonColor"
         android:id="@+id/VacationLog_BUTTON"
         android:layout_width="180dp"
         android:minHeight="50dp"
@@ -96,7 +99,6 @@
         android:textSize="11sp"
         android:layout_marginTop="44dp"
         android:layout_marginStart="30dp"
-        android:backgroundTint="#6499C3"
         android:elegantTextHeight="true"
         android:text="View Vacation Leave Log"
         app:layout_constraintEnd_toEndOf="@id/barLine_underTimeInOut"
@@ -148,7 +150,8 @@
         android:textSize="11sp"
         android:layout_marginTop="44dp"
         android:layout_marginStart="30dp"
-        android:backgroundTint="#6499C3"
+        android:textColor="@color/darkerTextColor"
+        android:backgroundTint="@color/buttonColor"
         android:elegantTextHeight="true"
         android:text="View Sick Leave Log"
         app:layout_constraintStart_toEndOf="@+id/sick_icon_calendar"
@@ -200,7 +203,8 @@
         android:textSize="11sp"
         android:layout_marginTop="44dp"
         android:layout_marginStart="30dp"
-        android:backgroundTint="#6499C3"
+        android:textColor="@color/darkerTextColor"
+        android:backgroundTint="@color/buttonColor"
         android:elegantTextHeight="true"
         android:text="View Overtime Log"
         app:layout_constraintEnd_toEndOf="@id/barLine_underSick"
@@ -253,13 +257,22 @@
         android:textSize="11sp"
         android:layout_marginTop="44dp"
         android:layout_marginStart="30dp"
-        android:backgroundTint="#6499C3"
+        android:textColor="@color/darkerTextColor"
+        android:backgroundTint="@color/buttonColor"
         android:text="Offset Log"
         app:layout_constraintEnd_toEndOf="@id/barLine_underOvertime"
         app:layout_constraintStart_toEndOf="@id/offset_calendar_icon"
         app:layout_constraintTop_toTopOf="@id/offset_calendar_icon"
         app:layout_constraintBottom_toBottomOf="@id/offset_calendar_icon"
         tools:ignore="HardcodedText" />
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/offsetLog_BUTTON"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <TextView
         android:layout_width="match_parent"
@@ -277,7 +290,7 @@
         android:id="@+id/calendar_placeholder_image"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

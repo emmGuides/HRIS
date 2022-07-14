@@ -44,6 +44,7 @@
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_change_email.xml" value="0.75" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_change_name.xml" value="0.33" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_change_password.xml" value="0.33" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_change_profile.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_log_out.xml" value="0.10182370820668693" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_offset.xml" value="0.16145833333333334" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_overtime.xml" value="0.1875" />
@@ -56,7 +57,7 @@
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_offset.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_overtime.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_profile.xml" value="2.0" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_profile.xml" value="0.28230337078651685" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_sick.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_slideshow.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_teams.xml" value="0.16032608695652173" />
