@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.hris.Employee;
-import com.example.hris.HomeScreen;
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentHomeBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -72,12 +71,6 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        // HomeViewModel homeViewModel =
-        //                new ViewModelProvider(this).get(HomeViewModel.class);
-        // homeViewModel format, in case
-        // final TextView textView = binding.textHome;
-        // homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         timeInsOuts = binding.TimeInsOuts;
         timeInOutButton = binding.TimeInsOutsButton;
@@ -157,10 +150,10 @@ public class HomeFragment extends Fragment {
                         firstName = fullName;
                     }
 
-                    if (Integer.parseInt(greet.format(currentTime.getTime()).toString()) < 13){
+                    if (Integer.parseInt(greet.format(currentTime.getTime())) < 13){
                         homeGreeting.setText("Good Morning, "+ firstName);
                     }
-                    else if (Integer.parseInt(greet.format(currentTime.getTime()).toString()) < 18) {
+                    else if (Integer.parseInt(greet.format(currentTime.getTime())) < 18) {
                         homeGreeting.setText("Good Afternoon, "+ firstName);
                     }
                     else {
@@ -196,7 +189,6 @@ public class HomeFragment extends Fragment {
 
                             try{
                                 // on time in only
-                                String trim = timeInsOuts.getText().toString().trim();
                                 String displayers = Objects.requireNonNull(snapshot.getValue()).toString();
                                 displayers = displayers.substring(1, displayers.length() - 1);
                                 String[] strArray = displayers.split(" ");
@@ -261,10 +253,11 @@ public class HomeFragment extends Fragment {
 
         if(trim.isEmpty()){
 
+
             timeInTime = currentTime;
             timeInsOuts.setText("Timed in:  " + currTime);
             Snackbar.make(requireView(),"Employee Timed In", Snackbar.LENGTH_LONG).show();
-            // timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
+
             toAdd.add(time.format(timeInTime.getTime()));
             toAdd.add(Long.toString(timeInTime.getTime()));
 
@@ -289,8 +282,6 @@ public class HomeFragment extends Fragment {
             toAdd.add(Long.toString(timeInFromDB));
             toAdd.add(time.format(timeOutTime.getTime()));
             toAdd.add(timeInDurationDB);
-
-
 
         }
         // send to DB:
