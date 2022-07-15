@@ -38,7 +38,6 @@ public class ProfileFragment extends Fragment {
     EditText emailEditText, nameEditText, ageEditText, passwordEditText_New, passwordEditText_Old,
             emailEditTextProfile, ageEditTextProfile,nameEditTextProfile, passwordEditText_NewProfile, passwordEditText_OldProfile;
     Button editProfile;
-    Thread thread;
 
     private FirebaseUser user;
     private DatabaseReference reference;
@@ -135,54 +134,32 @@ public class ProfileFragment extends Fragment {
         passwordEditText_OldProfile = changeProfile.findViewById(R.id.oldPassword_input);
 
 
-        thread = new Thread(){
-          @Override
-          public void run(){
-              try {
-                  while (!thread.isInterrupted()) {
-                      Thread.sleep(250);
-                      requireActivity().runOnUiThread(new Runnable() {
-                          @SuppressLint("SetTextI18n")
-                          @Override
-                          public void run() {
-                              reference.child(userID).child("User Details").addListenerForSingleValueEvent(new ValueEventListener() {
-                                  @Override
-                                  public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                      Employee userProfile = snapshot.getValue(Employee.class);
+        reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Employee userProfile = snapshot.getValue(Employee.class);
 
-                                      if(userProfile != null){
-                                          user_oldFullName = userProfile.fullName;
-                                          user_oldEmail = userProfile.email;
-                                          user_oldAge = userProfile.age;
+                if (userProfile != null) {
+                    user_oldFullName = userProfile.fullName;
+                    user_oldEmail = userProfile.email;
+                    user_oldAge = userProfile.age;
 
-                                          name.setText(user_oldFullName);
-                                          email.setText(user_oldEmail);
-                                          age.setText(user_oldAge);
+                    name.setText(user_oldFullName);
+                    email.setText(user_oldEmail);
+                    age.setText(user_oldAge);
 
 
-                                          nameEditTextProfile.setHint(user_oldFullName);
-                                          emailEditTextProfile.setHint(user_oldEmail);
-                                          ageEditTextProfile.setHint(user_oldAge);
-                                      }
-                                  }
+                    nameEditTextProfile.setHint(user_oldFullName);
+                    emailEditTextProfile.setHint(user_oldEmail);
+                    ageEditTextProfile.setHint(user_oldAge);
+                }
+            }
 
-                                  @Override
-                                  public void onCancelled(@NonNull DatabaseError error) {
-                                      Toast.makeText(getContext(), "Something Wrong Happened", Toast.LENGTH_LONG).show();
-                                  }
-                              });
-                          }
-                      });
-                  }
-              }
-              catch(InterruptedException x){
-                  x.printStackTrace();
-              }
-          }
-        };
-        thread.start();
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-
+            }
+        });
 
         email.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -346,6 +323,5 @@ public class ProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        thread.interrupt();
     }
 }
