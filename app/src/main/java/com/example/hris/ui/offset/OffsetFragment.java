@@ -79,6 +79,7 @@ public class OffsetFragment extends Fragment {
         offset_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                offsetDateLabel.setError(null);
                 new DatePickerDialog(getContext(), offsetDatePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
@@ -131,11 +132,12 @@ public class OffsetFragment extends Fragment {
             public void run() {
                 try {
                     while (!thread.isInterrupted()) {
-                        Thread.sleep(3000);
+                        Thread.sleep(10000);
                         requireActivity().runOnUiThread(new Runnable() {
                             @SuppressLint("SetTextI18n")
                             @Override
                             public void run() {
+                                offset_hours.setError(null);
                                 offsetDateLabel.setError(null);
                             }
                         });

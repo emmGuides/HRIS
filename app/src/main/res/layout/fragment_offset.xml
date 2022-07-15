@@ -92,12 +92,11 @@
 
         <TextView
             android:id="@+id/offset_date_label"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
             android:focusable="true"
             android:text="Date of Offset"
-            android:paddingEnd="80dp"
             android:textStyle="bold"
             android:textColor="@color/darkerTextColor"
             app:layout_constraintStart_toStartOf="@+id/offset_Date"

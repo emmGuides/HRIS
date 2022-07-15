@@ -83,6 +83,7 @@ public class OvertimeFragment extends Fragment {
         overtimeDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dateOvertimeLabel.setError(null);
                 new DatePickerDialog(getContext(), overtimeDatePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
@@ -115,15 +116,15 @@ public class OvertimeFragment extends Fragment {
                     return;
                 }
 
-                if(reasonOvertimeS.isEmpty()){
-                    reasonOvertime.setError("Reason for Overtime is Required");
-                    reasonOvertime.requestFocus();
-                    return;
-                }
-
                 if(hoursOvertimeS.isEmpty()){
                     hoursOvertime.setError("Please indicate the number of hours");
                     hoursOvertime.requestFocus();
+                    return;
+                }
+
+                if(reasonOvertimeS.isEmpty()){
+                    reasonOvertime.setError("Reason for Overtime is Required");
+                    reasonOvertime.requestFocus();
                     return;
                 }
 
@@ -141,11 +142,12 @@ public class OvertimeFragment extends Fragment {
             public void run() {
                 try {
                     while (!thread.isInterrupted()) {
-                        Thread.sleep(3000);
+                        Thread.sleep(10000);
                         requireActivity().runOnUiThread(new Runnable() {
                             @SuppressLint("SetTextI18n")
                             @Override
                             public void run() {
+                                hoursOvertime.setError(null);
                                 dateOvertimeLabel.setError(null);
                             }
                         });

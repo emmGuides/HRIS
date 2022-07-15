@@ -28,10 +28,9 @@
 
     <TextView
         android:id="@+id/overtime_date_label"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Date of Overtime"
-        android:paddingEnd="80dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:textStyle="bold"
