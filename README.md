@@ -162,8 +162,8 @@
 		- new profile names and ages on this dialog now gets pushed to DB
 		
       July 15, 2022:
-		- Adusted Offset form's fields in order to look better
-		- Adusted Overtime form's fields in order to look more appealing
+		- Adjusted Offset form's fields in order to look better
+		- Adjusted Overtime form's fields in order to look more appealing
 		- Added labels to all input text fields
 		- Added forgot password View
 		- Added reset password functionality through email
