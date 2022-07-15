@@ -15,4 +15,5 @@
     <color name="lineColorPale">#999999</color>
     <color name="iconCalendarColor">#32a8a4</color>
     <color name="buttonColor">#d1e8e2</color>
+    <color name="dividerColor">#f2faf9</color>
 </resources>

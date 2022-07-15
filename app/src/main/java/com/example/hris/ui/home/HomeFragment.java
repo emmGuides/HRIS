@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment {
         });
 
 
-        reference.child(userID).child("User Details").addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -268,9 +268,6 @@ public class HomeFragment extends Fragment {
             long seconds = (timeOutTime.getTime() - timeInFromDB)/(1000);
             long minutes = seconds / 60;
             long hours = minutes / 60;
-            Long.toString(seconds);
-            Long.toString(minutes);
-            Long.toString(hours);
             String timeInDurationDB = hours + "h " + minutes%60 + "m " + seconds%60 + "s ";
 
             timeInsOuts.setText("Timed out:  "+ currTime);
