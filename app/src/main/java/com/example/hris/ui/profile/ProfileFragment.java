@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ProfileFragment extends Fragment {
 
-    
+
     private FragmentProfileBinding binding;
     TextView name, age, email, password;
     Dialog changeName, changeAge, changeEmail, changePassword, changeProfile;
