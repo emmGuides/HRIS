@@ -123,6 +123,7 @@ public class VacationFragment extends Fragment {
         editTextStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startDateTextView.setError(null);
                 new DatePickerDialog(getContext(),
                         dateStart,
                         myCalendar.get(Calendar.YEAR),
@@ -136,6 +137,7 @@ public class VacationFragment extends Fragment {
         editTextEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                endDateTextView.setError(null);
                 new DatePickerDialog(getContext(),
                         dateEnd,
                         myCalendar.get(Calendar.YEAR),

@@ -29,13 +29,23 @@
         app:layout_constraintTop_toTopOf="parent"
     />
 
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/newName_input_label"
+        android:text="Enter New Name"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/newName_input"
+        app:layout_constraintBottom_toTopOf="@+id/newName_input"
+        />
+
     <EditText
         android:id="@+id/newName_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Enter New Name"
+        android:layout_marginTop="40dp"
         android:inputType="text"
+        android:hint="Name"
         android:minWidth="200dp"
         android:minHeight="40dp"
         android:textAlignment="textStart"
@@ -45,28 +55,47 @@
         tools:ignore="HardcodedText,TouchTargetSizeCheck"
         />
 
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/newAge_input_label"
+        android:text="Enter New Age"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/newAge_input"
+        app:layout_constraintBottom_toTopOf="@+id/newAge_input"
+        />
+
     <EditText
         android:id="@+id/newAge_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Enter New Age"
+        android:layout_marginTop="40dp"
+        android:hint="Age"
         android:inputType="number"
-        android:minWidth="200dp"
+        android:minWidth="100dp"
         android:minHeight="40dp"
         android:textAlignment="textStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/newName_input"
         app:layout_constraintTop_toBottomOf="@id/newName_input"
         tools:ignore="HardcodedText,TouchTargetSizeCheck"
+        />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/newEmail_input_label"
+        android:text="Enter New Email"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/newEmail_input"
+        app:layout_constraintBottom_toTopOf="@+id/newEmail_input"
         />
 
     <EditText
         android:id="@+id/newEmail_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Enter New Email"
+        android:layout_marginTop="40dp"
+        android:hint="Email"
         android:inputType="textEmailAddress"
         android:minWidth="200dp"
         android:minHeight="40dp"
@@ -77,12 +106,22 @@
         tools:ignore="HardcodedText,TouchTargetSizeCheck"
         />
 
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/oldPassword_input_label"
+        android:text="Enter Old Password"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/oldPassword_input"
+        app:layout_constraintBottom_toTopOf="@+id/oldPassword_input"
+        />
+
     <EditText
         android:id="@+id/oldPassword_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Enter Old Password"
+        android:layout_marginTop="40dp"
+        android:hint="Old password"
         android:inputType="textPassword"
         android:minWidth="200dp"
         android:minHeight="40dp"
@@ -93,12 +132,22 @@
         tools:ignore="HardcodedText,TouchTargetSizeCheck"
         />
 
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/newPassword_input_label"
+        android:text="Enter New Password"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/newPassword_input"
+        app:layout_constraintBottom_toTopOf="@+id/newPassword_input"
+        />
+
     <EditText
         android:id="@+id/newPassword_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Enter New Password"
+        android:layout_marginTop="40dp"
+        android:hint="New password"
         android:inputType="textPassword"
         android:minWidth="200dp"
         android:minHeight="40dp"
@@ -115,10 +164,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="Make sure inputted fields are correct.\n All fields left blank will not be changed"
         android:textAlignment="center"
-        android:textColor="@color/custTextColor"
+        android:textStyle="bold"
+        android:textColor="#f29991"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newPassword_input"

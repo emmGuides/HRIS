@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ProfileFragment extends Fragment {
 
+    
     private FragmentProfileBinding binding;
     TextView name, age, email, password;
     Dialog changeName, changeAge, changeEmail, changePassword, changeProfile;
@@ -157,6 +158,11 @@ public class ProfileFragment extends Fragment {
                                           name.setText(user_oldFullName);
                                           email.setText(user_oldEmail);
                                           age.setText(user_oldAge);
+
+
+                                          nameEditTextProfile.setHint(user_oldFullName);
+                                          emailEditTextProfile.setHint(user_oldEmail);
+                                          ageEditTextProfile.setHint(user_oldAge);
                                       }
                                   }
 
@@ -175,6 +181,7 @@ public class ProfileFragment extends Fragment {
           }
         };
         thread.start();
+
 
 
         email.setOnLongClickListener(new View.OnLongClickListener() {

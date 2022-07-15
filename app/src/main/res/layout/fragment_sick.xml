@@ -27,7 +27,7 @@
 
     <TextView
         android:id="@+id/start_date_label"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Start Date"
@@ -65,7 +65,7 @@
     <TextView
         android:layout_marginTop="40dp"
         android:id="@+id/end_date_label"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="End Date"
@@ -98,17 +98,28 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="Autofill,HardcodedText,TextFields" />
 
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Additional Details"
+        android:textStyle="bold"
+        android:layout_marginBottom="-5dp"
+        android:layout_marginStart="7dp"
+        app:layout_constraintStart_toStartOf="@+id/sick_additional_details"
+        app:layout_constraintBottom_toTopOf="@id/sick_additional_details"
+        />
+
     <EditText
         android:id="@+id/sick_additional_details"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:ems="10"
-        android:hint="Additional Details..."
+        android:hint="Details"
         android:inputType="text"
         android:minHeight="48dp"
         android:textSize="18sp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintTop_toBottomOf="@+id/sick_end_date"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -122,7 +133,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sick_additional_details"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:layout_marginTop="40dp"
         android:focusableInTouchMode="true"
         android:focusable="true"
@@ -162,7 +173,7 @@
         android:layout_marginTop="40dp"
         android:layout_height="wrap_content"
         android:text="Availment"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:id="@+id/availment_radioGroup_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -198,13 +209,24 @@
 
     </RadioGroup>
 
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Approved By"
+        android:textStyle="bold"
+        android:layout_marginBottom="-5dp"
+        android:layout_marginStart="7dp"
+        app:layout_constraintStart_toStartOf="@+id/sick_approved_by"
+        app:layout_constraintBottom_toTopOf="@id/sick_approved_by"
+        />
+
     <EditText
         android:id="@+id/sick_approved_by"
         android:inputType="text"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="Approved By..."
+        android:layout_marginTop="60dp"
+        android:hint="Name"
         app:layout_constraintTop_toBottomOf="@id/availment_radioGroup"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
