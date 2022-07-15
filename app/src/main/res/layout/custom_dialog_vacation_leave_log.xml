@@ -74,7 +74,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="NestedScrolling"
-        android:divider="@color/custTextColor"
+        android:divider="@color/dividerColor"
         android:dividerHeight="1dp">
 
     </ListView>
