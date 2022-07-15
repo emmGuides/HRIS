@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LogIn extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView register;
+    private TextView register, forgotPassword;
     private EditText editTextEmail, editTextPassword;
     private Button signIn;
 
@@ -46,6 +46,9 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         signIn = (Button) findViewById(R.id.signIn);
         signIn.setOnClickListener(this);
 
+        forgotPassword = (TextView) findViewById(R.id.forgotPassword);
+        forgotPassword.setOnClickListener(this);
+
         editTextEmail = (EditText) findViewById(R.id.email);
         editTextPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -53,6 +56,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v){
         switch (v.getId()){
@@ -61,6 +65,9 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.signIn:
                 userLogin();
+                break;
+            case R.id.forgotPassword:
+                startActivity(new Intent(this, ForgotPassword.class));
                 break;
         }
     }
