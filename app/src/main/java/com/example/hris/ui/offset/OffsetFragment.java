@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,7 +33,8 @@ public class OffsetFragment extends Fragment {
     EditText offset_teamName, offset_teamLeader, offset_hours, offset_date, offset_reason;
     String userID, offset_teamNameS, offset_teamLeaderS, offset_hoursS, offset_dateS, offset_reasonS;
     final Calendar myCalendar = Calendar.getInstance();
-    Date formattedOvertimeDate;
+    TextView offsetDateLabel;
+    Thread thread;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     @SuppressLint("SimpleDateFormat")
@@ -56,6 +58,7 @@ public class OffsetFragment extends Fragment {
         offset_reason = binding.offsetReason;
 
         applyButton = binding.offsetApply;
+        offsetDateLabel = binding.offsetDateLabel;
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
@@ -108,8 +111,8 @@ public class OffsetFragment extends Fragment {
                 }
 
                 if(offset_dateS.isEmpty()){
-                    offset_reason.setError("Date above is required!");
-                    offset_reason.requestFocus();
+                    offsetDateLabel.setError("Date is required!");
+                    offsetDateLabel.requestFocus();
                     return;
                 }
 
@@ -123,7 +126,27 @@ public class OffsetFragment extends Fragment {
             }
         });
 
+        thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!thread.isInterrupted()) {
+                        Thread.sleep(3000);
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void run() {
+                                offsetDateLabel.setError(null);
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
 
+        thread.start();
         return root;
     }
 
@@ -156,6 +179,7 @@ public class OffsetFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        thread.interrupt();
         binding = null;
     }
 }

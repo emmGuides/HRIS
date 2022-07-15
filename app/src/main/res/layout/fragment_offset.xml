@@ -26,11 +26,21 @@
             app:layout_constraintVertical_bias="0.014" />
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team Name"
+            android:textStyle="bold"
+            android:textColor="@color/darkerTextColor"
+            app:layout_constraintStart_toStartOf="@+id/offset_Team"
+            app:layout_constraintBottom_toTopOf="@+id/offset_Team"
+            />
+
         <EditText
             android:id="@+id/offset_Team"
             android:hint="Team Name"
             android:inputType="text"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="80dp"
             android:layout_width="300dp"
             android:layout_height="48dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,8 +48,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="HardcodedText" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team Leader"
+            android:textStyle="bold"
+            android:textColor="@color/darkerTextColor"
+            app:layout_constraintStart_toStartOf="@+id/offset_TeamLeader"
+            app:layout_constraintBottom_toTopOf="@+id/offset_TeamLeader"
+            />
+
         <EditText
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="60dp"
             android:id="@+id/offset_TeamLeader"
             android:hint="Team Leader Name"
             android:layout_width="300dp"
@@ -49,16 +69,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Hours to Offset"
+            android:textStyle="bold"
+            android:textColor="@color/darkerTextColor"
+            app:layout_constraintStart_toStartOf="@+id/offset_totalHours"
+            app:layout_constraintBottom_toTopOf="@+id/offset_totalHours"
+            />
+
         <EditText
-            android:hint="Total Hours to Offset"
-            android:layout_width="300dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="100dp"
+            android:hint="Hours"
+            android:layout_marginTop="60dp"
             android:layout_height="48dp"
             android:id="@+id/offset_totalHours"
             android:inputType="number"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/offset_TeamLeader"
             app:layout_constraintTop_toBottomOf="@id/offset_TeamLeader"
+            />
+
+        <TextView
+            android:id="@+id/offset_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:text="Date of Offset"
+            android:paddingEnd="80dp"
+            android:textStyle="bold"
+            android:textColor="@color/darkerTextColor"
+            app:layout_constraintStart_toStartOf="@+id/offset_Date"
+            app:layout_constraintBottom_toTopOf="@+id/offset_Date"
             />
 
         <EditText
@@ -67,23 +110,32 @@
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:layout_marginTop="40dp"
-            android:layout_width="300dp"
+            android:layout_marginTop="60dp"
+            android:layout_width="150dp"
             android:layout_height="48dp"
             android:id="@+id/offset_Date"
-            android:hint="Date for Offset"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:hint="DD/MM/YYYY"
+            app:layout_constraintStart_toStartOf="@id/offset_totalHours"
             app:layout_constraintTop_toBottomOf="@id/offset_totalHours"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reason for Offset"
+            android:textStyle="bold"
+            android:textColor="@color/darkerTextColor"
+            app:layout_constraintStart_toStartOf="@+id/offset_reason"
+            app:layout_constraintBottom_toTopOf="@+id/offset_reason"
             />
 
         <EditText
             android:inputType="text"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="60dp"
             android:id="@+id/offset_reason"
             android:layout_width="300dp"
             android:layout_height="48dp"
-            android:hint="Reason for Offset"
+            android:hint="Indicate Reason"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/offset_Date"

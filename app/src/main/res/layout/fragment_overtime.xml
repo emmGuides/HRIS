@@ -26,6 +26,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.014" />
 
+    <TextView
+        android:id="@+id/overtime_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date of Overtime"
+        android:paddingEnd="80dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:textStyle="bold"
+        android:textColor="@color/darkerTextColor"
+        app:layout_constraintStart_toStartOf="@+id/overtime_Date"
+        app:layout_constraintBottom_toTopOf="@+id/overtime_Date"
+        />
+
     <EditText
         android:id="@+id/overtime_Date"
         android:clickable="false"
@@ -33,80 +47,128 @@
         android:ems="10"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:layout_width="300dp"
+        android:layout_width="150dp"
         android:layout_height="48dp"
-        android:layout_marginTop="120dp"
-        android:hint="Date of Overtime"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="80dp"
+        android:hint="DD/MM/YYYY"
+        app:layout_constraintStart_toStartOf="@+id/overtime_titlePosition"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Employee Position"
+        android:textStyle="bold"
+        android:textColor="@color/darkerTextColor"
+        app:layout_constraintStart_toStartOf="@+id/overtime_titlePosition"
+        app:layout_constraintBottom_toTopOf="@+id/overtime_titlePosition"
+        />
 
     <EditText
         android:id="@+id/overtime_titlePosition"
         android:inputType="text"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:layout_marginTop="40dp"
-        android:hint="Title/Position"
+        android:layout_marginTop="63dp"
+        android:hint="Your Title or Position"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/overtime_Date"
         tools:ignore="HardcodedText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team Name"
+        android:textStyle="bold"
+        android:textColor="@color/darkerTextColor"
+        app:layout_constraintStart_toStartOf="@+id/overtime_team"
+        app:layout_constraintBottom_toTopOf="@+id/overtime_team"
+        />
 
     <EditText
         android:id="@+id/overtime_team"
         android:inputType="text"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="63dp"
         android:hint="Team"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/overtime_titlePosition"
         tools:ignore="HardcodedText" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reason of Overtime"
+        android:textStyle="bold"
+        android:textColor="@color/darkerTextColor"
+        app:layout_constraintStart_toStartOf="@+id/overtime_reason"
+        app:layout_constraintBottom_toTopOf="@+id/overtime_reason"
+        />
+
     <EditText
         android:id="@+id/overtime_reason"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:inputType="text"
-        android:layout_marginTop="40dp"
-        android:hint="Reason of Overtime"
+        android:layout_marginTop="63dp"
+        android:hint="Indicate Reason"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/overtime_team"
+        app:layout_constraintTop_toBottomOf="@+id/overtime_totalHours"
         tools:ignore="HardcodedText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Number of Hours to Overtime"
+        android:textStyle="bold"
+        android:textColor="@color/darkerTextColor"
+        app:layout_constraintStart_toStartOf="@+id/overtime_totalHours"
+        app:layout_constraintBottom_toTopOf="@+id/overtime_totalHours"
+        />
 
     <EditText
         android:id="@+id/overtime_totalHours"
-        android:layout_width="300dp"
+        android:layout_width="100dp"
         android:layout_height="48dp"
-        android:layout_marginTop="40dp"
-        android:hint="Total Hours of Overtime"
+        android:layout_marginTop="63dp"
+        android:hint="Hours"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/overtime_reason"
+        app:layout_constraintStart_toStartOf="@+id/overtime_reason"
+        app:layout_constraintTop_toBottomOf="@+id/overtime_team"
         tools:ignore="HardcodedText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Approved By"
+        android:textStyle="bold"
+        android:textColor="@color/darkerTextColor"
+        app:layout_constraintStart_toStartOf="@+id/overtime_approvedBy"
+        app:layout_constraintBottom_toTopOf="@+id/overtime_approvedBy"
+        />
 
     <EditText
         android:id="@+id/overtime_approvedBy"
         android:inputType="text"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:layout_marginTop="40dp"
-        android:hint="Approved by"
+        android:layout_marginTop="63dp"
+        android:hint="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/overtime_totalHours"
+        app:layout_constraintTop_toBottomOf="@+id/overtime_reason"
         tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/overtime_apply"
         android:layout_width="300dp"
         android:layout_height="70dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="26dp"
         android:backgroundTint="#6499C3"
         android:text="Apply"
         android:textColor="@color/white"

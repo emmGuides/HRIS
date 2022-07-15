@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,8 @@ public class OvertimeFragment extends Fragment {
     EditText overtimeDate, titlePosition, teamOvertime, reasonOvertime, hoursOvertime, approvedByOvertime;
     String userID, overtimeDateS, titlePositionS, teamOvertimeS, reasonOvertimeS, hoursOvertimeS, approvedByS, OvertimeS;
     final Calendar myCalendar = Calendar.getInstance();
-    Date formattedOvertimeDate;
+    TextView dateOvertimeLabel;
+    Thread thread;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     @SuppressLint("SimpleDateFormat")
@@ -59,6 +61,7 @@ public class OvertimeFragment extends Fragment {
         approvedByOvertime = binding.overtimeApprovedBy;
 
         applyButton = binding.overtimeApply;
+        dateOvertimeLabel = binding.overtimeDateLabel;
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
@@ -95,8 +98,8 @@ public class OvertimeFragment extends Fragment {
                 approvedByS = approvedByOvertime.getText().toString().trim();
 
                 if(overtimeDateS.isEmpty()){
-                    titlePosition.setError("Date is Required Above");
-                    titlePosition.requestFocus();
+                    dateOvertimeLabel.setError("Date is Required");
+                    dateOvertimeLabel.requestFocus();
                     return;
                 }
 
@@ -130,11 +133,30 @@ public class OvertimeFragment extends Fragment {
                     return;
                 }
                 sendToDatabase();
-                Toast.makeText(getActivity(), "Send to DB here!", Toast.LENGTH_SHORT).show();
             }
         });
 
+        thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!thread.isInterrupted()) {
+                        Thread.sleep(3000);
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void run() {
+                                dateOvertimeLabel.setError(null);
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
 
+        thread.start();
         return root;
     }
 
@@ -172,6 +194,7 @@ public class OvertimeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        thread.interrupt();
         binding = null;
     }
 }
