@@ -108,3 +108,71 @@
 		- Added checks for EditText fields on Name and Age Dialog
 		- Users can now Change name and age since it is also updated in the DB
 		- Email and Password updates pushed behind schedule since they require authentication.
+		
+      July 7, 2022:
+		- Removed edit info Icons
+        	- replaced icons with onLongClick event listener
+        	- Added info icon and message to let users know they can Long Tap on the fields
+        	- Added calendar placeholder
+        	- Successfully read time ins and outs all child and children
+        	- Start finding ways on how to display all time ins and outs as a log
+      
+      July 8, 2022:
+		- Added times in and out log as list
+        	- Added Vacation Leave Request log as list
+        	- Added Sick Leave Request log as list
+        	- made all logs display necessary details
+        	- Added Log Out description to the log out button
+        	- Presented current state of the Application to Sach
+		
+      July 11, 2022:
+		- Created Overtime Fragment and added it in the navigation
+		- Created Offset Fragment and added it in the navigation
+		- Added Fields for users to fill up in Overtime Fragment
+		- Added necessary icons for these newer fragments in the navigation drawer
+		- Added field checks for all fields in the Overtime Fragment
+		- Form Button now pushes Hash map in the database from all the user fields
+		
+      July 12, 2022:
+		- Added Offset form fields input checks
+        	- Added User inputs into a Hashmap
+        	- Successfully push hashmaps into DB
+        	- Reformatted previous Sick and Vacation forms' data structure to hashmaps
+        	- Added Buttons for Dialog implementations of Logs in calendar fragment
+        	- Transferred Lists inside Dialogs
+        	- Removed lists on Calendar Fragment
+		
+      July 13, 2022:
+		- Added list view and empty view inside time in and out log dialog
+		- Added list view and empty view inside sick leave log dialog
+		- Added list view and empty view inside vacation leave log dialog
+		- Added List view (from hashmap) and empty view inside overtimes log dialog
+		- Added List view (from hashmap) and empty view inside offsets log dialog
+		- Overtimes and offsets now reads, writes, and displays data from realtime database
+		- All buttons in the calendar fragment have their UIs fixed and updated.
+		- Entire Calendar Fragment and all Logs Display currently done
+      
+      July 14, 2022:
+		- Added and adjusted fields in the vacation leave request form based on the sent layout
+		- Added and adjusted fields in the sick leave request form based on the sent layout
+		- Modified all data from forms to push Hashmaps (key-value pairs) of each pair of data required
+		- Added edit user profile button
+		- added checks for all fields in the user profile button
+		- added dialog for edit user profile
+		- new profile names and ages on this dialog now gets pushed to DB
+		
+      July 15, 2022:
+		- Adusted Offset form's fields in order to look better
+		- Adusted Overtime form's fields in order to look more appealing
+		- Added labels to all input text fields
+		- Added forgot password View
+		- Added reset password functionality through email
+		- Met with Sach for a weekly progress review of the application
+		
+      Sach's recommendations (July 15):
+		- divider navigation drawer
+		- no records available or found
+		- Create upload function (clarify file format if yes)
+		- Change 'Confirm' to Close icon (X button)
+		- Remove Password Field display in Profile page
+		- What Ms. Ariessa really wants to see in the HomePage, and the Teams page
