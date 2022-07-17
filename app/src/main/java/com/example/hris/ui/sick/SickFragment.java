@@ -320,7 +320,8 @@ public class SickFragment extends Fragment {
 
         Toast.makeText(getContext(), "Sick Leave Applied!", Toast.LENGTH_LONG).show();
         editTextStart.setText(""); editTextEnd.setText(""); details.setText(""); approvedBy.setText("");
-
+        medForm_group.clearCheck();
+        availment_group.clearCheck();
     }
     @Override
     public void onDestroyView() {
