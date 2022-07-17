@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ public class CalendarFragment extends Fragment {
     String ret_timeInOut, ret_vacation, ret_sick, ret_overtime, ret_offset;
     Dialog timeInOutLogDialog, vacationLeaveLogDialog, sickLeaveLogDialog, overtimeLogDialog, offsetLogDialog;
     Button timeInOutLog_BUTTON, vacationLeaveLog_BUTTON, sickLeaveLog_BUTTON, overtimeLog_BUTTON, offsetLog_BUTTON;
+    ImageButton offset_ImgButton;
 
     ArrayList<String> timeInOutList = new ArrayList<>();
     ArrayList<String> vacationLeavesList = new ArrayList<>();
@@ -60,6 +62,8 @@ public class CalendarFragment extends Fragment {
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
 
+
+
         // overtime Dialog
         overtimeLog_BUTTON = binding.overtimeLogBUTTON;
         overtimeLogDialog = new Dialog(getContext());
@@ -75,7 +79,7 @@ public class CalendarFragment extends Fragment {
         overtimeLog.setAdapter(arrayAdapter_overtime);
         overtimeLog.setEmptyView(overtimeLogDialog.findViewById(R.id.emptyListOvertime_TextView));
         // confirm button in overtime dialog
-        overtimeLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+        overtimeLogDialog.findViewById(R.id.close_BUTTON).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 overtimeLogDialog.dismiss();
@@ -94,7 +98,7 @@ public class CalendarFragment extends Fragment {
         offsetLogDialog = new Dialog(getContext());
         offsetLogDialog.setContentView(R.layout.custom_dialog_log_offset);
         offsetLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
-        offsetLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        offsetLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         offsetLogDialog.setCancelable(true);
         offsetLogDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         // offset ListView
@@ -104,7 +108,8 @@ public class CalendarFragment extends Fragment {
         offsetLog.setAdapter(arrayAdapter_offset);
         offsetLog.setEmptyView(offsetLogDialog.findViewById(R.id.emptyListOffset_TextView));
         // confirm button in offset dialog
-        offsetLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+
+        offsetLogDialog.findViewById(R.id.close_BUTTON).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 offsetLogDialog.dismiss();
@@ -133,8 +138,8 @@ public class CalendarFragment extends Fragment {
         arrayAdapter_timeInOut = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, timeInOutList);
         timeInOutLog.setAdapter(arrayAdapter_timeInOut);
         timeInOutLog.setEmptyView(timeInOutLogDialog.findViewById(R.id.emptyListTimeInOut_TextView));
-        // Confirm
-        timeInOutLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+        // Close
+        timeInOutLogDialog.findViewById(R.id.close_BUTTON).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 timeInOutLogDialog.dismiss();
@@ -164,8 +169,8 @@ public class CalendarFragment extends Fragment {
         arrayAdapter_vacation = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, vacationLeavesList);
         vacationLeaveLog.setAdapter(arrayAdapter_vacation);
         vacationLeaveLog.setEmptyView(vacationLeaveLogDialog.findViewById(R.id.emptyListVacation_TextView));
-        // Confirm
-        vacationLeaveLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+        // Close
+        vacationLeaveLogDialog.findViewById(R.id.close_BUTTON).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 vacationLeaveLogDialog.dismiss();
@@ -193,8 +198,8 @@ public class CalendarFragment extends Fragment {
         arrayAdapter_sick = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sickLeavesList);
         sickLeaveLog.setAdapter(arrayAdapter_sick);
         sickLeaveLog.setEmptyView(sickLeaveLogDialog.findViewById(R.id.emptyListSick_TextView));
-        // Confirm
-        sickLeaveLogDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+        // Close
+        sickLeaveLogDialog.findViewById(R.id.close_BUTTON).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sickLeaveLogDialog.dismiss();
