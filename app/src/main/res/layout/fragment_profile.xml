@@ -38,7 +38,7 @@
         android:textSize="11sp"
         android:textAllCaps="false"
         app:icon = "@drawable/edit_icon"
-        app:layout_constraintTop_toBottomOf="@id/password_actual"
+        app:layout_constraintTop_toBottomOf="@id/age_actual"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="50dp"
@@ -181,40 +181,6 @@
         app:layout_constraintTop_toBottomOf="@+id/age_actual"
         app:layout_constraintStart_toStartOf="@id/Age_desc"
         app:layout_constraintEnd_toEndOf="@id/age_actual"/>
-
-    <TextView
-        android:id="@+id/Password_desc"
-        android:text="Password:"
-        android:layout_marginStart="-80dp"
-        android:layout_marginTop="20dp"
-        android:textAlignment="viewStart"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        app:layout_constraintTop_toBottomOf="@+id/Age_desc"
-        app:layout_constraintStart_toStartOf="@id/user_Icon"
-        tools:ignore="HardcodedText" />
-
-
-    <TextView
-        android:clickable="true"
-        android:id="@+id/password_actual"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="-20dp"
-        android:minHeight="40dp"
-        android:textAlignment="center"
-        android:hint="•••••••••"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/Password_desc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.234"
-        app:layout_constraintStart_toEndOf="@+id/Password_desc"
-        app:layout_constraintTop_toTopOf="@+id/Password_desc"
-        app:layout_constraintVertical_bias="0.0"
-        android:focusable="true" />
 
     <ImageView
         android:paddingTop="10dp"

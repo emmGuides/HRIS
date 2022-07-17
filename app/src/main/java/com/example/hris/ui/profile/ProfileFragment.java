@@ -31,11 +31,11 @@ public class ProfileFragment extends Fragment {
 
 
     private FragmentProfileBinding binding;
-    TextView name, age, email, password;
-    Dialog changeName, changeAge, changeEmail, changePassword, changeProfile;
-    Button okayName, cancelName, okayAge, cancelAge, okayEmail, cancelEmail, okayPassword, cancelPassword,
+    TextView name, age, email;
+    Dialog changeName, changeAge, changeEmail, changeProfile;
+    Button okayName, cancelName, okayAge, cancelAge, okayEmail, cancelEmail,
             okayProfile, cancelProfile;
-    EditText emailEditText, nameEditText, ageEditText, passwordEditText_New, passwordEditText_Old,
+    EditText emailEditText, nameEditText, ageEditText,
             emailEditTextProfile, ageEditTextProfile,nameEditTextProfile, passwordEditText_NewProfile, passwordEditText_OldProfile;
     Button editProfile;
 
@@ -43,7 +43,7 @@ public class ProfileFragment extends Fragment {
     private DatabaseReference reference;
     private String userID;
 
-    String user_oldFullName, user_oldEmail, user_oldAge, user_oldPassword;
+    String user_oldFullName, user_oldEmail, user_oldAge;
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,7 +55,6 @@ public class ProfileFragment extends Fragment {
         name = binding.nameActual;
         age = binding.ageActual;
         email = binding.emailActual;
-        password = binding.passwordActual;
 
         editProfile = binding.editProfileBUTTON;
 
@@ -96,13 +95,6 @@ public class ProfileFragment extends Fragment {
         changeEmail.setCancelable(true);
         changeEmail.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
-        // change password dialog
-        changePassword = new Dialog(getContext());
-        changePassword.setContentView(R.layout.custom_dialog_change_password);
-        changePassword.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
-        changePassword.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        changePassword.setCancelable(true);
-        changePassword.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
         // Dialog Confirm and Cancel buttons
         okayName = changeName.findViewById(R.id.btn_okay);
@@ -114,9 +106,6 @@ public class ProfileFragment extends Fragment {
         okayEmail = changeEmail.findViewById(R.id.btn_okay);
         cancelEmail = changeEmail.findViewById(R.id.btn_cancel);
 
-        okayPassword = changePassword.findViewById(R.id.btn_okay);
-        cancelPassword = changePassword.findViewById(R.id.btn_cancel);
-
         okayProfile = changeProfile.findViewById(R.id.btn_okay);
         cancelProfile = changeProfile.findViewById(R.id.btn_cancel);
 
@@ -124,8 +113,6 @@ public class ProfileFragment extends Fragment {
         emailEditText = changeEmail.findViewById(R.id.newEmail_input);
         nameEditText = changeName.findViewById(R.id.newName_input);
         ageEditText = changeAge.findViewById(R.id.newAge_input);
-        passwordEditText_New = changePassword.findViewById(R.id.newPassword_input);
-        passwordEditText_Old = changePassword.findViewById(R.id.oldPassword_input);
 
         emailEditTextProfile = changeProfile.findViewById(R.id.newEmail_input);
         nameEditTextProfile = changeProfile.findViewById(R.id.newName_input);
@@ -181,14 +168,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public boolean onLongClick(View view) {
                 changeAge.show();
-                return false;
-            }
-        });
-
-        password.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                changePassword.show();
                 return false;
             }
         });
@@ -253,16 +232,6 @@ public class ProfileFragment extends Fragment {
         });
 
         cancelEmail.setOnClickListener(view -> changeEmail.dismiss());
-
-        okayPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "Passwords will be able to be updated in Future Updates", Toast.LENGTH_SHORT).show();
-                changePassword.dismiss();
-            }
-        });
-
-        cancelPassword.setOnClickListener(view -> changePassword.dismiss());
 
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
