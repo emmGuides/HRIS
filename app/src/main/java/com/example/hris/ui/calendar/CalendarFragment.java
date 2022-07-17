@@ -98,7 +98,7 @@ public class CalendarFragment extends Fragment {
         offsetLogDialog = new Dialog(getContext());
         offsetLogDialog.setContentView(R.layout.custom_dialog_log_offset);
         offsetLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
-        offsetLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        offsetLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         offsetLogDialog.setCancelable(true);
         offsetLogDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         // offset ListView
