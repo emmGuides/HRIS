@@ -41,7 +41,6 @@ public class CalendarFragment extends Fragment {
     String ret_timeInOut, ret_vacation, ret_sick, ret_overtime, ret_offset;
     Dialog timeInOutLogDialog, vacationLeaveLogDialog, sickLeaveLogDialog, overtimeLogDialog, offsetLogDialog;
     Button timeInOutLog_BUTTON, vacationLeaveLog_BUTTON, sickLeaveLog_BUTTON, overtimeLog_BUTTON, offsetLog_BUTTON;
-    ImageButton offset_ImgButton;
 
     ArrayList<String> timeInOutList = new ArrayList<>();
     ArrayList<String> vacationLeavesList = new ArrayList<>();
