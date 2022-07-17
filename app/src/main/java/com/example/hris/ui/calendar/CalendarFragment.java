@@ -63,7 +63,7 @@ public class CalendarFragment extends Fragment {
         // overtime Dialog
         overtimeLog_BUTTON = binding.overtimeLogBUTTON;
         overtimeLogDialog = new Dialog(getContext());
-        overtimeLogDialog.setContentView(R.layout.custom_dialog_overtime);
+        overtimeLogDialog.setContentView(R.layout.custom_dialog_log_overtime);
         overtimeLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
         overtimeLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         overtimeLogDialog.setCancelable(true);
@@ -92,7 +92,7 @@ public class CalendarFragment extends Fragment {
         // offset Dialog
         offsetLog_BUTTON = binding.offsetLogBUTTON;
         offsetLogDialog = new Dialog(getContext());
-        offsetLogDialog.setContentView(R.layout.custom_dialog_offset);
+        offsetLogDialog.setContentView(R.layout.custom_dialog_log_offset);
         offsetLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
         offsetLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         offsetLogDialog.setCancelable(true);
@@ -122,7 +122,7 @@ public class CalendarFragment extends Fragment {
         // timeInOutLog Dialog
         timeInOutLog_BUTTON = binding.timeInOutLogBUTTON;
         timeInOutLogDialog = new Dialog(getContext());
-        timeInOutLogDialog.setContentView(R.layout.custom_dialog_time_in_out_log);
+        timeInOutLogDialog.setContentView(R.layout.custom_dialog_log_time_in_out);
         timeInOutLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
         timeInOutLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         timeInOutLogDialog.setCancelable(true);
@@ -153,7 +153,7 @@ public class CalendarFragment extends Fragment {
         // Vacation Leave log Dialog
         vacationLeaveLog_BUTTON = binding.VacationLogBUTTON;
         vacationLeaveLogDialog = new Dialog(getContext());
-        vacationLeaveLogDialog.setContentView(R.layout.custom_dialog_vacation_leave_log);
+        vacationLeaveLogDialog.setContentView(R.layout.custom_dialog_log_vacation_leave);
         vacationLeaveLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
         vacationLeaveLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         vacationLeaveLogDialog.setCancelable(true);
@@ -182,7 +182,7 @@ public class CalendarFragment extends Fragment {
         // Sick Leave log Dialog
         sickLeaveLog_BUTTON = binding.SickLogBUTTON;
         sickLeaveLogDialog = new Dialog(getContext());
-        sickLeaveLogDialog.setContentView(R.layout.custom_dialog_sick_leave_log);
+        sickLeaveLogDialog.setContentView(R.layout.custom_dialog_log_sick_leave);
         sickLeaveLogDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
         sickLeaveLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         sickLeaveLogDialog.setCancelable(true);

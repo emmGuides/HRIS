@@ -63,7 +63,7 @@ public class HomeScreen extends AppCompatActivity {
 
         // dialog
         dialog = new Dialog(HomeScreen.this);
-        dialog.setContentView(R.layout.custom_dialog_log_out);
+        dialog.setContentView(R.layout.custom_dialog_logout);
         dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_backgroud));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
