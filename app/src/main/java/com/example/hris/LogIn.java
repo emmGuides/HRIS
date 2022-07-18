@@ -7,7 +7,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,8 +32,9 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
 
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
+    boolean passwordVisible;
 
-    @SuppressLint("SourceLockedOrientationActivity")
+    @SuppressLint({"SourceLockedOrientationActivity", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,32 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         editTextPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();
+
+        editTextPassword.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                final int rightTouch = 2;
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    if(motionEvent.getRawX() >= editTextPassword.getRight()-editTextPassword.getCompoundDrawables()[rightTouch].getBounds().width()){
+                        int selection = editTextPassword.getSelectionEnd();
+                        if(passwordVisible){
+                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.vis_off, 0);
+                            editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            passwordVisible=false;
+                        }
+                        else {
+                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.vis_on, 0);
+                            editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            passwordVisible=true;
+                        }
+                        editTextPassword.setSelection(selection);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
 
     }
 
