@@ -81,7 +81,10 @@
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="300dp"
+        android:drawableEnd="@drawable/vis_off"
+        android:layout_width="290dp"
+        android:paddingEnd="10dp"
+        android:longClickable="false"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"

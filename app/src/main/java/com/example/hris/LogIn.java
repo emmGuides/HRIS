@@ -62,6 +62,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                editTextPassword.requestFocus();
                 final int rightTouch = 2;
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP){
                     if(motionEvent.getRawX() >= editTextPassword.getRight()-editTextPassword.getCompoundDrawables()[rightTouch].getBounds().width()){
