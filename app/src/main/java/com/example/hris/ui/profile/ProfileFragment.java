@@ -3,8 +3,11 @@ package com.example.hris.ui.profile;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -38,6 +41,7 @@ public class ProfileFragment extends Fragment {
     EditText emailEditText, nameEditText, ageEditText,
             emailEditTextProfile, ageEditTextProfile,nameEditTextProfile, passwordEditText_NewProfile, passwordEditText_OldProfile;
     Button editProfile;
+    boolean passwordVisible;
 
     private FirebaseUser user;
     private DatabaseReference reference;
@@ -45,7 +49,7 @@ public class ProfileFragment extends Fragment {
 
     String user_oldFullName, user_oldEmail, user_oldAge;
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint({"UseCompatLoadingForDrawables", "ClickableViewAccessibility"})
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -119,6 +123,35 @@ public class ProfileFragment extends Fragment {
         ageEditTextProfile = changeProfile.findViewById(R.id.newAge_input);
         passwordEditText_NewProfile = changeProfile.findViewById(R.id.newPassword_input);
         passwordEditText_OldProfile = changeProfile.findViewById(R.id.oldPassword_input);
+
+        passwordEditText_OldProfile.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                final int rightTouch = 2;
+                passwordEditText_OldProfile.requestFocus();
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    if(motionEvent.getRawX() >= passwordEditText_OldProfile.getRight()-passwordEditText_OldProfile.getCompoundDrawables()[rightTouch].getBounds().width()){
+                        int selection = passwordEditText_OldProfile.getSelectionEnd();
+                        if(passwordVisible){
+                            passwordEditText_OldProfile.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.vis_off, 0);
+                            passwordEditText_OldProfile.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            passwordEditText_NewProfile.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            passwordVisible=false;
+                        }
+                        else {
+                            passwordEditText_OldProfile.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.vis_on, 0);
+                            passwordEditText_OldProfile.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            passwordEditText_NewProfile.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            passwordVisible=true;
+                        }
+                        passwordEditText_OldProfile.setSelection(selection);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
 
 
         reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {

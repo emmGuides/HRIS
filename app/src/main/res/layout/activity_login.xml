@@ -65,7 +65,7 @@
     <EditText
         android:id="@+id/password"
         android:drawableEnd="@drawable/vis_off"
-        android:layout_width="290dp"
+        android:layout_width="300dp"
         android:paddingEnd="10dp"
         android:longClickable="false"
         android:layout_height="wrap_content"
