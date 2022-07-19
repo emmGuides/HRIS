@@ -31,6 +31,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.hris.databinding.FragmentSickBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -47,6 +48,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class SickFragment extends Fragment {
 
@@ -54,18 +56,12 @@ public class SickFragment extends Fragment {
 
 
     private FragmentSickBinding binding;
-    EditText editTextStart = null;
-    EditText editTextEnd = null;
-    EditText details = null;
-    EditText approvedBy, editTextSelectFile;
+    EditText editTextStart, editTextEnd, details, approvedBy, editTextSelectFile;
     TextView numberOfDays, medFormLabel, availmentLabel, startDateLabel, endDateLabel;
-    String startDate;
-    String endDate;
-    String additionalDetails;
+    String startDate, endDate, additionalDetails;
     Thread thread, threadRadio;
     int differenceInDates = 0;
-    Date formattedStart = null;
-    Date formattedEnd = null;
+    Date formattedStart, formattedEnd;
 
     RadioGroup medForm_group, availment_group;
     RadioButton medForm_button, availment_button;
@@ -81,13 +77,12 @@ public class SickFragment extends Fragment {
     Button applyButton;
     Uri pdfUri;
     ProgressDialog progressDialog;
+    HashMap<String, String> toAddMap = new HashMap<>();
+
     private String userID;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SickViewModel sickViewModel =
-                new ViewModelProvider(this).get(SickViewModel.class);
-
         binding = FragmentSickBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -164,7 +159,10 @@ public class SickFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startDateLabel.setError(null);
-                new DatePickerDialog(getContext(),dateStart,myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(getContext(),dateStart,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -173,7 +171,10 @@ public class SickFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 endDateLabel.setError(null);
-                new DatePickerDialog(getContext(),dateEnd,myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(getContext(),dateEnd,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -301,9 +302,11 @@ public class SickFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        String url = "nopers";
+                        url = Objects.requireNonNull(Objects.requireNonNull(taskSnapshot.getMetadata()).getReference()).getDownloadUrl().toString();
+                        toAddMap.put("Certificate Url", url);
+                        Toast.makeText(getActivity(), url, Toast.LENGTH_LONG).show();
 
-                        String url = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-                        //TODO: upload this url to user database
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -318,6 +321,10 @@ public class SickFragment extends Fragment {
 
                         int currentProgress = (int) (100*snapshot.getBytesTransferred()/snapshot.getTotalByteCount());
                         progressDialog.setProgress(currentProgress);
+                        if(progressDialog.getProgress() == 100){
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "File upload complete", Toast.LENGTH_LONG).show();
+                        }
 
                     }
                 });
@@ -338,7 +345,7 @@ public class SickFragment extends Fragment {
     }
 
     private void selectFile() {
-        Toast.makeText(getActivity(), "Select File", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Select a File", Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent();
         intent.setType("application/pdf");
@@ -407,11 +414,8 @@ public class SickFragment extends Fragment {
 
     public void sendToDatabase (){
 
-        List<String> toAdd = new ArrayList<>();
-        HashMap<String, String> toAddMap = new HashMap<String, String>();
-
-        medForm_button =  getActivity().findViewById(medForm_group.getCheckedRadioButtonId());
-        availment_button = getActivity().findViewById(availment_group.getCheckedRadioButtonId());
+        medForm_button =  requireActivity().findViewById(medForm_group.getCheckedRadioButtonId());
+        availment_button = requireActivity().findViewById(availment_group.getCheckedRadioButtonId());
 
         toAddMap.put("Date of Request", dateToday);
         toAddMap.put("User ID", user.getUid());
@@ -423,17 +427,13 @@ public class SickFragment extends Fragment {
         toAddMap.put("Approved By", approvedBy.getText().toString().trim());
         toAddMap.put("Leave Duration", String.valueOf(differenceInDates));
 
-        toAdd.add(dateToday);
-        toAdd.add(startDate);
-        toAdd.add(endDate);
-        toAdd.add(additionalDetails);
-        toAdd.add(String.valueOf(differenceInDates));
-
         masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAddMap);
-        toAdd.clear();
+        toAddMap.clear();
 
         Toast.makeText(getContext(), "Sick Leave Applied!", Toast.LENGTH_LONG).show();
         editTextStart.setText(""); editTextEnd.setText(""); details.setText(""); approvedBy.setText("");
+        editTextSelectFile.setText(null);
+
         medForm_group.clearCheck();
         availment_group.clearCheck();
     }
