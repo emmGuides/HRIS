@@ -2,7 +2,6 @@ package com.example.hris.ui.sick;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -26,8 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,7 +42,7 @@ public class SickFragment extends Fragment {
     EditText editTextStart = null;
     EditText editTextEnd = null;
     EditText details = null;
-    EditText approvedBy, editTextFileUpload;
+    EditText approvedBy;
     TextView numberOfDays, medFormLabel, availmentLabel, startDateLabel, endDateLabel;
     String startDate;
     String endDate;
@@ -66,8 +62,7 @@ public class SickFragment extends Fragment {
 
     private DatabaseReference reference, masterList;
     private FirebaseUser user;
-    private StorageReference storageReference;
-    Button applyButton, fileUploadButton;
+    Button applyButton = null;
     private String userID;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -77,10 +72,6 @@ public class SickFragment extends Fragment {
 
         binding = FragmentSickBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        // file upload things
-        editTextFileUpload = binding.editTextAttachForm;
-        fileUploadButton = binding.fileUploadBUTTON;
 
         //radio buttons groups
         medForm_group = binding.medFormRadioGroup;
@@ -110,16 +101,6 @@ public class SickFragment extends Fragment {
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
         masterList = reference.child(userID).child("Sick Leaves");
-        storageReference = FirebaseStorage.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference();
-
-        // get file from storage editText
-        editTextFileUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectFile();
-            }
-        });
-
 
         // calendar popup
         DatePickerDialog.OnDateSetListener dateStart = new DatePickerDialog.OnDateSetListener() {
@@ -263,21 +244,6 @@ public class SickFragment extends Fragment {
         return root;
     }
 
-    private void selectFile() {
-        Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "PDF FILE SELECT"),12);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == 12 && resultCode==RESULT_OK ){
-
-        }
-    }
 
 
     // calendar pop up

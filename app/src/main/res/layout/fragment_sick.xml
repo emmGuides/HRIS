@@ -176,13 +176,9 @@
         android:drawableStart="@drawable/uploadfile_icon"
         android:hint=" Select File"
         android:textSize="14sp"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        tools:ignore="Autofill,HardcodedText,TextFields" />
-
+        />
+    
     <Button
-        android:id="@+id/file_upload_BUTTON"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
