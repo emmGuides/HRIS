@@ -171,24 +171,18 @@
         android:id="@+id/editText_attachForm"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:minWidth="150dp"
         app:layout_constraintTop_toBottomOf="@+id/medForm_RadioGroup"
         app:layout_constraintStart_toStartOf="@+id/medForm_RadioGroup"
         android:drawableStart="@drawable/uploadfile_icon"
         android:hint=" Select File"
         android:textSize="14sp"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         />
-    
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:textAllCaps="false"
-        android:backgroundTint="@color/buttonColor"
-        android:textColor="@color/darkerTextColor"
-        app:layout_constraintTop_toTopOf="@+id/editText_attachForm"
-        app:layout_constraintStart_toEndOf="@+id/editText_attachForm"
-        android:text="Upload"
-        />
+
 
 
     <TextView

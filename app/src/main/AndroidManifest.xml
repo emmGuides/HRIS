@@ -5,8 +5,14 @@
 
     <uses-permission
         android:name="android.permission.INTERNET"
-        tools:ignore="ManifestOrder" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        tools:ignore="ManifestOrder"
+        />
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        />
 
     <application
         android:allowBackup="true"

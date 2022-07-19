@@ -1,7 +1,13 @@
 package com.example.hris.ui.sick;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,14 +22,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.databinding.FragmentSickBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +57,7 @@ public class SickFragment extends Fragment {
     EditText editTextStart = null;
     EditText editTextEnd = null;
     EditText details = null;
-    EditText approvedBy;
+    EditText approvedBy, editTextSelectFile;
     TextView numberOfDays, medFormLabel, availmentLabel, startDateLabel, endDateLabel;
     String startDate;
     String endDate;
@@ -62,7 +77,10 @@ public class SickFragment extends Fragment {
 
     private DatabaseReference reference, masterList;
     private FirebaseUser user;
-    Button applyButton = null;
+    StorageReference storage;
+    Button applyButton;
+    Uri pdfUri;
+    ProgressDialog progressDialog;
     private String userID;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -90,8 +108,11 @@ public class SickFragment extends Fragment {
 
         // button
         applyButton = binding.sickApply;
-
-        //location
+        
+        // selectFile
+        editTextSelectFile = binding.editTextAttachForm;
+        
+        // additional Details
         details =  binding.sickAdditionalDetails;
 
         // days duration
@@ -99,8 +120,22 @@ public class SickFragment extends Fragment {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
+        storage = FirebaseStorage.getInstance("gs://hris-c2ba2.appspot.com").getReference();
         userID = user.getUid();
         masterList = reference.child(userID).child("Sick Leaves");
+
+        // choose file
+        editTextSelectFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+                if(ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                    selectFile();
+                }else{
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+                }
+            }
+        });
 
         // calendar popup
         DatePickerDialog.OnDateSetListener dateStart = new DatePickerDialog.OnDateSetListener() {
@@ -187,6 +222,15 @@ public class SickFragment extends Fragment {
                     approvedBy.requestFocus();
                     return;
                 }
+
+                if(pdfUri != null){
+                    uploadFile(pdfUri);
+                }
+                else {
+                    Toast.makeText(getActivity(), "Select a File", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 sendToDatabase();
             }
         });
@@ -244,7 +288,77 @@ public class SickFragment extends Fragment {
         return root;
     }
 
+    private void uploadFile(Uri pdfUri) {
 
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setTitle("Uploading File");
+        progressDialog.setProgress(0);
+        progressDialog.show();
+
+        String fileName = String.valueOf(System.currentTimeMillis());
+        storage.child("Medical Certificates").child(fileName).putFile(pdfUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        String url = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                        //TODO: upload this url to user database
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        Toast.makeText(getActivity(), "File Not Uploaded", Toast.LENGTH_LONG).show();
+
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+
+                        int currentProgress = (int) (100*snapshot.getBytesTransferred()/snapshot.getTotalByteCount());
+                        progressDialog.setProgress(currentProgress);
+
+                    }
+                });
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(requestCode == 9 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                selectFile();
+        }
+        else {
+            Toast.makeText(getActivity(), "Permission is needed for this", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    private void selectFile() {
+        Toast.makeText(getActivity(), "Select File", Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 86);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode == 86 && resultCode == Activity.RESULT_OK && data!=null){
+            pdfUri = data.getData();
+            editTextSelectFile.setText(data.getData().getLastPathSegment());
+            Toast.makeText(getActivity(), data.getData().getLastPathSegment(), Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(getActivity(), "Please select a file", Toast.LENGTH_LONG).show();
+        }
+
+    }
 
     // calendar pop up
     private void updateLabelStart(){
