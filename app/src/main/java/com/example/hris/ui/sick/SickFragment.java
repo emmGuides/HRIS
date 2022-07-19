@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.hris.R;
 import com.example.hris.databinding.FragmentSickBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,8 +61,6 @@ import java.util.Objects;
 public class SickFragment extends Fragment {
 
     final Calendar myCalendar = Calendar.getInstance();
-
-
     private FragmentSickBinding binding;
     EditText editTextStart, editTextEnd, details, approvedBy, editTextSelectFile;
     TextView numberOfDays, medFormLabel, availmentLabel, startDateLabel, endDateLabel;
@@ -68,16 +68,17 @@ public class SickFragment extends Fragment {
     Thread thread, threadRadio;
     int differenceInDates = 0;
     Date formattedStart, formattedEnd;
-
+    ImageView selectFormIcon;
 
     RadioGroup medForm_group, availment_group;
-    RadioButton medForm_button, availment_button;
+    RadioButton medForm_button, availment_button, constCheckButton;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat dateWord = new SimpleDateFormat("MMMM dd, yyyy");
     String dateToday = dateFormat.format(myCalendar.getTime());
 
+    private String userID, cmp;
     private DatabaseReference reference, masterList;
     private FirebaseUser user;
     StorageReference storage;
@@ -85,8 +86,6 @@ public class SickFragment extends Fragment {
     Uri pdfUri;
     ProgressDialog progressDialog;
     HashMap<String, String> toAddMap = new HashMap<>();
-
-    private String userID, cmp;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -113,6 +112,7 @@ public class SickFragment extends Fragment {
         
         // selectFile
         editTextSelectFile = binding.editTextAttachForm;
+        selectFormIcon = binding.uploadIcon;
         
         // additional Details
         details =  binding.sickAdditionalDetails;
@@ -240,15 +240,17 @@ public class SickFragment extends Fragment {
                     return;
                 }
 
-                if(pdfUri != null){
+                if(cmp.equals("Attach a Form") && pdfUri != null){
                     uploadFile(pdfUri);
                 }
-                else {
-                    Toast.makeText(getActivity(), "Select a File", Toast.LENGTH_LONG).show();
+                else if(cmp.equals("Attach a Form")){
+                    medFormLabel.setError("Attach your Medical Certificate");
+                    medFormLabel.requestFocus();
                     return;
+                } else {
+                    sendToDatabase();
                 }
 
-                sendToDatabase();
             }
         });
 
@@ -257,7 +259,7 @@ public class SickFragment extends Fragment {
             public void run(){
                 try{
                     while(!thread.isInterrupted()) {
-                        Thread.sleep(500);
+                        Thread.sleep(100);
                         requireActivity().runOnUiThread(new Runnable() {
                             @SuppressLint({"SetTextI18n", "ResourceType"})
                             @Override
@@ -270,18 +272,33 @@ public class SickFragment extends Fragment {
                                     numberOfDays.setText("Dates incomplete");
                                 }
                                 updateDuration();
-                                /*try{
-                                    cmp = (String) medForm_button.getText();
+
+                                constCheckButton =  requireActivity().findViewById(medForm_group.getCheckedRadioButtonId());
+                                try{
+                                    cmp = (String) constCheckButton.getText();
                                 } catch (Exception s){
-                                    cmp = "No";
+                                    cmp = "ehe";
                                 }
+
                                 if(!cmp.equals("Attach a Form")){
                                     editTextSelectFile.setText(null);
                                     editTextSelectFile.setEnabled(false);
+                                    editTextSelectFile.setVisibility(View.GONE);
+                                    selectFormIcon.setVisibility(View.GONE);
+                                    pdfUri = null;
                                 }
                                 else {
+                                    editTextSelectFile.setVisibility(View.VISIBLE);
+                                    selectFormIcon.setVisibility(View.VISIBLE);
                                     editTextSelectFile.setEnabled(true);
-                                }*/
+                                }
+
+                                if(!editTextSelectFile.getText().toString().trim().isEmpty()){
+                                    selectFormIcon.setImageResource(R.drawable.uploadfile_icon_green);
+                                }else{
+                                    selectFormIcon.setImageResource(R.drawable.uploadfile_icon);
+                                }
+
                             }
                         });
                     }
@@ -349,12 +366,13 @@ public class SickFragment extends Fragment {
         progressDialog.setProgress(0);
         progressDialog.show();
 
-        String fileName = String.valueOf(System.currentTimeMillis());
-        storage.child("Medical Certificates").child(userID).child(getFileName(pdfUri)).putFile(pdfUri)
+        String childPath = dateWord.format(Calendar.getInstance().getTime()) + " (Time In Milli: " +String.valueOf(System.currentTimeMillis()) +")";
+        storage.child("Medical Certificates").child(userID).child(childPath).child(getFileName(pdfUri)).putFile(pdfUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         url = Objects.requireNonNull(Objects.requireNonNull(taskSnapshot.getMetadata()).getReference()).getDownloadUrl().toString();
+                        sendToDatabase();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -467,13 +485,14 @@ public class SickFragment extends Fragment {
         toAddMap.put("Start Date", startDate);
         toAddMap.put("End Date", endDate);
         toAddMap.put("Details", additionalDetails);
-        toAddMap.put("Medical Certificate", (String) medForm_button.getText());
+        toAddMap.put("Has Med Cert", (String) medForm_button.getText());
         toAddMap.put("Availment", (String) availment_button.getText());
         toAddMap.put("Approved By", approvedBy.getText().toString().trim());
         toAddMap.put("Leave Duration", String.valueOf(differenceInDates));
         toAddMap.put("Certificate Url", url);
 
-        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAddMap);
+        String childPath = dateWord.format(Calendar.getInstance().getTime()) + " (Time In Milli: " +String.valueOf(System.currentTimeMillis()) +")";
+        masterList.child(childPath).setValue(toAddMap);
         toAddMap.clear();
 
         Toast.makeText(getContext(), "Sick Leave Applied!", Toast.LENGTH_LONG).show();

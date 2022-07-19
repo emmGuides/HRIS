@@ -175,6 +175,7 @@
         android:src="@drawable/uploadfile_icon"
         android:id="@+id/upload_Icon"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         />
 
     <EditText
@@ -186,6 +187,7 @@
         app:layout_constraintTop_toTopOf="@+id/upload_Icon"
         app:layout_constraintStart_toEndOf="@+id/upload_Icon"
         android:hint="Select File"
+        android:visibility="gone"
         android:layout_marginStart="5dp"
         android:textSize="14sp"
         android:clickable="false"
