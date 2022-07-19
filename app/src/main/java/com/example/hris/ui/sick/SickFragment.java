@@ -7,8 +7,13 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -58,10 +64,11 @@ public class SickFragment extends Fragment {
     private FragmentSickBinding binding;
     EditText editTextStart, editTextEnd, details, approvedBy, editTextSelectFile;
     TextView numberOfDays, medFormLabel, availmentLabel, startDateLabel, endDateLabel;
-    String startDate, endDate, additionalDetails;
+    String startDate, endDate, additionalDetails, url = "No File URL";
     Thread thread, threadRadio;
     int differenceInDates = 0;
     Date formattedStart, formattedEnd;
+
 
     RadioGroup medForm_group, availment_group;
     RadioButton medForm_button, availment_button;
@@ -79,7 +86,7 @@ public class SickFragment extends Fragment {
     ProgressDialog progressDialog;
     HashMap<String, String> toAddMap = new HashMap<>();
 
-    private String userID;
+    private String userID, cmp;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -129,6 +136,15 @@ public class SickFragment extends Fragment {
                 }else{
                     ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
                 }
+            }
+        });
+
+
+        editTextSelectFile.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(getActivity(), editTextSelectFile.getText().toString(), Toast.LENGTH_LONG).show();
+                return false;
             }
         });
 
@@ -243,7 +259,7 @@ public class SickFragment extends Fragment {
                     while(!thread.isInterrupted()) {
                         Thread.sleep(500);
                         requireActivity().runOnUiThread(new Runnable() {
-                            @SuppressLint("SetTextI18n")
+                            @SuppressLint({"SetTextI18n", "ResourceType"})
                             @Override
                             public void run() {
                                 startDate = editTextStart.getText().toString().trim();
@@ -254,6 +270,18 @@ public class SickFragment extends Fragment {
                                     numberOfDays.setText("Dates incomplete");
                                 }
                                 updateDuration();
+                                /*try{
+                                    cmp = (String) medForm_button.getText();
+                                } catch (Exception s){
+                                    cmp = "No";
+                                }
+                                if(!cmp.equals("Attach a Form")){
+                                    editTextSelectFile.setText(null);
+                                    editTextSelectFile.setEnabled(false);
+                                }
+                                else {
+                                    editTextSelectFile.setEnabled(true);
+                                }*/
                             }
                         });
                     }
@@ -289,6 +317,30 @@ public class SickFragment extends Fragment {
         return root;
     }
 
+    // get file name
+    @SuppressLint("Range")
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = requireActivity().getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
+
     private void uploadFile(Uri pdfUri) {
 
         progressDialog = new ProgressDialog(getActivity());
@@ -298,24 +350,20 @@ public class SickFragment extends Fragment {
         progressDialog.show();
 
         String fileName = String.valueOf(System.currentTimeMillis());
-        storage.child("Medical Certificates").child(fileName).putFile(pdfUri)
+        storage.child("Medical Certificates").child(userID).child(getFileName(pdfUri)).putFile(pdfUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String url = "nopers";
                         url = Objects.requireNonNull(Objects.requireNonNull(taskSnapshot.getMetadata()).getReference()).getDownloadUrl().toString();
-                        toAddMap.put("Certificate Url", url);
-                        Toast.makeText(getActivity(), url, Toast.LENGTH_LONG).show();
-
                     }
-                }).addOnFailureListener(new OnFailureListener() {
+                })
+                .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
                         Toast.makeText(getActivity(), "File Not Uploaded", Toast.LENGTH_LONG).show();
-
                     }
-                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
 
@@ -328,9 +376,7 @@ public class SickFragment extends Fragment {
 
                     }
                 });
-
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -358,8 +404,7 @@ public class SickFragment extends Fragment {
 
         if(requestCode == 86 && resultCode == Activity.RESULT_OK && data!=null){
             pdfUri = data.getData();
-            editTextSelectFile.setText(data.getData().getLastPathSegment());
-            Toast.makeText(getActivity(), data.getData().getLastPathSegment(), Toast.LENGTH_LONG).show();
+            editTextSelectFile.setText(getFileName(pdfUri));
         }
         else{
             Toast.makeText(getActivity(), "Please select a file", Toast.LENGTH_LONG).show();
@@ -426,6 +471,7 @@ public class SickFragment extends Fragment {
         toAddMap.put("Availment", (String) availment_button.getText());
         toAddMap.put("Approved By", approvedBy.getText().toString().trim());
         toAddMap.put("Leave Duration", String.valueOf(differenceInDates));
+        toAddMap.put("Certificate Url", url);
 
         masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAddMap);
         toAddMap.clear();
