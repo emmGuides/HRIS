@@ -35,6 +35,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private EditText editTextFullName, editTextAge, editTextEmail, editTextPassword;
     private ProgressBar progressBar;
     boolean passwordVisible;
+    private TextView goBackLogIn;
 
     @SuppressLint({"SourceLockedOrientationActivity", "ClickableViewAccessibility"})
     @Override
@@ -46,11 +47,12 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mAuth = FirebaseAuth.getInstance();
-        TextView banner = (TextView) findViewById(R.id.banner);
-        banner.setOnClickListener(this);
+        goBackLogIn = (TextView) findViewById(R.id.gobackLogIn);
+        goBackLogIn.setOnClickListener(this);
 
-        TextView registerUser = (Button) findViewById((R.id.register));
+        Button registerUser = (Button) findViewById((R.id.register));
         registerUser.setOnClickListener(this);
+
 
         editTextFullName = (EditText) findViewById(R.id.fullName);
         editTextAge = (EditText) findViewById(R.id.age);
@@ -90,7 +92,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case R.id.banner:
+            case R.id.gobackLogIn:
                 startActivity(new Intent(this, LogIn.class));
                 break;
             case R.id.register:
