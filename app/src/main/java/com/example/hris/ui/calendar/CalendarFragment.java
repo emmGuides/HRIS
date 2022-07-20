@@ -374,7 +374,7 @@ public class CalendarFragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                 try{
-                    ret_vacation = "\nDate Filed: " + snapshot.getKey()
+                    ret_vacation = "\nDate Filed: " + Objects.requireNonNull(snapshot.getKey()).replaceAll("\\(.*\\)", "")
                             + "\n\n\n\t\t\tFrom: " + ((HashMap<?, ?>) snapshot.getValue()).get("Start Date")
                             + "\n\t\t\tTo: " + ((HashMap<?, ?>) snapshot.getValue()).get("End Date")
                             + "\n\t\t\tNumber of Days: " + ((HashMap<?, ?>) snapshot.getValue()).get("Leave Duration")

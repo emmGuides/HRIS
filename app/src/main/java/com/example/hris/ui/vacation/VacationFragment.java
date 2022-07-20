@@ -312,8 +312,9 @@ public class VacationFragment extends Fragment {
         toAddMap.put("Approved By", approvedBy.getText().toString().trim());
         toAddMap.put("Leave Duration", String.valueOf(differenceInDates));
 
+        String childPath = dateWord.format(Calendar.getInstance().getTime()) + " (Time In Milli: " +String.valueOf(System.currentTimeMillis()) +")";
         Toast.makeText(getContext(), "Vacation Leave Applied!", Toast.LENGTH_LONG).show();
-        masterList.child(dateWord.format(Calendar.getInstance().getTime())).setValue(toAddMap);
+        masterList.child(childPath).setValue(toAddMap);
 
         editTextStart.setText(""); editTextEnd.setText(""); details.setText("");
         teamName.setText(null); managerName.setText(null); approvedBy.setText(null);
