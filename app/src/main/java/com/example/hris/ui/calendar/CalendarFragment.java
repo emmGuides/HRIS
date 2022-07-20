@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,8 @@ public class CalendarFragment extends Fragment {
     ArrayList<String> overtimeList = new ArrayList<>();
     ArrayList<String> offsetList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter_timeInOut, arrayAdapter_vacation, arrayAdapter_sick, arrayAdapter_overtime, arrayAdapter_offset;
+    HashMap<Integer, String> certificates = new HashMap<>();
+    int counter = 0;
 
     @SuppressLint({"ClickableViewAccessibility", "UseCompatLoadingForDrawables"})
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -115,6 +118,7 @@ public class CalendarFragment extends Fragment {
         downloadFileDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                downloadFile();
                 //TODO download file
             }
         });
@@ -242,8 +246,13 @@ public class CalendarFragment extends Fragment {
         sickLeaveLog.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                downloadFileDialog.show();
-                Toast.makeText(getActivity(), "hooyaai", Toast.LENGTH_SHORT).show();
+                TextView fileName = (TextView) downloadFileDialog.findViewById(R.id.download_filename);
+                fileName.setText(certificates.get(i));
+                if(!fileName.getText().toString().trim().equals("No Certificate")){
+                    downloadFileDialog.show();
+                }else{
+                    Toast.makeText(getActivity(), "No certificate uploaded", Toast.LENGTH_SHORT).show();
+                }
                 return false;
             }
         });
@@ -260,6 +269,7 @@ public class CalendarFragment extends Fragment {
         reference.child(userID).child("Offsets").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
                 try{
                     ret_offset = "\nDate of request: " + snapshot.getKey()
                             + "\n\n\t\t\tDate of Offset: " + ((HashMap<?, ?>) snapshot.getValue()).get("Date of Offset")
@@ -271,8 +281,6 @@ public class CalendarFragment extends Fragment {
                 } catch (Exception e) {
                     ret_offset = "Retrieval Error";
                 }
-
-
                 offsetList.add(ret_offset);
                 arrayAdapter_offset.notifyDataSetChanged();
             }
@@ -296,6 +304,7 @@ public class CalendarFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
         });
 
         // overtime list view reference
@@ -481,6 +490,12 @@ public class CalendarFragment extends Fragment {
         reference.child(userID).child("Sick Leaves").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                String cirtName;
+                try{
+                    cirtName = (String) ((HashMap<?, ?>) Objects.requireNonNull(snapshot.getValue())).get("Certificate Name");
+                } catch (Exception c){
+                    cirtName = "No Certificate";
+                }
 
                 try{
                     ret_sick = "\nDate Filed: " + Objects.requireNonNull(snapshot.getKey()).replaceAll("\\(.*\\)", "")
@@ -488,14 +503,14 @@ public class CalendarFragment extends Fragment {
                             + "\n\t\t\tTo: " + ((HashMap<?, ?>) snapshot.getValue()).get("End Date")
                             + "\n\t\t\tNumber of Days: " + ((HashMap<?, ?>) snapshot.getValue()).get("Leave Duration")
                             + "\n\t\t\tAvailment: " + ((HashMap<?, ?>) snapshot.getValue()).get("Availment")
-                            + "\n\n\t\t\tMedical Certificate: " //TODO
+                            + "\n\n\t\t\tMedical Certificate: \n\t\t\t" + cirtName
                             + "\n\n\t\t\tAdditional Details: " + ((HashMap<?, ?>) snapshot.getValue()).get("Details")
                             + "\n";
-
                 } catch (Exception e) {
                     ret_sick = "Something wrong happened.";
                 }
-
+                certificates.put(counter, cirtName);
+                counter++;
                 sickLeavesList.add(ret_sick);
                 arrayAdapter_sick.notifyDataSetChanged();
             }
@@ -547,6 +562,10 @@ public class CalendarFragment extends Fragment {
 
         return root;
 
+    }
+
+    private void downloadFile() {
+        storageReference = FirebaseStorage.getInstance("gs://hris-c2ba2.appspot.com").getReference().child(userID);
     }
 
     @Override

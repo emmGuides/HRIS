@@ -480,6 +480,13 @@ public class SickFragment extends Fragment {
         medForm_button =  requireActivity().findViewById(medForm_group.getCheckedRadioButtonId());
         availment_button = requireActivity().findViewById(availment_group.getCheckedRadioButtonId());
 
+        String cirtName;
+        try{
+            cirtName = getFileName(pdfUri);
+        }catch (Exception c){
+            cirtName = "No Certificate";
+        }
+
         toAddMap.put("Date of Request", dateToday);
         toAddMap.put("User ID", user.getUid());
         toAddMap.put("Start Date", startDate);
@@ -490,6 +497,7 @@ public class SickFragment extends Fragment {
         toAddMap.put("Approved By", approvedBy.getText().toString().trim());
         toAddMap.put("Leave Duration", String.valueOf(differenceInDates));
         toAddMap.put("Certificate Url", url);
+        toAddMap.put("Certificate Name", cirtName);
 
         String childPath = dateWord.format(Calendar.getInstance().getTime()) + " (Time In Milli: " +String.valueOf(System.currentTimeMillis()) +")";
         masterList.child(childPath).setValue(toAddMap);
