@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +27,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +40,8 @@ public class CalendarFragment extends Fragment {
     private FragmentCalendarBinding binding;
 
     private FirebaseUser user;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
     private DatabaseReference reference;
     private String userID;
     ListView timeInOutLog, vacationLeaveLog, sickLeaveLog, overtimeLog, offsetLog;
@@ -203,6 +209,15 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 sickLeaveLogDialog.dismiss();
+            }
+        });
+
+        // TODO: testo
+        sickLeaveLog.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(), "hooyaai", Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
 
@@ -446,12 +461,13 @@ public class CalendarFragment extends Fragment {
                             + "\n\t\t\tTo: " + ((HashMap<?, ?>) snapshot.getValue()).get("End Date")
                             + "\n\t\t\tNumber of Days: " + ((HashMap<?, ?>) snapshot.getValue()).get("Leave Duration")
                             + "\n\t\t\tAvailment: " + ((HashMap<?, ?>) snapshot.getValue()).get("Availment")
+                            + "\n\n\t\t\tMedical Certificate: " //TODO
                             + "\n\n\t\t\tAdditional Details: " + ((HashMap<?, ?>) snapshot.getValue()).get("Details")
                             + "\n";
+
                 } catch (Exception e) {
                     ret_sick = "Something wrong happened.";
                 }
-
 
                 sickLeavesList.add(ret_sick);
                 arrayAdapter_sick.notifyDataSetChanged();
