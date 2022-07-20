@@ -1,5 +1,7 @@
 package com.example.hris.ui.calendar;
 
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.DownloadManager;
@@ -64,7 +66,7 @@ public class CalendarFragment extends Fragment {
     ArrayAdapter<String> arrayAdapter_timeInOut, arrayAdapter_vacation, arrayAdapter_sick, arrayAdapter_overtime, arrayAdapter_offset;
     HashMap<Integer, String> certificates = new HashMap<>();
     HashMap<Integer, String> certificateKeyName = new HashMap<>();
-    String childName, fileNameS;
+    String childName, fileNameS, fileLoc;
     int counter = 0;
 
     @SuppressLint({"ClickableViewAccessibility", "UseCompatLoadingForDrawables"})
@@ -126,8 +128,13 @@ public class CalendarFragment extends Fragment {
         downloadFileDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                downloadFile();
-                //TODO download file
+                try{
+                    downloadFile();
+                    Toast.makeText(getActivity(), "File being downloaded", Toast.LENGTH_LONG).show();
+                }catch (Exception d){
+                    Toast.makeText(getActivity(), "Download error", Toast.LENGTH_SHORT).show();
+                }
+                downloadFileDialog.dismiss();
             }
         });
         downloadFileDialog.findViewById(R.id.close_BUTTON).setOnClickListener(new View.OnClickListener() {
@@ -578,14 +585,20 @@ public class CalendarFragment extends Fragment {
     }
 
     private void downloadFile() {
+        //gs://hris-c2ba2.appspot.com/Medical Certificates/wWyKVheNvjMupuK3xdEei1aUIXU2/July 19, 2022 (Time In Milli: 1658227360446)
+
+
+        fileLoc = "Medical Certificates/" + userID + "/" + childName + "/" + fileNameS;
+        Toast.makeText(getActivity(), fileLoc, Toast.LENGTH_LONG).show();
+        fileLoc = "Medical Certificates/1Ee8WSYm8JelIW3aywVyCBUFfMc2/July 20, 2022 (Time In Milli: 1658310073318)/special-commencement-issue-2015.pdf";
         storageReference = FirebaseStorage.getInstance("gs://hris-c2ba2.appspot.com").getReference()
-                .child("Medical Certificates").child(userID).child(childName).child(fileNameS);
+                .child(fileLoc);
 
         storageReference.getDownloadUrl()
                 .addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                downloadNow();
+                downloadNow(requireActivity(),fileNameS, DIRECTORY_DOWNLOADS, uri.toString());
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
@@ -596,14 +609,14 @@ public class CalendarFragment extends Fragment {
         });
     }
 
-    private void downloadNow(Context context, String fileName, String fileExtension, String destinationDirectory, String url) {
+    private void downloadNow(Context context, String completeFileName, String destinationDirectory, String url) {
 
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         Uri uri = Uri.parse(url);
         DownloadManager.Request request = new DownloadManager.Request(uri);
 
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalFilesDir(context, destinationDirectory, fileName+fileExtension);
+        request.setDestinationInExternalFilesDir(context, destinationDirectory, completeFileName);
 
         downloadManager.enqueue(request);
 
