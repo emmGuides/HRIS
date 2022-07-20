@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class CalendarFragment extends Fragment {
 
@@ -367,7 +368,7 @@ public class CalendarFragment extends Fragment {
             }
         });
 
-
+        // vacation leaves
         reference.child(userID).child("Vacation Leaves").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -434,12 +435,13 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+        // Sick Leaves
         reference.child(userID).child("Sick Leaves").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                 try{
-                    ret_sick = "\nDate Filed: " + snapshot.getKey()
+                    ret_sick = "\nDate Filed: " + Objects.requireNonNull(snapshot.getKey()).replaceAll("\\(.*\\)", "")
                             + "\n\n\n\t\t\tFrom: " + ((HashMap<?, ?>) snapshot.getValue()).get("Start Date")
                             + "\n\t\t\tTo: " + ((HashMap<?, ?>) snapshot.getValue()).get("End Date")
                             + "\n\t\t\tNumber of Days: " + ((HashMap<?, ?>) snapshot.getValue()).get("Leave Duration")
