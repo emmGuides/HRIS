@@ -514,7 +514,7 @@ public class SickFragment extends Fragment {
         availment_group.clearCheck();
     }
 
-    
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
