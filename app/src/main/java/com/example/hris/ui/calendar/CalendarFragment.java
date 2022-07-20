@@ -2,6 +2,9 @@ package com.example.hris.ui.calendar;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -21,6 +24,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentCalendarBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -32,6 +37,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -57,6 +63,8 @@ public class CalendarFragment extends Fragment {
     ArrayList<String> offsetList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter_timeInOut, arrayAdapter_vacation, arrayAdapter_sick, arrayAdapter_overtime, arrayAdapter_offset;
     HashMap<Integer, String> certificates = new HashMap<>();
+    HashMap<Integer, String> certificateKeyName = new HashMap<>();
+    String childName, fileNameS;
     int counter = 0;
 
     @SuppressLint({"ClickableViewAccessibility", "UseCompatLoadingForDrawables"})
@@ -253,6 +261,10 @@ public class CalendarFragment extends Fragment {
                 }else{
                     Toast.makeText(getActivity(), "No certificate uploaded", Toast.LENGTH_SHORT).show();
                 }
+
+                childName = certificateKeyName.get(i);
+                fileNameS = certificates.get(i);
+
                 return false;
             }
         });
@@ -510,6 +522,7 @@ public class CalendarFragment extends Fragment {
                     ret_sick = "Something wrong happened.";
                 }
                 certificates.put(counter, cirtName);
+                certificateKeyName.put(counter, (String) snapshot.getKey());
                 counter++;
                 sickLeavesList.add(ret_sick);
                 arrayAdapter_sick.notifyDataSetChanged();
@@ -565,7 +578,35 @@ public class CalendarFragment extends Fragment {
     }
 
     private void downloadFile() {
-        storageReference = FirebaseStorage.getInstance("gs://hris-c2ba2.appspot.com").getReference().child(userID);
+        storageReference = FirebaseStorage.getInstance("gs://hris-c2ba2.appspot.com").getReference()
+                .child("Medical Certificates").child(userID).child(childName).child(fileNameS);
+
+        storageReference.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                downloadNow();
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+    private void downloadNow(Context context, String fileName, String fileExtension, String destinationDirectory, String url) {
+
+        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(url);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalFilesDir(context, destinationDirectory, fileName+fileExtension);
+
+        downloadManager.enqueue(request);
+
     }
 
     @Override
