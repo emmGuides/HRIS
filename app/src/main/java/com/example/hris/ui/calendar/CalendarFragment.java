@@ -1,16 +1,24 @@
 package com.example.hris.ui.calendar;
 
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +26,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentCalendarBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -25,8 +35,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -36,11 +49,13 @@ public class CalendarFragment extends Fragment {
     private FragmentCalendarBinding binding;
 
     private FirebaseUser user;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
     private DatabaseReference reference;
     private String userID;
     ListView timeInOutLog, vacationLeaveLog, sickLeaveLog, overtimeLog, offsetLog;
     String ret_timeInOut, ret_vacation, ret_sick, ret_overtime, ret_offset;
-    Dialog timeInOutLogDialog, vacationLeaveLogDialog, sickLeaveLogDialog, overtimeLogDialog, offsetLogDialog;
+    Dialog timeInOutLogDialog, vacationLeaveLogDialog, sickLeaveLogDialog, overtimeLogDialog, offsetLogDialog, downloadFileDialog;
     Button timeInOutLog_BUTTON, vacationLeaveLog_BUTTON, sickLeaveLog_BUTTON, overtimeLog_BUTTON, offsetLog_BUTTON;
 
     ArrayList<String> timeInOutList = new ArrayList<>();
@@ -49,6 +64,10 @@ public class CalendarFragment extends Fragment {
     ArrayList<String> overtimeList = new ArrayList<>();
     ArrayList<String> offsetList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter_timeInOut, arrayAdapter_vacation, arrayAdapter_sick, arrayAdapter_overtime, arrayAdapter_offset;
+    HashMap<Integer, String> certificates = new HashMap<>();
+    HashMap<Integer, String> certificateKeyName = new HashMap<>();
+    String childName, fileNameS, fileLoc;
+    int counter = 0;
 
     @SuppressLint({"ClickableViewAccessibility", "UseCompatLoadingForDrawables"})
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -90,6 +109,38 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 overtimeLogDialog.show();
+            }
+        });
+
+        // download file Dialog
+        downloadFileDialog = new Dialog(getContext());
+        downloadFileDialog.setContentView(R.layout.custom_dialog_downloadfile);
+        downloadFileDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        downloadFileDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        downloadFileDialog.setCancelable(false);
+        downloadFileDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        downloadFileDialog.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadFileDialog.dismiss();
+            }
+        });
+        downloadFileDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    downloadFile();
+                    Toast.makeText(getActivity(), "File being downloaded", Toast.LENGTH_LONG).show();
+                }catch (Exception d){
+                    Toast.makeText(getActivity(), "Download error", Toast.LENGTH_SHORT).show();
+                }
+                downloadFileDialog.dismiss();
+            }
+        });
+        downloadFileDialog.findViewById(R.id.close_BUTTON).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadFileDialog.dismiss();
             }
         });
 
@@ -206,6 +257,25 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+        // TODO: testo
+        sickLeaveLog.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView fileName = (TextView) downloadFileDialog.findViewById(R.id.download_filename);
+                fileName.setText(certificates.get(i));
+                if(!fileName.getText().toString().trim().equals("No Certificate")){
+                    downloadFileDialog.show();
+                }else{
+                    Toast.makeText(getActivity(), "No certificate uploaded", Toast.LENGTH_SHORT).show();
+                }
+
+                childName = certificateKeyName.get(i);
+                fileNameS = certificates.get(i);
+
+                return false;
+            }
+        });
+
         sickLeaveLog_BUTTON.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -218,6 +288,7 @@ public class CalendarFragment extends Fragment {
         reference.child(userID).child("Offsets").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
                 try{
                     ret_offset = "\nDate of request: " + snapshot.getKey()
                             + "\n\n\t\t\tDate of Offset: " + ((HashMap<?, ?>) snapshot.getValue()).get("Date of Offset")
@@ -229,8 +300,6 @@ public class CalendarFragment extends Fragment {
                 } catch (Exception e) {
                     ret_offset = "Retrieval Error";
                 }
-
-
                 offsetList.add(ret_offset);
                 arrayAdapter_offset.notifyDataSetChanged();
             }
@@ -254,6 +323,7 @@ public class CalendarFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
         });
 
         // overtime list view reference
@@ -439,6 +509,12 @@ public class CalendarFragment extends Fragment {
         reference.child(userID).child("Sick Leaves").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                String cirtName;
+                try{
+                    cirtName = (String) ((HashMap<?, ?>) Objects.requireNonNull(snapshot.getValue())).get("Certificate Name");
+                } catch (Exception c){
+                    cirtName = "No Certificate";
+                }
 
                 try{
                     ret_sick = "\nDate Filed: " + Objects.requireNonNull(snapshot.getKey()).replaceAll("\\(.*\\)", "")
@@ -446,13 +522,15 @@ public class CalendarFragment extends Fragment {
                             + "\n\t\t\tTo: " + ((HashMap<?, ?>) snapshot.getValue()).get("End Date")
                             + "\n\t\t\tNumber of Days: " + ((HashMap<?, ?>) snapshot.getValue()).get("Leave Duration")
                             + "\n\t\t\tAvailment: " + ((HashMap<?, ?>) snapshot.getValue()).get("Availment")
+                            + "\n\n\t\t\tMedical Certificate: \n\t\t\t" + cirtName
                             + "\n\n\t\t\tAdditional Details: " + ((HashMap<?, ?>) snapshot.getValue()).get("Details")
                             + "\n";
                 } catch (Exception e) {
                     ret_sick = "Something wrong happened.";
                 }
-
-
+                certificates.put(counter, cirtName);
+                certificateKeyName.put(counter, (String) snapshot.getKey());
+                counter++;
                 sickLeavesList.add(ret_sick);
                 arrayAdapter_sick.notifyDataSetChanged();
             }
@@ -503,6 +581,44 @@ public class CalendarFragment extends Fragment {
         });
 
         return root;
+
+    }
+
+    private void downloadFile() {
+
+        fileLoc = "Medical Certificates/" + userID + "/" + childName + "/" + fileNameS;
+        storageReference = FirebaseStorage.getInstance("gs://hris-c2ba2.appspot.com").getReference()
+                .child(fileLoc);
+
+        storageReference.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                downloadNow(requireActivity(),fileNameS, DIRECTORY_DOWNLOADS, uri.toString());
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                try{
+                    Toast.makeText(getActivity(), "Download Failed", Toast.LENGTH_LONG).show();
+                } catch (Error f){
+                    // not needed as of now
+                }
+            }
+        });
+    }
+
+    private void downloadNow(Context context, String completeFileName, String destinationDirectory, String url) {
+
+        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(url);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalFilesDir(context, destinationDirectory, completeFileName);
+
+        downloadManager.enqueue(request);
 
     }
 

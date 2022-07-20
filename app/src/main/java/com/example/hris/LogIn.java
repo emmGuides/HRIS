@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
@@ -134,6 +136,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                     // TODO VERIFY EMAIL: DISABLED FOR NOW SINCE IT IS IN DEVELOPMENT (working)
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     assert user != null;
+
                     /*
                     if(user.isEmailVerified()){
                         startActivity(new Intent(LogIn.this, HomeScreen.class));
@@ -144,8 +147,8 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(LogIn.this, "Check your Email to Verify Account", Toast.LENGTH_LONG).show();
 
                     }
-
                      */
+
                     // change for_test_final.class to HomeScreen.class to stop checking
                     startActivity(new Intent(LogIn.this, HomeScreen.class));
                     progressBar.setVisibility(View.GONE);
@@ -158,8 +161,30 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         });
     }
 
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
     public void onBackPressed() {
-        Toast.makeText(LogIn.this, "Register or Log in to proceed", Toast.LENGTH_SHORT).show();
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            try{
+                finishAndRemoveTask();
+            } catch (Exception e) {
+                this.finishAffinity();
+            }
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Tap back again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
 }

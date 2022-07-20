@@ -44,6 +44,8 @@ public class VacationFragment extends Fragment {
     EditText teamName, managerName, approvedBy;
     TextView numberOfDays, startDateTextView, endDateTextView;
     ProgressBar progressBar;
+    String childPath;
+
 
     String startDate;
     String endDate;
@@ -151,6 +153,7 @@ public class VacationFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                childPath = dateWord.format(Calendar.getInstance().getTime()) + " (Time In Milli: " +String.valueOf(System.currentTimeMillis()) +")";
                 if(startDate.isEmpty()){
                     startDateTextView.setError("Start Date is required");
                     startDateTextView.requestFocus();
@@ -187,7 +190,7 @@ public class VacationFragment extends Fragment {
                     return;
                 }
 
-                sendToDatabase();
+                sendToDatabase(childPath);
             }
 
         });
@@ -290,7 +293,7 @@ public class VacationFragment extends Fragment {
             }
     }
 
-    public void sendToDatabase (){
+    public void sendToDatabase (String childPath){
 
         List <String> toAdd = new ArrayList<>();
         toAdd.add(dateToday);
@@ -312,7 +315,6 @@ public class VacationFragment extends Fragment {
         toAddMap.put("Approved By", approvedBy.getText().toString().trim());
         toAddMap.put("Leave Duration", String.valueOf(differenceInDates));
 
-        String childPath = dateWord.format(Calendar.getInstance().getTime()) + " (Time In Milli: " +String.valueOf(System.currentTimeMillis()) +")";
         Toast.makeText(getContext(), "Vacation Leave Applied!", Toast.LENGTH_LONG).show();
         masterList.child(childPath).setValue(toAddMap);
 
