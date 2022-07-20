@@ -136,6 +136,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                     // TODO VERIFY EMAIL: DISABLED FOR NOW SINCE IT IS IN DEVELOPMENT (working)
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     assert user != null;
+
                     /*
                     if(user.isEmailVerified()){
                         startActivity(new Intent(LogIn.this, HomeScreen.class));
@@ -146,8 +147,8 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(LogIn.this, "Check your Email to Verify Account", Toast.LENGTH_LONG).show();
 
                     }
-
                      */
+
                     // change for_test_final.class to HomeScreen.class to stop checking
                     startActivity(new Intent(LogIn.this, HomeScreen.class));
                     progressBar.setVisibility(View.GONE);
@@ -166,6 +167,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
+            this.finishAffinity();
             return;
         }
 
