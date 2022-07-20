@@ -46,7 +46,7 @@ public class CalendarFragment extends Fragment {
     private String userID;
     ListView timeInOutLog, vacationLeaveLog, sickLeaveLog, overtimeLog, offsetLog;
     String ret_timeInOut, ret_vacation, ret_sick, ret_overtime, ret_offset;
-    Dialog timeInOutLogDialog, vacationLeaveLogDialog, sickLeaveLogDialog, overtimeLogDialog, offsetLogDialog;
+    Dialog timeInOutLogDialog, vacationLeaveLogDialog, sickLeaveLogDialog, overtimeLogDialog, offsetLogDialog, downloadFileDialog;
     Button timeInOutLog_BUTTON, vacationLeaveLog_BUTTON, sickLeaveLog_BUTTON, overtimeLog_BUTTON, offsetLog_BUTTON;
 
     ArrayList<String> timeInOutList = new ArrayList<>();
@@ -96,6 +96,32 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 overtimeLogDialog.show();
+            }
+        });
+
+        // download file Dialog
+        downloadFileDialog = new Dialog(getContext());
+        downloadFileDialog.setContentView(R.layout.custom_dialog_downloadfile);
+        downloadFileDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        downloadFileDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        downloadFileDialog.setCancelable(false);
+        downloadFileDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        downloadFileDialog.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadFileDialog.dismiss();
+            }
+        });
+        downloadFileDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO download file
+            }
+        });
+        downloadFileDialog.findViewById(R.id.close_BUTTON).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                downloadFileDialog.dismiss();
             }
         });
 
@@ -216,6 +242,7 @@ public class CalendarFragment extends Fragment {
         sickLeaveLog.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                downloadFileDialog.show();
                 Toast.makeText(getActivity(), "hooyaai", Toast.LENGTH_SHORT).show();
                 return false;
             }

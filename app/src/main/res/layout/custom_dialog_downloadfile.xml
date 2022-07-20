@@ -55,16 +55,16 @@
         android:textAlignment="center"
         android:gravity="center"
         android:textAllCaps="false"
-        android:background="but"
         android:paddingTop="5dp"
         android:textColor="@color/darkerTextColor"
-        app:layout_constraintEnd_toEndOf="@+id/download_label"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/download_filename"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="40dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="10sp"
         app:drawableEndCompat="@drawable/download_icon" />
-    
+
     <TextView
         android:id="@+id/btn_cancel"
         android:layout_width="90sp"
@@ -74,10 +74,11 @@
         android:textColor="#eb4034"
         android:layout_marginBottom="40dp"
         android:layout_marginTop="30dp"
+        android:layout_marginStart="10sp"
         android:paddingTop="5dp"
         android:textAlignment="center"
         android:gravity="center"
-        app:layout_constraintStart_toStartOf="@+id/download_label"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/download_filename"
         app:layout_constraintBottom_toBottomOf="parent"
         />
