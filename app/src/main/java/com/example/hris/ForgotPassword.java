@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +22,7 @@ public class ForgotPassword extends AppCompatActivity {
     private EditText emailEditText;
     private ProgressBar progressBar;
     private Button resetPasswordBUTTON;
+    private TextView logInInstead;
 
     FirebaseAuth auth;
 
@@ -32,6 +34,7 @@ public class ForgotPassword extends AppCompatActivity {
         emailEditText = (EditText) findViewById(R.id.email);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         resetPasswordBUTTON = (Button) findViewById(R.id.resetPassword_BUTTON);
+        logInInstead = (TextView) findViewById(R.id.gobackLogIn);
 
         auth = FirebaseAuth.getInstance();
 
@@ -39,6 +42,13 @@ public class ForgotPassword extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 resetPassword();
+            }
+        });
+
+        logInInstead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ForgotPassword.this, LogIn.class));
             }
         });
 

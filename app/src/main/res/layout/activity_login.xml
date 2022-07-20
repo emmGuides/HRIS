@@ -90,7 +90,7 @@
         android:backgroundTint="@color/buttonColor"
         android:text="Login"
         android:textColor="@color/darkerTextColor"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textAllCaps="false"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -104,10 +104,9 @@
         android:text="Forgot Password?"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/signIn"
         app:layout_constraintTop_toBottomOf="@+id/signIn"
         android:layout_marginTop="25dp"
-        android:layout_marginStart="40dp"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
     <TextView
@@ -117,10 +116,9 @@
         android:text="Register"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/signIn"
         app:layout_constraintTop_toBottomOf="@+id/signIn"
         android:layout_marginTop="25dp"
-        android:layout_marginEnd="50dp"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
 

@@ -273,8 +273,8 @@ public class SickFragment extends Fragment {
                                 }
                                 updateDuration();
 
-                                constCheckButton =  requireActivity().findViewById(medForm_group.getCheckedRadioButtonId());
                                 try{
+                                    constCheckButton =  requireActivity().findViewById(medForm_group.getCheckedRadioButtonId());
                                     cmp = (String) constCheckButton.getText();
                                 } catch (Exception s){
                                     cmp = "ehe";
@@ -409,7 +409,7 @@ public class SickFragment extends Fragment {
     }
 
     private void selectFile() {
-        Toast.makeText(getActivity(), "Select a File", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Select a File", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent();
         intent.setType("application/pdf");
