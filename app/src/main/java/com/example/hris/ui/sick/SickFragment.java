@@ -77,6 +77,7 @@ public class SickFragment extends Fragment {
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat dateWord = new SimpleDateFormat("MMMM dd, yyyy");
     String dateToday = dateFormat.format(myCalendar.getTime());
+    String childPath;
 
     private String userID, cmp;
     private DatabaseReference reference, masterList;
@@ -199,6 +200,7 @@ public class SickFragment extends Fragment {
             @SuppressLint("ResourceType")
             @Override
             public void onClick(View view) {
+                childPath = dateWord.format(Calendar.getInstance().getTime()) + " (Time In Milli: " +String.valueOf(System.currentTimeMillis()) +")";
                 String startDate = editTextStart.getText().toString().trim();
                 String endDate = editTextEnd.getText().toString().trim();
                 String additionalDetails = details.getText().toString().trim();
@@ -248,7 +250,7 @@ public class SickFragment extends Fragment {
                     medFormLabel.requestFocus();
                     return;
                 } else {
-                    sendToDatabase();
+                    sendToDatabase(childPath);
                 }
 
             }
@@ -366,13 +368,12 @@ public class SickFragment extends Fragment {
         progressDialog.setProgress(0);
         progressDialog.show();
 
-        String childPath = dateWord.format(Calendar.getInstance().getTime()) + " (Time In Milli: " +String.valueOf(System.currentTimeMillis()) +")";
         storage.child("Medical Certificates").child(userID).child(childPath).child(getFileName(pdfUri)).putFile(pdfUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         url = Objects.requireNonNull(Objects.requireNonNull(taskSnapshot.getMetadata()).getReference()).getDownloadUrl().toString();
-                        sendToDatabase();
+                        sendToDatabase(childPath);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -444,10 +445,12 @@ public class SickFragment extends Fragment {
         editTextEnd.setText(dateFormat.format(myCalendar.getTime()));
     }
 
+    // check if dates are complete
     private Boolean isEditTextEmpty(){
         return (TextUtils.isEmpty(editTextStart.getText().toString()) || TextUtils.isEmpty(editTextEnd.getText().toString()));
     }
 
+    // compute difference between two dates (Sick Leave End Date - Sick Leave Start Date)
     @SuppressLint("SetTextI18n")
     private void updateDuration(){
 
@@ -475,7 +478,8 @@ public class SickFragment extends Fragment {
         }
     }
 
-    public void sendToDatabase (){
+    // send to DB, childpath as argument so that path name is consistent on both database and cloud storage
+    public void sendToDatabase (String childPath){
 
         medForm_button =  requireActivity().findViewById(medForm_group.getCheckedRadioButtonId());
         availment_button = requireActivity().findViewById(availment_group.getCheckedRadioButtonId());
@@ -499,7 +503,6 @@ public class SickFragment extends Fragment {
         toAddMap.put("Certificate Url", url);
         toAddMap.put("Certificate Name", cirtName);
 
-        String childPath = dateWord.format(Calendar.getInstance().getTime()) + " (Time In Milli: " +String.valueOf(System.currentTimeMillis()) +")";
         masterList.child(childPath).setValue(toAddMap);
         toAddMap.clear();
 
@@ -510,6 +513,8 @@ public class SickFragment extends Fragment {
         medForm_group.clearCheck();
         availment_group.clearCheck();
     }
+
+    
     @Override
     public void onDestroyView() {
         super.onDestroyView();

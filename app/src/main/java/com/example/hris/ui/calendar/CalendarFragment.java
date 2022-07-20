@@ -585,12 +585,8 @@ public class CalendarFragment extends Fragment {
     }
 
     private void downloadFile() {
-        //gs://hris-c2ba2.appspot.com/Medical Certificates/wWyKVheNvjMupuK3xdEei1aUIXU2/July 19, 2022 (Time In Milli: 1658227360446)
-
 
         fileLoc = "Medical Certificates/" + userID + "/" + childName + "/" + fileNameS;
-        Toast.makeText(getActivity(), fileLoc, Toast.LENGTH_LONG).show();
-        fileLoc = "Medical Certificates/1Ee8WSYm8JelIW3aywVyCBUFfMc2/July 20, 2022 (Time In Milli: 1658310073318)/special-commencement-issue-2015.pdf";
         storageReference = FirebaseStorage.getInstance("gs://hris-c2ba2.appspot.com").getReference()
                 .child(fileLoc);
 
@@ -604,7 +600,11 @@ public class CalendarFragment extends Fragment {
                 .addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
+                try{
+                    Toast.makeText(getActivity(), "Download Failed", Toast.LENGTH_LONG).show();
+                } catch (Error f){
+                    // not needed as of now
+                }
             }
         });
     }
