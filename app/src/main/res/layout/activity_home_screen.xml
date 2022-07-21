@@ -23,17 +23,6 @@
         app:headerLayout="@layout/nav_header_home_screen"
         app:menu="@menu/activity_main_drawer" >
 
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="30dp"
-            android:id="@+id/logOutIcon"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="25dp"
-            android:layout_marginBottom="37.5dp"
-            android:src="@drawable/ic_logout"
-            android:contentDescription="Log Out Icon"
-            tools:ignore="ContentDescription,HardcodedText" />
-
         <View
             android:layout_width="250dp"
             android:layout_height="1dp"
@@ -43,18 +32,31 @@
             android:layout_marginStart="15dp"
             />
 
-        <Button
+        <View
+            android:layout_width="1dp"
+            android:layout_height="1000dp"
+            android:background="@color/lineColorPale"
+            android:layout_marginBottom="80dp"
+            android:layout_marginStart="45dp"
+            />
+
+
+
+        <TextView
             android:id="@+id/logOutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:gravity="center"
             android:layout_gravity="bottom"
-            android:layout_marginStart="44dp"
+            android:layout_marginStart="24dp"
             android:layout_marginBottom="30dp"
             android:text="Log out"
+            android:textSize="15sp"
             android:textColor="@color/darkerTextColor"
             android:background="@android:color/transparent"
             android:textAllCaps="false"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"
+            app:drawableStartCompat="@drawable/ic_logout" />
 
     </com.google.android.material.navigation.NavigationView>
 
