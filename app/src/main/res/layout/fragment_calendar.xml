@@ -25,7 +25,7 @@
         app:layout_constraintTop_toBottomOf="@+id/barLine_calendarPlaceholder" />
 
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="150sp"
         android:layout_height="wrap_content"
         android:text="All time Ins and Outs are here"
         android:textStyle="italic"
@@ -82,7 +82,7 @@
         />
 
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="150sp"
         android:layout_height="wrap_content"
         android:text="All Vacation Leaves are here"
         android:textStyle="italic"
@@ -139,7 +139,7 @@
         />
 
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="150sp"
         android:layout_height="wrap_content"
         android:text="All Sick Leaves are here"
         android:textStyle="italic"
@@ -196,7 +196,7 @@
         />
 
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="150sp"
         android:layout_height="wrap_content"
         android:text="All Overtimes are here"
         android:textStyle="italic"
@@ -244,7 +244,7 @@
         />
 
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="150sp"
         android:layout_height="wrap_content"
         android:text="All Offsets are here"
         android:textStyle="italic"
@@ -299,7 +299,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/calendar_placeholder_image"
         android:text="Calendar"
-        android:paddingStart="40dp"
+        android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -318,16 +318,30 @@
         android:contentDescription="Calendar Placeholder"
         tools:ignore="HardcodedText" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/barLine_calendarPlaceholder"
+        android:text="Logs"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="HardcodedText,RtlSymmetry"
+        />
+
     <View
         android:id="@+id/barLine_calendarPlaceholder"
         android:layout_width="300dp"
         android:maxWidth="400dp"
-        android:layout_height="1dp"
+        android:layout_height=".5dp"
         android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/calendar_placeholder_image"
         app:layout_constraintStart_toStartOf="@id/calendar_placeholder_image"
         app:layout_constraintEnd_toEndOf="@id/calendar_placeholder_image"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100sp"
         />
 
 
