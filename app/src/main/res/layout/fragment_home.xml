@@ -15,6 +15,15 @@
     >
 
 
+    <ImageView
+        android:layout_width="900dp"
+        android:layout_height="150dp"
+        android:alpha="0.3"
+        android:src="@drawable/bg_blob2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/greet_user"
         android:layout_width="match_parent"
@@ -115,18 +124,18 @@
     <TextView
         android:hint="You haven't timed in yet..."
         android:id="@+id/Time_ins_outs"
-        android:minWidth="250dp"
+        android:maxWidth="200dp"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="40dp"
         android:textAlignment="textEnd"
         android:paddingEnd="20dp"
         android:paddingTop="10dp"
         android:textSize="18sp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="@+id/attendance_body"
         android:backgroundTint="@color/white"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/Time_ins_outs_Button"
         app:layout_constraintTop_toBottomOf="@+id/attendance_body"
         tools:ignore="HardcodedText,RtlSymmetry,TextContrastCheck" />
 
@@ -135,12 +144,13 @@
         android:paddingEnd="20dp"
         android:textAlignment="textEnd"
         android:id="@+id/total_timed_in"
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:minHeight="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.378"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="-20sp"
+        app:layout_constraintStart_toStartOf="@id/attendance_body"
+        app:layout_constraintEnd_toStartOf="@id/Time_ins_outs_Button"
         app:layout_constraintTop_toBottomOf="@+id/Time_ins_outs"
         tools:ignore="HardcodedText,RtlSymmetry" />
 
@@ -157,6 +167,7 @@
         android:id="@+id/Time_ins_outs_Button"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:layout_marginEnd="20dp"
         android:backgroundTint="@color/background"
         android:contentDescription="TAP"
         android:padding="10dp"
