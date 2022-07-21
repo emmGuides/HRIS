@@ -6,8 +6,12 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -381,7 +385,8 @@ public class CalendarFragment extends Fragment {
                     ret_timeInOut = "\nDate: " + snapshot.getKey()
                                 + "\n\n\t\t\tTime In: " + master.get(0)
                                 + "\n\t\t\tTime Out: " + master.get(2)
-                                + "\n\t\t\tDuration: " + master.get(3) + "\n";
+                                + "\n\t\t\tDuration: " + master.get(3)
+                                + "\n";
                 } catch (Exception e) {
                     ret_timeInOut = "\nDate: " + snapshot.getKey()
                                 + "\n\n\t\t\tTime In: " + master.get(0)
@@ -509,20 +514,26 @@ public class CalendarFragment extends Fragment {
         reference.child(userID).child("Sick Leaves").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                String cirtName;
+                String cirtName, dispCirtName;
                 try{
                     cirtName = (String) ((HashMap<?, ?>) Objects.requireNonNull(snapshot.getValue())).get("Certificate Name");
                 } catch (Exception c){
                     cirtName = "No Certificate";
                 }
 
+                if(Objects.requireNonNull(cirtName).length() > 14){
+                    dispCirtName = cirtName.substring(0, 10) + ".." + cirtName.substring(cirtName.length() - 4);
+                } else {
+                    dispCirtName = cirtName;
+                }
+
                 try{
                     ret_sick = "\nDate Filed: " + Objects.requireNonNull(snapshot.getKey()).replaceAll("\\(.*\\)", "")
-                            + "\n\n\n\t\t\tFrom: " + ((HashMap<?, ?>) snapshot.getValue()).get("Start Date")
+                            + "\n\n\t\t\tFrom: " + ((HashMap<?, ?>) snapshot.getValue()).get("Start Date")
                             + "\n\t\t\tTo: " + ((HashMap<?, ?>) snapshot.getValue()).get("End Date")
                             + "\n\t\t\tNumber of Days: " + ((HashMap<?, ?>) snapshot.getValue()).get("Leave Duration")
                             + "\n\t\t\tAvailment: " + ((HashMap<?, ?>) snapshot.getValue()).get("Availment")
-                            + "\n\n\t\t\tMedical Certificate: \n\t\t\t" + cirtName
+                            + "\n\n\t\t\tMedical Certificate: \n\t\t\t" + dispCirtName
                             + "\n\n\t\t\tAdditional Details: " + ((HashMap<?, ?>) snapshot.getValue()).get("Details")
                             + "\n";
                 } catch (Exception e) {
