@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment {
 
     Dialog dialog_timeIn, dialog_timeOut;
     Button cancel_timeIn, cancel_timeOut, okay_timeIn, okay_timeOut;
+    Thread thread;
 
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat time = new SimpleDateFormat("HH:mm");
@@ -75,6 +76,7 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
 
         scaleUp = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_up);
         scaleDown = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_down);
@@ -94,6 +96,7 @@ public class HomeFragment extends Fragment {
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
 
+        checkBtnStatus();
 
         // dialog time in
         dialog_timeIn = new Dialog(getContext());
@@ -191,7 +194,6 @@ public class HomeFragment extends Fragment {
                             timeInsOuts.setText("Timed out:  "+strArray[2].substring(0, strArray[2].length() - 1));
                             totalTimedIn.setText("Total Timed In: " + strArray[3] +" "+ strArray[4] + " " + strArray[5]);
 
-
                         } catch (Exception e) {
 
                             try{
@@ -260,7 +262,26 @@ public class HomeFragment extends Fragment {
 
         cancel_timeOut.setOnClickListener(view -> dialog_timeOut.dismiss());
 
-
+        thread = new Thread(){
+            @Override
+            public void run(){
+                try{
+                    while(!thread.isInterrupted()) {
+                        Thread.sleep(200);
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void run() {
+                                checkBtnStatus();
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
         return root;
     }
 
@@ -305,9 +326,23 @@ public class HomeFragment extends Fragment {
         toAdd.clear();
     }
 
+    public void checkBtnStatus (){
+        if(timeInsOuts.getText().toString().trim().isEmpty()){
+            timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
+            timeInOutButton.setEnabled(true);
+        }else if(totalTimedIn.getText().toString().trim().isEmpty() && !(timeInsOuts.getText().toString().trim().isEmpty())){
+            timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
+            timeInOutButton.setEnabled(true);
+        }else{
+            timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_off);
+            timeInOutButton.setEnabled(false);
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        thread.interrupt();
         binding = null;
     }
 
