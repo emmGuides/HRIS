@@ -46,7 +46,6 @@
 
 
     <TextView
-        android:textColor="@color/custTextColor"
         android:id="@+id/announcement_header"
         android:layout_width="447dp"
         android:layout_height="43dp"

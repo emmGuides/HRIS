@@ -231,6 +231,19 @@ public class HomeFragment extends Fragment {
         timeInOutButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                if(!timeInsOuts.getText().toString().trim().isEmpty()
+                        && !totalTimedIn.getText().toString().trim().isEmpty())
+                {
+                    try{
+                        Snackbar.make(requireView(), "You already timed out", Snackbar.LENGTH_SHORT).show();
+                    } catch (Exception t){
+                        Toast.makeText(getActivity(), "You already timed out", Toast.LENGTH_SHORT).show();
+                    }
+
+                    return false;
+                }
+
                 if(motionEvent.getAction()==MotionEvent.ACTION_DOWN){
                     timeInOutButton.startAnimation(scaleUp);
                 }else if(motionEvent.getAction()==MotionEvent.ACTION_UP){
@@ -247,6 +260,7 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
+
 
         okay_timeIn.setOnClickListener(view -> {
             timeInOutFunction();
@@ -329,13 +343,10 @@ public class HomeFragment extends Fragment {
     public void checkBtnStatus (){
         if(timeInsOuts.getText().toString().trim().isEmpty()){
             timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
-            timeInOutButton.setEnabled(true);
         }else if(totalTimedIn.getText().toString().trim().isEmpty() && !(timeInsOuts.getText().toString().trim().isEmpty())){
             timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
-            timeInOutButton.setEnabled(true);
         }else{
             timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_off);
-            timeInOutButton.setEnabled(false);
         }
     }
 
