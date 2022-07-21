@@ -5,12 +5,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,17 +36,16 @@ public class HomeScreen extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeScreenBinding binding;
-    private TextView signOut;
+    private Button signOut;
     private ImageView signOut_icon;
 
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
-    Animation scaleUp, scaleDown;
 
     Dialog dialog;
     Button cancel, okay;
-    @SuppressLint({"SourceLockedOrientationActivity", "UseCompatLoadingForDrawables", "ClickableViewAccessibility"})
+    @SuppressLint({"SourceLockedOrientationActivity", "UseCompatLoadingForDrawables"})
 
 
     @Override
@@ -64,9 +60,6 @@ public class HomeScreen extends AppCompatActivity {
         // portrait lock
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        // button animation
-        scaleUp = AnimationUtils.loadAnimation(HomeScreen.this, R.anim.scale_up);
-        scaleDown = AnimationUtils.loadAnimation(HomeScreen.this, R.anim.scale_down);
 
         // dialog
         dialog = new Dialog(HomeScreen.this);
@@ -145,32 +138,11 @@ public class HomeScreen extends AppCompatActivity {
         });
 
 
-        signOut = (TextView) findViewById(R.id.logOutButton);
-        signOut.setOnTouchListener((view, motionEvent) -> {
+        signOut = (Button) findViewById(R.id.logOutButton);
+        signOut.setOnClickListener(view -> dialog.show());
 
-            if(motionEvent.getAction()==MotionEvent.ACTION_DOWN){
-                signOut.startAnimation(scaleUp);
-            }else if(motionEvent.getAction()==MotionEvent.ACTION_UP){
-                signOut.startAnimation(scaleDown);
-            }
-
-            dialog.show();
-            return false;
-        });
-
-        /*
         signOut_icon = (ImageView) findViewById(R.id.logOutIcon);
-        signOut.setOnTouchListener((view, motionEvent) -> {
-
-            if(motionEvent.getAction()==MotionEvent.ACTION_DOWN){
-                signOut_icon.startAnimation(scaleUp);
-            }else if(motionEvent.getAction()==MotionEvent.ACTION_UP){
-                signOut_icon.startAnimation(scaleDown);
-            }
-
-            dialog.show();
-            return false;
-        });*/
+        signOut_icon.setOnClickListener(view -> dialog.show());
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;

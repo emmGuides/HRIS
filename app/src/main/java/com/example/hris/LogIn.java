@@ -167,7 +167,11 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
-            this.finishAffinity();
+            try{
+                finishAndRemoveTask();
+            } catch (Exception e) {
+                this.finishAffinity();
+            }
             return;
         }
 
