@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -43,6 +46,7 @@ public class HomeFragment extends Fragment {
     TextView homeGreeting;
     TextView DateDisplay;
     TextView totalTimedIn;
+    Animation scaleUp, scaleDown;
 
     FirebaseUser user;
     DatabaseReference reference;
@@ -66,11 +70,14 @@ public class HomeFragment extends Fragment {
     SimpleDateFormat greet = new SimpleDateFormat("HH");
 
 
-    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables", "ClickableViewAccessibility"})
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        scaleUp = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_up);
+        scaleDown = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_down);
 
         timeInsOuts = binding.TimeInsOuts;
         timeInOutButton = binding.TimeInsOutsButton;
@@ -218,12 +225,24 @@ public class HomeFragment extends Fragment {
         }
 
 
-        timeInOutButton.setOnClickListener(view -> {
-            String trim = timeInsOuts.getText().toString().trim();
-            if(trim.isEmpty()){
-                dialog_timeIn.show();
-            } else {
-                dialog_timeOut.show();
+
+        timeInOutButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction()==MotionEvent.ACTION_DOWN){
+                    timeInOutButton.startAnimation(scaleUp);
+                }else if(motionEvent.getAction()==MotionEvent.ACTION_UP){
+                    timeInOutButton.startAnimation(scaleDown);
+                }
+
+                String trim = timeInsOuts.getText().toString().trim();
+                if(trim.isEmpty()){
+                    dialog_timeIn.show();
+                } else {
+                    dialog_timeOut.show();
+                }
+
+                return false;
             }
         });
 
