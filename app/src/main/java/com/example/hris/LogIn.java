@@ -137,7 +137,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     assert user != null;
 
-                    /*
+
                     if(user.isEmailVerified()){
                         startActivity(new Intent(LogIn.this, HomeScreen.class));
 
@@ -147,10 +147,10 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(LogIn.this, "Check your Email to Verify Account", Toast.LENGTH_LONG).show();
 
                     }
-                     */
 
-                    // change for_test_final.class to HomeScreen.class to stop checking
-                    startActivity(new Intent(LogIn.this, HomeScreen.class));
+
+                    // for no email verification
+                    // startActivity(new Intent(LogIn.this, HomeScreen.class));
                     progressBar.setVisibility(View.GONE);
                 }
                 else{
