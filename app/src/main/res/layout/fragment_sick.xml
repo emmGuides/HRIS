@@ -186,7 +186,7 @@
         android:maxWidth="200dp"
         app:layout_constraintTop_toTopOf="@+id/upload_Icon"
         app:layout_constraintStart_toEndOf="@+id/upload_Icon"
-        android:hint="Select PDF file"
+        android:hint="Select PDF/Image file"
         android:visibility="gone"
         android:layout_marginStart="5dp"
         android:textSize="14sp"
