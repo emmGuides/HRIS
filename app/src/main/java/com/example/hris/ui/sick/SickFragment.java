@@ -412,9 +412,11 @@ public class SickFragment extends Fragment {
     private void selectFile() {
         Toast.makeText(getActivity(), "Select a File", Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        String [] mimeTypes = {"application/pdf", "image/*"};
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         startActivityForResult(intent, 86);
     }
 
