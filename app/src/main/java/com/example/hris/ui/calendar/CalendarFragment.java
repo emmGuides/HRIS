@@ -528,7 +528,7 @@ public class CalendarFragment extends Fragment {
                 }
 
                 try{
-                    ret_sick = "\nDate Filed: " + Objects.requireNonNull(snapshot.getKey()).replaceAll("\\(.*\\)", "")
+                    ret_sick = "\n\nDate Filed: " + Objects.requireNonNull(snapshot.getKey()).replaceAll("\\(.*\\)", "")
                             + "\n\n\t\t\tFrom: " + ((HashMap<?, ?>) snapshot.getValue()).get("Start Date")
                             + "\n\t\t\tTo: " + ((HashMap<?, ?>) snapshot.getValue()).get("End Date")
                             + "\n\t\t\tNumber of Days: " + ((HashMap<?, ?>) snapshot.getValue()).get("Leave Duration")
