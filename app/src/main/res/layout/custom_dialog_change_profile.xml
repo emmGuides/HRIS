@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_marginStart="30dp"
     android:layout_marginEnd="30dp"
     android:layout_height="wrap_content"
@@ -41,12 +41,11 @@
 
     <EditText
         android:id="@+id/newName_input"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="45sp"
         android:inputType="text"
         android:hint="Name"
-        android:minWidth="200dp"
         android:minHeight="40dp"
         android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,12 +91,11 @@
 
     <EditText
         android:id="@+id/newEmail_input"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:minWidth="200dp"
         android:minHeight="40dp"
         android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,13 +116,12 @@
 
     <EditText
         android:id="@+id/oldPassword_input"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:hint="Old password"
         android:inputType="textPassword"
         android:drawableEnd="@drawable/vis_off"
-        android:minWidth="200dp"
         android:paddingEnd="10dp"
         android:longClickable="false"
         android:minHeight="40dp"
@@ -147,12 +144,11 @@
 
     <EditText
         android:id="@+id/newPassword_input"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:hint="New password"
         android:inputType="textPassword"
-        android:minWidth="200dp"
         android:minHeight="40dp"
         android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="parent"
@@ -179,7 +175,7 @@
 
     <View
         android:id="@+id/divider"
-        android:layout_width="1dp"
+        android:layout_width="10dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -188,11 +184,11 @@
 
     <Button
         android:id="@+id/btn_cancel"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
         android:stateListAnimator="@null"
@@ -201,18 +197,18 @@
         android:textColor="#f23838"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/newEmail_input"
         app:layout_constraintEnd_toStartOf="@+id/divider"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btn_okay"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="2dp"
         android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
         android:stateListAnimator="@null"
@@ -221,7 +217,7 @@
         android:textAllCaps="false"
         android:textColor="@color/iconCalendarColor"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/newEmail_input"
         app:layout_constraintStart_toEndOf="@+id/divider"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:ignore="HardcodedText" />
