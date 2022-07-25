@@ -17,14 +17,10 @@ public class TeamsFragment extends Fragment {
     private FragmentTeamsBinding binding;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        TeamsViewModel teamsViewModel =
-                new ViewModelProvider(this).get(TeamsViewModel.class);
 
         binding = FragmentTeamsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textTeams;
-        teamsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
