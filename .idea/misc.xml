@@ -70,12 +70,12 @@
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_time_out.xml" value="0.209375" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_vacation_leave_log.xml" value="0.209375" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/for_test_only.xml" value="0.15353260869565216" />
-        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_calendar.xml" value="0.25" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_calendar.xml" value="0.24263839811542992" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_gallery.xml" value="0.16032608695652173" />
-        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_offset.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_overtime.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_profile.xml" value="0.28230337078651685" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_sick.xml" value="0.33" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_slideshow.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_teams.xml" value="0.16032608695652173" />
@@ -84,6 +84,7 @@
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/nav_header_home_screen.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/menu/home_screen.xml" value="0.209375" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1185" />
       </map>
     </option>
   </component>

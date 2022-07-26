@@ -144,7 +144,7 @@ public class SickFragment extends Fragment {
         editTextSelectFile.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Toast.makeText(getActivity(), editTextSelectFile.getText().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Select file for upload", Toast.LENGTH_LONG).show();
                 return false;
             }
         });
@@ -410,8 +410,6 @@ public class SickFragment extends Fragment {
     }
 
     private void selectFile() {
-        Toast.makeText(getActivity(), "Select a File", Toast.LENGTH_SHORT).show();
-
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         String [] mimeTypes = {"application/pdf", "image/*"};
@@ -428,7 +426,7 @@ public class SickFragment extends Fragment {
             editTextSelectFile.setText(getFileName(pdfUri));
         }
         else{
-            Toast.makeText(getActivity(), "Please select a file", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "File selection cancelled", Toast.LENGTH_LONG).show();
         }
 
     }

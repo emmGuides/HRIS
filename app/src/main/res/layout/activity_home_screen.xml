@@ -32,7 +32,8 @@
             android:layout_marginBottom="37.5dp"
             android:src="@drawable/ic_logout"
             android:contentDescription="Log Out Icon"
-            tools:ignore="ContentDescription,HardcodedText" />
+            tools:ignore="ContentDescription,HardcodedText"
+            app:tint="@color/darkerTextColor" />
 
         <View
             android:layout_width="250dp"

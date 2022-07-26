@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.example.hris.Employee;
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentProfileBinding;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,11 +38,15 @@ public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     TextView name, age, email;
+    ImageView dummyProfileIcon;
+    Animation scaleDownSlow, scaleUpSlow;
     Dialog changeName, changeAge, changeEmail, changeProfile;
     Button okayName, cancelName, okayAge, cancelAge, okayEmail, cancelEmail,
             okayProfile, cancelProfile;
+
     EditText emailEditText, nameEditText, ageEditText,
             emailEditTextProfile, ageEditTextProfile,nameEditTextProfile, passwordEditText_NewProfile, passwordEditText_OldProfile;
+
     Button editProfile;
     boolean passwordVisible;
 
@@ -59,8 +66,13 @@ public class ProfileFragment extends Fragment {
         name = binding.nameActual;
         age = binding.ageActual;
         email = binding.emailActual;
+        dummyProfileIcon = binding.userIcon;
 
         editProfile = binding.editProfileBUTTON;
+
+        // animation
+        scaleUpSlow = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_up_slow);
+        scaleDownSlow = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_down_slow);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
@@ -317,7 +329,24 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        dummyProfileIcon.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                try{
+                    Snackbar.make(requireView(), "Profile Icon placeholder", Snackbar.LENGTH_SHORT).show();
+                }catch(Exception e){
+                    Toast.makeText(getActivity(), "Profile Icon placeholder", Toast.LENGTH_SHORT).show();
+                }
 
+                if(motionEvent.getAction()==MotionEvent.ACTION_DOWN){
+                    dummyProfileIcon.startAnimation(scaleDownSlow);
+                }else if(motionEvent.getAction()==MotionEvent.ACTION_UP){
+                    dummyProfileIcon.startAnimation(scaleUpSlow);
+                }
+
+                return false;
+            }
+        });
         return root;
     }
 

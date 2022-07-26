@@ -14,6 +14,15 @@
     android:layout_height="wrap_content"
     tools:context=".ui.calendar.CalendarFragment">
 
+    <ImageView
+        android:layout_height="300dp"
+        android:layout_width="700dp"
+        android:alpha="0.2"
+        android:src="@drawable/cloud_for_bg_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/timeInOut_img_calendar"
@@ -60,8 +69,9 @@
 
     <View
         android:id="@+id/barLine_underTimeInOut"
-        android:layout_width="300dp"
-        android:maxWidth="400dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="40sp"
+        android:layout_marginEnd="40sp"
         android:layout_height="1dp"
         android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/timeInOut_img_calendar"
@@ -117,8 +127,9 @@
 
     <View
         android:id="@+id/barLine_underVacation"
-        android:layout_width="300dp"
-        android:maxWidth="400dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="40sp"
+        android:layout_marginEnd="40sp"
         android:layout_height="1dp"
         android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/vacation_calendar"
@@ -174,8 +185,9 @@
 
     <View
         android:id="@+id/barLine_underSick"
-        android:layout_width="300dp"
-        android:maxWidth="400dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="40sp"
+        android:layout_marginEnd="40sp"
         android:layout_height="1dp"
         android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/sick_icon_calendar"
@@ -232,8 +244,9 @@
 
     <View
         android:id="@+id/barLine_underOvertime"
-        android:layout_width="300dp"
-        android:maxWidth="400dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="40sp"
+        android:layout_marginEnd="40sp"
         android:layout_height="1dp"
         android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/overtime_calendar_icon"
@@ -334,8 +347,9 @@
 
     <View
         android:id="@+id/barLine_calendarPlaceholder"
-        android:layout_width="300dp"
-        android:maxWidth="400dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="40sp"
+        android:layout_marginEnd="40sp"
         android:layout_height=".5dp"
         android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/calendar_placeholder_image"
