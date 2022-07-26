@@ -99,7 +99,7 @@ public class CalendarFragment extends Fragment {
                 }
 
                 try{
-                    Snackbar.make(getView(), "This is a placeholder for a working Calendar Widget", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(requireView(), "This is a placeholder for a working Calendar Widget", Snackbar.LENGTH_LONG).show();
                 } catch (Exception s) {
                     Toast.makeText(requireActivity(), "This is a placeholder for a working Calendar Widget", Toast.LENGTH_LONG).show();
                 }

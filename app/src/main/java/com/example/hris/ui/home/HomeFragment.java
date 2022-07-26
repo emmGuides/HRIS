@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,10 +44,11 @@ public class HomeFragment extends Fragment {
 
     TextView timeInsOuts;
     ImageButton timeInOutButton;
+    ImageView announcementDummy;
     TextView homeGreeting;
     TextView DateDisplay;
     TextView totalTimedIn;
-    Animation scaleUp, scaleDown;
+    Animation scaleUp, scaleDown, scaleUpSlow, scaleDownSlow;
 
     FirebaseUser user;
     DatabaseReference reference;
@@ -80,7 +82,10 @@ public class HomeFragment extends Fragment {
 
         scaleUp = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_up);
         scaleDown = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_down);
+        scaleUpSlow = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_up_slow);
+        scaleDownSlow = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_down_slow);
 
+        announcementDummy = binding.mockAnnouncements;
         timeInsOuts = binding.TimeInsOuts;
         timeInOutButton = binding.TimeInsOutsButton;
         DateDisplay = binding.dateDisplay;
@@ -227,6 +232,24 @@ public class HomeFragment extends Fragment {
         }
 
 
+        announcementDummy.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction()==MotionEvent.ACTION_DOWN){
+                    announcementDummy.startAnimation(scaleDownSlow);
+                }else if(motionEvent.getAction()==MotionEvent.ACTION_UP){
+                    announcementDummy.startAnimation(scaleUpSlow);
+                }
+
+                try{
+                    Snackbar.make(requireView(), "This is a placeholder for a working Announcements Widget", Snackbar.LENGTH_LONG).show();
+                } catch (Exception s) {
+                    Toast.makeText(requireActivity(), "This is a placeholder for a working Announcements Widget", Toast.LENGTH_LONG).show();
+                }
+
+                return false;
+            }
+        });
 
         timeInOutButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
