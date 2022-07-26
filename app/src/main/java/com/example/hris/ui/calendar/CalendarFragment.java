@@ -6,20 +6,18 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +30,7 @@ import com.example.hris.R;
 import com.example.hris.databinding.FragmentCalendarBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -43,7 +42,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -53,7 +51,6 @@ public class CalendarFragment extends Fragment {
     private FragmentCalendarBinding binding;
 
     private FirebaseUser user;
-    private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private DatabaseReference reference;
     private String userID;
@@ -62,6 +59,7 @@ public class CalendarFragment extends Fragment {
     Dialog timeInOutLogDialog, vacationLeaveLogDialog, sickLeaveLogDialog, overtimeLogDialog, offsetLogDialog, downloadFileDialog;
     Button timeInOutLog_BUTTON, vacationLeaveLog_BUTTON, sickLeaveLog_BUTTON, overtimeLog_BUTTON, offsetLog_BUTTON;
 
+    Animation scaleUpSlow, scaleDownSlow;
     ArrayList<String> timeInOutList = new ArrayList<>();
     ArrayList<String> vacationLeavesList = new ArrayList<>();
     ArrayList<String> sickLeavesList = new ArrayList<>();
@@ -72,6 +70,7 @@ public class CalendarFragment extends Fragment {
     HashMap<Integer, String> certificateKeyName = new HashMap<>();
     String childName, fileNameS, fileLoc;
     int counter = 0;
+    ImageView calendarDummy;
 
     @SuppressLint({"ClickableViewAccessibility", "UseCompatLoadingForDrawables"})
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -79,12 +78,34 @@ public class CalendarFragment extends Fragment {
         binding = FragmentCalendarBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        calendarDummy = binding.calendarPlaceholderImage;
 
         // Authenticated user ID and Firebase Reference
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
 
+        // Animation
+        scaleUpSlow = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_up_slow);
+        scaleDownSlow = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_down_slow);
+
+        calendarDummy.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction()==MotionEvent.ACTION_DOWN){
+                    calendarDummy.startAnimation(scaleDownSlow);
+                }else if(motionEvent.getAction()==MotionEvent.ACTION_UP){
+                    calendarDummy.startAnimation(scaleUpSlow);
+                }
+
+                try{
+                    Snackbar.make(getView(), "This is a placeholder for a working Calendar Widget", Snackbar.LENGTH_LONG).show();
+                } catch (Exception s) {
+                    Toast.makeText(requireActivity(), "This is a placeholder for a working Calendar Widget", Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+        });
 
 
         // overtime Dialog
@@ -98,7 +119,7 @@ public class CalendarFragment extends Fragment {
         // overtime ListView
         overtimeLog = overtimeLogDialog.findViewById(R.id.overtimeLOG_inDialog);
         // set up and adapter for overtimes
-        arrayAdapter_overtime = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, overtimeList);
+        arrayAdapter_overtime = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, overtimeList);
         overtimeLog.setAdapter(arrayAdapter_overtime);
         overtimeLog.setEmptyView(overtimeLogDialog.findViewById(R.id.emptyListOvertime_TextView));
         // confirm button in overtime dialog
