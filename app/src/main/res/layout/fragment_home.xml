@@ -96,7 +96,9 @@
         tools:ignore="RtlSymmetry" />
 
     <View
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="40sp"
+        android:layout_marginEnd="40sp"
         android:layout_height="1dp"
         android:layout_marginTop="40dp"
         android:background="@color/barColor"
@@ -164,7 +166,9 @@
         tools:ignore="HardcodedText,RtlSymmetry" />
 
     <View
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="40sp"
+        android:layout_marginEnd="40sp"
         android:layout_height="1dp"
         android:layout_marginTop="40dp"
         android:background="@color/barColor"
