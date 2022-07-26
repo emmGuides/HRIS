@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".ui.profile.ProfileFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools">
+        android:layout_height="wrap_content">
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="300sp"
+            android:id="@+id/buffer"
+            android:layout_width="1dp"
+            android:layout_height="100sp"
             app:layout_constraintTop_toBottomOf="@+id/editProfile_BUTTON"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
 
+
         <ImageView
             android:layout_height="300dp"
             android:layout_width="700dp"
             android:alpha="0.2"
-            android:src="@drawable/cloud_for_bg_2"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buffer"
+            android:layout_marginTop="-200sp"
+            android:src="@drawable/cloud_for_bg_2_full"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="ContentDescription" />
@@ -245,3 +251,5 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
