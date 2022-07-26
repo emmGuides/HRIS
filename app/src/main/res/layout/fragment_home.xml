@@ -8,7 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-<androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".ui.home.HomeFragment"
@@ -16,10 +16,10 @@
 
 
     <ImageView
-        android:layout_width="900dp"
-        android:layout_height="150dp"
-        android:alpha="0.3"
-        android:src="@drawable/bg_blob2"
+        android:layout_height="300dp"
+        android:layout_width="700dp"
+        android:alpha="0.2"
+        android:src="@drawable/cloud_for_bg_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="-60sp"
         android:layout_marginEnd="-10sp"
-         android:layout_height="300dp"
+        android:layout_height="300dp"
         android:layout_width="500dp"
         android:alpha="0.2"
         android:src="@drawable/cloudforhome_1"/>

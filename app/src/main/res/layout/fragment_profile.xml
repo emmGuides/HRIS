@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.profile.ProfileFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.profile.ProfileFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.profile.ProfileFragment"
-    tools:ignore="ScrollViewSize">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="300sp"
+            app:layout_constraintTop_toBottomOf="@+id/editProfile_BUTTON"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-    <ImageView
+        <ImageView
+            android:layout_height="300dp"
+            android:layout_width="700dp"
+            android:alpha="0.2"
+            android:src="@drawable/cloud_for_bg_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
         android:id="@+id/user_Icon"
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -24,6 +37,7 @@
         android:src="@drawable/user_icon_transparent"
         android:contentDescription="User Image"
         tools:ignore="HardcodedText" />
+
 
     <Button
         android:id="@+id/editProfile_BUTTON"
@@ -231,5 +245,3 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>

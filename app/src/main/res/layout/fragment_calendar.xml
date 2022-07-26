@@ -14,6 +14,15 @@
     android:layout_height="wrap_content"
     tools:context=".ui.calendar.CalendarFragment">
 
+    <ImageView
+        android:layout_height="300dp"
+        android:layout_width="700dp"
+        android:alpha="0.2"
+        android:src="@drawable/cloud_for_bg_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/timeInOut_img_calendar"
