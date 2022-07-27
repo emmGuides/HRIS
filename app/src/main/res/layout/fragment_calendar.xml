@@ -319,6 +319,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="HardcodedText,RtlSymmetry" />
 
+
     <ImageView
         android:id="@+id/calendar_placeholder_image"
         android:layout_width="300dp"

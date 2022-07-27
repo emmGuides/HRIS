@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment {
         // dialog time in
         dialog_timeIn = new Dialog(getContext());
         dialog_timeIn.setContentView(R.layout.custom_dialog_time_in);
-        dialog_timeIn.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        dialog_timeIn.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
         dialog_timeIn.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog_timeIn.setCancelable(true);
         dialog_timeIn.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment {
         // dialog time out
         dialog_timeOut = new Dialog(getContext());
         dialog_timeOut.setContentView(R.layout.custom_dialog_time_out);
-        dialog_timeOut.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        dialog_timeOut.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
         dialog_timeOut.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog_timeOut.setCancelable(true);
         dialog_timeOut.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
