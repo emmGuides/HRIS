@@ -5,5 +5,4 @@
 
     <solid android:color="@color/dialogNightDay" />
     <corners android:radius="15sp" />
-
 </shape>
