@@ -81,7 +81,7 @@ public class ProfileFragment extends Fragment {
         // change Entire Profile dialog
         changeProfile = new Dialog(getContext());
         changeProfile.setContentView(R.layout.custom_dialog_change_profile);
-        changeProfile.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        changeProfile.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
         changeProfile.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         changeProfile.setCancelable(false);
         changeProfile.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
@@ -90,7 +90,7 @@ public class ProfileFragment extends Fragment {
         // change name dialog
         changeName = new Dialog(getContext());
         changeName.setContentView(R.layout.custom_dialog_change_name);
-        changeName.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        changeName.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
         changeName.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         changeName.setCancelable(true);
         changeName.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
@@ -98,7 +98,7 @@ public class ProfileFragment extends Fragment {
         // change age dialog
         changeAge = new Dialog(getContext());
         changeAge.setContentView(R.layout.custom_dialog_change_age);
-        changeAge.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        changeAge.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
         changeAge.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         changeAge.setCancelable(true);
         changeAge.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
@@ -106,7 +106,7 @@ public class ProfileFragment extends Fragment {
         // change email dialog
         changeEmail = new Dialog(getContext());
         changeEmail.setContentView(R.layout.custom_dialog_change_email);
-        changeEmail.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_dialog_backgroud));
+        changeEmail.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
         changeEmail.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         changeEmail.setCancelable(true);
         changeEmail.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
