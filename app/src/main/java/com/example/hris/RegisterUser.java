@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,6 +36,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth mAuth;
     private EditText editTextFullName, editTextAge, editTextEmail, editTextPassword;
+    TextInputLayout email_layout, password_layout, fullName_layout, age_layout;
     private ProgressBar progressBar;
     boolean passwordVisible;
     private TextView goBackLogIn, positionLabel;
@@ -61,44 +63,51 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         registerUser.setOnClickListener(this);
 
         editTextFullName = (EditText) findViewById(R.id.fullName);
+        fullName_layout = findViewById(R.id.fullName_Layout);
+
         editTextAge = (EditText) findViewById(R.id.age);
+        age_layout = findViewById(R.id.age_layout);
+
         editTextEmail = (EditText) findViewById(R.id.email);
+        email_layout = findViewById(R.id.email_layout);
+
         editTextPassword = (EditText) findViewById(R.id.password);
+        password_layout = findViewById(R.id.password_layout);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        editTextFullName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fullName_layout.setError(null);
+            }
+        });
+
+        editTextEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                email_layout.setError(null);
+            }
+        });
+
+        editTextPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                password_layout.setError(null);
+            }
+        });
+
+        editTextAge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                age_layout.setError(null);
+            }
+        });
 
         positionGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 positionLabel.setError(null);
-            }
-        });
-
-        // password visibility toggle
-        editTextPassword.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                final int rightTouch = 2;
-                editTextPassword.requestFocus();
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    if(motionEvent.getRawX() >= editTextPassword.getRight()-editTextPassword.getCompoundDrawables()[rightTouch].getBounds().width()){
-                        int selection = editTextPassword.getSelectionEnd();
-                        if(passwordVisible){
-                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.vis_off, 0);
-                            editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            passwordVisible=false;
-                        }
-                        else {
-                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.vis_on, 0);
-                            editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            passwordVisible=true;
-                        }
-                        editTextPassword.setSelection(selection);
-                        return true;
-                    }
-                }
-                return false;
             }
         });
     }
@@ -124,26 +133,22 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
 
         if(fullName.isEmpty()){
-            editTextFullName.setError("Full Name is required");
-            editTextFullName.requestFocus();
+            fullName_layout.setError("Full name is required");
             return;
         }
 
         if(age.isEmpty()){
-            editTextAge.setError("Age is required");
-            editTextAge.requestFocus();
+            age_layout.setError("Age is required");
             return;
         }
 
         if(email.isEmpty()){
-            editTextEmail.setError("Email is required");
-            editTextEmail.requestFocus();
+            email_layout.setError("Email is required");
             return;
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            editTextEmail.setError("Invalid Email");
-            editTextEmail.requestFocus();
+            email_layout.setError("Invalid Email");
             return;
         }
 
@@ -156,16 +161,15 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         }
 
         if(password.isEmpty()){
-            editTextPassword.setError("Password Required");
-            editTextPassword.requestFocus();
+            password_layout.setError("Password Required");
             return;
         }
 
         if(password.length() < 6){
-            editTextPassword.setError("Password too small");
-            editTextPassword.requestFocus();
+            password_layout.setError("Password too small");
             return;
         }
+
         String position = positionSelected.getText().toString();
 
         progressBar.setVisibility(View.VISIBLE);
