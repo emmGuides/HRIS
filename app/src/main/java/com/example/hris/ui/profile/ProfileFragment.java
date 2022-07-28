@@ -49,7 +49,9 @@ public class ProfileFragment extends Fragment {
             emailEditTextProfile, ageEditTextProfile, nameEditTextProfile,
             passwordEditText_NewProfile, passwordEditText_OldProfile;
 
-    TextInputLayout nameLayout, ageLayout, emailLayout;
+    TextInputLayout nameLayout, ageLayout, emailLayout,
+            nameProfileLayout, ageProfileLayout, emailProfileLayout,
+            oldPasswordProfileLayout, newPasswordProfileLayout;
 
     Button editProfile;
     boolean passwordVisible;
@@ -91,7 +93,6 @@ public class ProfileFragment extends Fragment {
         changeProfile.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         changeProfile.setCancelable(false);
         changeProfile.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-
 
         // change name dialog
         changeName = new Dialog(getContext());
@@ -141,11 +142,21 @@ public class ProfileFragment extends Fragment {
         ageEditText = changeAge.findViewById(R.id.newAge_input);
         ageLayout = changeAge.findViewById(R.id.newAge_input_layout);
 
+        // Edit User Profile Main
         emailEditTextProfile = changeProfile.findViewById(R.id.newEmail_input);
+        emailProfileLayout = changeProfile.findViewById(R.id.newEmail_input_layout);
+
         nameEditTextProfile = changeProfile.findViewById(R.id.newName_input);
+        nameProfileLayout = changeProfile.findViewById(R.id.newName_input_layout);
+
         ageEditTextProfile = changeProfile.findViewById(R.id.newAge_input);
+        ageProfileLayout = changeProfile.findViewById(R.id.newAge_input_layout);
+
         passwordEditText_NewProfile = changeProfile.findViewById(R.id.newPassword_input);
+        newPasswordProfileLayout = changeProfile.findViewById(R.id.newPassword_input_layout);
+
         passwordEditText_OldProfile = changeProfile.findViewById(R.id.oldPassword_input);
+        oldPasswordProfileLayout = changeProfile.findViewById(R.id.oldPassword_input_layout);
 
         // display user details
         reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
@@ -169,10 +180,6 @@ public class ProfileFragment extends Fragment {
                     email.setText(user_oldEmail);
                     age.setText(user_oldAge);
                     position.setText(user_oldPosition);
-
-                    nameEditTextProfile.setHint(user_oldFullName);
-                    emailEditTextProfile.setHint(user_oldEmail);
-                    ageEditTextProfile.setHint(user_oldAge);
                 }
             }
 
@@ -326,12 +333,12 @@ public class ProfileFragment extends Fragment {
                     String oldEmail = user_oldEmail;
 
                     if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                        emailEditTextProfile.setError("Invalid Email Format");
+                        emailProfileLayout.setError("Invalid Email Format");
                         emailEditTextProfile.requestFocus();
                         return;
                     }
                     if(email.equals(oldEmail)){
-                        emailEditTextProfile.setError("New and Old email should not be the same.");
+                        emailProfileLayout.setError("New and Old email should not be the same.");
                         emailEditTextProfile.requestFocus();
                         return;
                     }
@@ -344,6 +351,13 @@ public class ProfileFragment extends Fragment {
                 }
                 Toast.makeText(getActivity(), "Non empty fields updated!", Toast.LENGTH_LONG).show();
                 changeProfile.dismiss();
+            }
+        });
+
+        emailEditTextProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                emailProfileLayout.setError(null);
             }
         });
 
