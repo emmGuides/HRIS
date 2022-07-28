@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,6 +32,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
     private TextView register, forgotPassword;
     private EditText editTextEmail, editTextPassword;
     private Button signIn;
+    TextInputLayout email_layout;
 
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
@@ -46,6 +48,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         // portrait lock
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+
         register = (TextView) findViewById(R.id.register);
         register.setOnClickListener(this);
 
@@ -56,9 +59,19 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         forgotPassword.setOnClickListener(this);
 
         editTextEmail = (EditText) findViewById(R.id.email);
+        email_layout = findViewById(R.id.email_layout);
+
         editTextPassword = (EditText) findViewById(R.id.password);
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();
+
+        editTextEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                email_layout.setError(null);
+            }
+        });
 
         editTextPassword.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
@@ -110,8 +123,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         String password = editTextPassword.getText().toString().trim();
 
         if(email.isEmpty()){
-            editTextEmail.setError("Email required");
-            editTextEmail.requestFocus();
+            email_layout.setError("Email is required");
             return;
         }
 
