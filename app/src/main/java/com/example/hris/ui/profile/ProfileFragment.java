@@ -37,7 +37,7 @@ public class ProfileFragment extends Fragment {
 
 
     private FragmentProfileBinding binding;
-    TextView name, age, email;
+    TextView name, age, email, position;
     ImageView dummyProfileIcon;
     Animation scaleDownSlow, scaleUpSlow;
     Dialog changeName, changeAge, changeEmail, changeProfile;
@@ -54,7 +54,7 @@ public class ProfileFragment extends Fragment {
     private DatabaseReference reference;
     private String userID;
 
-    String user_oldFullName, user_oldEmail, user_oldAge;
+    String user_oldFullName, user_oldEmail, user_oldAge, user_oldPosition;
 
     @SuppressLint({"UseCompatLoadingForDrawables", "ClickableViewAccessibility"})
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -66,6 +66,7 @@ public class ProfileFragment extends Fragment {
         name = binding.nameActual;
         age = binding.ageActual;
         email = binding.emailActual;
+        position = binding.positionActual;
         dummyProfileIcon = binding.userIcon;
 
         editProfile = binding.editProfileBUTTON;
@@ -74,6 +75,7 @@ public class ProfileFragment extends Fragment {
         scaleUpSlow = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_up_slow);
         scaleDownSlow = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_down_slow);
 
+        // get user and DB
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
@@ -165,7 +167,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
+        // display user details
         reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -176,10 +178,17 @@ public class ProfileFragment extends Fragment {
                     user_oldEmail = userProfile.email;
                     user_oldAge = userProfile.age;
 
+                    try{
+                        user_oldPosition = userProfile.position;
+                    } catch (Exception p){
+                        user_oldPosition = "Employee";
+                    }
+
+
                     name.setText(user_oldFullName);
                     email.setText(user_oldEmail);
                     age.setText(user_oldAge);
-
+                    position.setText(user_oldPosition);
 
                     nameEditTextProfile.setHint(user_oldFullName);
                     emailEditTextProfile.setHint(user_oldEmail);
@@ -190,6 +199,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        position.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(requireActivity(), "Position cannot be changed as of now", Toast.LENGTH_SHORT).show();
             }
         });
 

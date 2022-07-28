@@ -98,21 +98,68 @@
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_radioGroup"
+        tools:ignore="Autofill,HardcodedText,RtlSymmetry,TouchTargetSizeCheck" />
+
+
+    <TextView
+        android:id="@+id/employeePositionLabel"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:layout_marginStart="5sp"
+        app:layout_constraintStart_toStartOf="@+id/email"
         app:layout_constraintTop_toBottomOf="@+id/email"
-        tools:ignore="Autofill,HardcodedText,TouchTargetSizeCheck" />
+        android:text="Employee Position"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        tools:ignore="HardcodedText"
+        android:focusableInTouchMode="true"
+        android:focusable="true"/>
+
+    <RadioGroup
+        android:id="@+id/register_radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/email"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@+id/employeePositionLabel">
+
+        <RadioButton
+            android:id="@+id/medForm_YES"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Employee" />
+
+        <RadioButton
+            android:id="@+id/medForm_NO"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Manager" />
+
+        <!--RadioButton
+            android:id="@+id/medForm_attachAForm"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Other" /-->
+
+    </RadioGroup>
 
     <TextView
         android:id="@+id/gobackLogIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/go_back_icon"
         android:text="\tLogin instead"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/register"
         app:layout_constraintTop_toBottomOf="@+id/register"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="1dp"
         android:layout_marginTop="30dp"
-        />
+        android:layout_marginBottom="60sp"
+        app:drawableStartCompat="@drawable/go_back_icon"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/register"
@@ -136,7 +183,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/gobackLogIn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"/>
