@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -78,6 +80,19 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 password_layout.setError(null);
+            }
+        });
+
+        editTextEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                email_layout.setStartIconDrawable(b ? R.drawable.email_on : R.drawable.email_icon);
+            }
+        });
+        editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                password_layout.setStartIconDrawable(b ? R.drawable.key_on : R.drawable.key_off);
             }
         });
     }

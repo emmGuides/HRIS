@@ -97,7 +97,7 @@
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:startIconDrawable="@drawable/keyicon"
+        app:startIconDrawable="@drawable/key_off"
         app:endIconMode="password_toggle"
         app:errorEnabled="true"
         app:helperTextEnabled="true"
