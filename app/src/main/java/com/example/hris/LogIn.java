@@ -104,16 +104,19 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
 
         if(email.isEmpty()){
             email_layout.setError("Email is required");
+            editTextEmail.requestFocus();
             return;
         }
 
         if(password.isEmpty()){
             password_layout.setError("Password should not be empty");
+            editTextPassword.requestFocus();
             return;
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             email_layout.setError("Invalid Email format");
+            editTextEmail.requestFocus();
             return;
         }
 

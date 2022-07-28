@@ -134,21 +134,25 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         if(fullName.isEmpty()){
             fullName_layout.setError("Full name is required");
+            editTextFullName.requestFocus();
             return;
         }
 
         if(age.isEmpty()){
             age_layout.setError("Age is required");
+            editTextAge.requestFocus();
             return;
         }
 
         if(email.isEmpty()){
             email_layout.setError("Email is required");
+            editTextEmail.requestFocus();
             return;
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             email_layout.setError("Invalid Email");
+            editTextEmail.requestFocus();
             return;
         }
 
@@ -162,11 +166,13 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         if(password.isEmpty()){
             password_layout.setError("Password Required");
+            editTextPassword.requestFocus();
             return;
         }
 
         if(password.length() < 6){
             password_layout.setError("Password too small");
+            editTextPassword.requestFocus();
             return;
         }
 
