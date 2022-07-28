@@ -75,6 +75,7 @@ public class ProfileFragment extends Fragment {
         scaleUpSlow = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_up_slow);
         scaleDownSlow = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_down_slow);
 
+        // get user and DB
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
