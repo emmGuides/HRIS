@@ -15,6 +15,11 @@
             android:title="@string/menu_profile"
             />
         <item
+            android:id="@+id/nav_reminders"
+            android:icon="@drawable/notifications"
+            android:title="@string/reminders"
+            />
+        <item
             android:id="@+id/nav_calendar"
             android:icon="@drawable/calendar_icon"
             android:title="@string/menu_calendar" />

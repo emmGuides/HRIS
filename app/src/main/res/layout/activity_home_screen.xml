@@ -21,19 +21,9 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_home_screen"
-        app:menu="@menu/activity_main_drawer" >
+        app:menu="@menu/activity_main_drawer"
+        tools:ignore="ExtraText">
 
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="30dp"
-            android:id="@+id/logOutIcon"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="25dp"
-            android:layout_marginBottom="37.5dp"
-            android:src="@drawable/ic_logout"
-            android:contentDescription="Log Out Icon"
-            tools:ignore="ContentDescription,HardcodedText"
-            app:tint="@color/darkerTextColor" />
 
         <View
             android:layout_width="250dp"
@@ -56,6 +46,26 @@
             android:background="@android:color/transparent"
             android:textAllCaps="false"
             tools:ignore="HardcodedText" />
+
+        <!--TODO: fix navbar scrolling-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="80sp"
+            android:layout_gravity="bottom"
+            />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:id="@+id/logOutIcon"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="25dp"
+            android:layout_marginBottom="37.5dp"
+            android:src="@drawable/ic_logout"
+            android:contentDescription="Log Out Icon"
+            tools:ignore="ContentDescription,HardcodedText"
+            app:tint="@color/darkerTextColor"
+            />
 
     </com.google.android.material.navigation.NavigationView>
 
