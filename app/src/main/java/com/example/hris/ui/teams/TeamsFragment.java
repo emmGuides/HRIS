@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,14 +24,15 @@ import com.google.firebase.database.ValueEventListener;
 
 public class TeamsFragment extends Fragment {
 
-    
+
     private FragmentTeamsBinding binding;
 
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
     ConstraintLayout employeeView, managerView;
-    TextView employee, manager;
+    TextView employee;
+    Button createTeam_asManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class TeamsFragment extends Fragment {
         employeeView = binding.employeeLayout;
         managerView = binding.managerLayout;
         employee = binding.employee;
-        manager = binding.manager;
+        createTeam_asManager = binding.createTeamAsManager;
 
         // get user and DB
         user = FirebaseAuth.getInstance().getCurrentUser();
