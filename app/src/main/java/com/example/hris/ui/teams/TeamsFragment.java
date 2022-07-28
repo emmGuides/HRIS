@@ -30,8 +30,9 @@ public class TeamsFragment extends Fragment {
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
-    ConstraintLayout employeeView, managerView;
-    TextView employee;
+    ConstraintLayout employeeView, managerView,
+            employeeNoTeamView, managerNoTeamView,
+            employeeHasTeamView, managerHasTeamView;
     Button createTeam_asManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,8 +42,13 @@ public class TeamsFragment extends Fragment {
         View root = binding.getRoot();
 
         employeeView = binding.employeeLayout;
+        employeeNoTeamView = binding.noTeamsLayoutEMPLOYEE;
+        employeeHasTeamView = binding.hasTeamsLayoutEMPLOYEE;
+
         managerView = binding.managerLayout;
-        employee = binding.employee;
+        managerNoTeamView = binding.noTeamsLayoutMANAGER;
+        managerHasTeamView = binding.hasTeamsLayoutMANAGER;
+
         createTeam_asManager = binding.createTeamAsManager;
 
         // get user and DB
@@ -59,8 +65,23 @@ public class TeamsFragment extends Fragment {
 
                     if(user_position.equals("Employee")){
                         employeeView.setVisibility(View.VISIBLE);
-                    } else {
+                        if(userProfile.teams.equals("No Team")){
+                            employeeNoTeamView.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            employeeHasTeamView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    else{
                         managerView.setVisibility(View.VISIBLE);
+                        if(userProfile.teams.equals("No Team")){
+                            managerNoTeamView.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            managerHasTeamView.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             }
