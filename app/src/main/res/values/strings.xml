@@ -16,6 +16,7 @@
     <string name="menu_profile">My Profile</string>
     <string name="overtime">Overtime</string>
     <string name="offset">Offset</string>
+    <string name="reminders">Reminders</string>
 
     <string-array name="medForm">
         <item>Yes</item>
