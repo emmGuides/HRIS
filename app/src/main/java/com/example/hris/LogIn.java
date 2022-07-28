@@ -80,34 +80,6 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
                 password_layout.setError(null);
             }
         });
-
-        editTextPassword.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                editTextPassword.requestFocus();
-                final int rightTouch = 2;
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    if(motionEvent.getRawX() >= editTextPassword.getRight()-editTextPassword.getCompoundDrawables()[rightTouch].getBounds().width()){
-                        int selection = editTextPassword.getSelectionEnd();
-                        if(passwordVisible){
-                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.vis_off, 0);
-                            editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            passwordVisible=false;
-                        }
-                        else {
-                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.vis_on, 0);
-                            editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            passwordVisible=true;
-                        }
-                        editTextPassword.setSelection(selection);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -141,8 +113,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            editTextEmail.setError("Invalid Email Format");
-            editTextEmail.requestFocus();
+            email_layout.setError("Invalid Email format");
             return;
         }
 
