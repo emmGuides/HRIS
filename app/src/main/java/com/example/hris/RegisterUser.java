@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +37,9 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private EditText editTextFullName, editTextAge, editTextEmail, editTextPassword;
     private ProgressBar progressBar;
     boolean passwordVisible;
-    private TextView goBackLogIn;
+    private TextView goBackLogIn, positionLabel;
+    RadioGroup positionGroup;
+    RadioButton positionSelected;
 
     @SuppressLint({"SourceLockedOrientationActivity", "ClickableViewAccessibility"})
     @Override
@@ -46,13 +50,15 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         // portrait lock
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        positionGroup = findViewById(R.id.register_radioGroup);
+        positionLabel = findViewById(R.id.employeePositionLabel);
+
         mAuth = FirebaseAuth.getInstance();
         goBackLogIn = (TextView) findViewById(R.id.gobackLogIn);
         goBackLogIn.setOnClickListener(this);
 
         Button registerUser = (Button) findViewById((R.id.register));
         registerUser.setOnClickListener(this);
-
 
         editTextFullName = (EditText) findViewById(R.id.fullName);
         editTextAge = (EditText) findViewById(R.id.age);
@@ -61,6 +67,14 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        positionGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                positionLabel.setError(null);
+            }
+        });
+
+        // password visibility toggle
         editTextPassword.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
@@ -132,6 +146,14 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
+        if(positionGroup.getCheckedRadioButtonId() == -1){
+            positionLabel.setError("Employee Position Required");
+            positionLabel.requestFocus();
+            return;
+        } else {
+            positionSelected = findViewById(positionGroup.getCheckedRadioButtonId());
+        }
+
         if(password.isEmpty()){
             editTextPassword.setError("Password Required");
             editTextPassword.requestFocus();
@@ -143,6 +165,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             editTextPassword.requestFocus();
             return;
         }
+        String position = positionSelected.getText().toString();
 
         progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -151,7 +174,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(task.isSuccessful()){
-                            Employee employee = new Employee(fullName, age, email);
+                            Employee employee = new Employee(fullName, age, email, position);
 
                             FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees")
                                     .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("User Details")

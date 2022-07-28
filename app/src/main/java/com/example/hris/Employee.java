@@ -5,16 +5,17 @@ import java.util.List;
 
 public class Employee {
 
-    public String fullName, age, email;
+    public String fullName, age, email, position;
 
     public Employee(){
 
     }
 
-    public Employee(String fullName, String age, String email){
+    public Employee(String fullName, String age, String email, String position){
         this.fullName = fullName;
         this.age = age;
         this.email = email;
+        this.position = position;
     }
 
 }
