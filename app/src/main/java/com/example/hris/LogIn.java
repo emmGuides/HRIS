@@ -32,7 +32,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
     private TextView register, forgotPassword;
     private EditText editTextEmail, editTextPassword;
     private Button signIn;
-    TextInputLayout email_layout;
+    TextInputLayout email_layout, password_layout;
 
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
@@ -62,6 +62,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         email_layout = findViewById(R.id.email_layout);
 
         editTextPassword = (EditText) findViewById(R.id.password);
+        password_layout = findViewById(R.id.password_layout);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();
@@ -70,6 +71,13 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 email_layout.setError(null);
+            }
+        });
+
+        editTextPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                password_layout.setError(null);
             }
         });
 
@@ -128,8 +136,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         }
 
         if(password.isEmpty()){
-            editTextPassword.setError("Password should not be empty");
-            editTextPassword.requestFocus();
+            password_layout.setError("Password should not be empty");
             return;
         }
 
