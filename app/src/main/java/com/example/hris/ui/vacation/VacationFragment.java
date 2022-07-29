@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.databinding.FragmentVacationBinding;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +33,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class VacationFragment extends Fragment {
 
@@ -43,7 +45,7 @@ public class VacationFragment extends Fragment {
     EditText details;
     EditText teamName, managerName, approvedBy;
     TextView numberOfDays, startDateTextView, endDateTextView;
-    ProgressBar progressBar;
+    TextInputLayout detailslayout, teamNameLayout, managerNameLayout, approvedByLayout, startDateLayout, endDateLayout;
     String childPath;
 
 
@@ -74,17 +76,22 @@ public class VacationFragment extends Fragment {
         View root = binding.getRoot();
 
         teamName = binding.vacationTeam;
-        managerName = binding.vacationProjectManager;
-        approvedBy = binding.vacationApprovedBy;
+        teamNameLayout = binding.vacationTeamLayout;
 
-        startDateTextView = binding.vacStartDateLabel;
-        endDateTextView = binding.vacEndDateLabel;
+        managerName = binding.vacationProjectManager;
+        managerNameLayout = binding.vacationProjectManagerLayout;
+
+        approvedBy = binding.vacationApprovedBy;
+        approvedByLayout = binding.vacationApprovedByLayout;
+
+        details = binding.vacationAdditionalDetails;
+        detailslayout = binding.vacationAdditionalDetailsLayout;
+
+        startDateLayout = binding.vacationStartDateLayout;
+        endDateLayout = binding.vacationEndDateLayout;
 
         // Button apply
         applyButton = binding.vacationApply;
-
-        // location
-        details = binding.vacationAdditionalDetails;
 
         // calendar popup
         editTextStart = binding.vacationStartDate;
@@ -125,7 +132,7 @@ public class VacationFragment extends Fragment {
         editTextStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startDateTextView.setError(null);
+                startDateLayout.setError(null);
                 new DatePickerDialog(getContext(),
                         dateStart,
                         myCalendar.get(Calendar.YEAR),
@@ -139,7 +146,7 @@ public class VacationFragment extends Fragment {
         editTextEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                endDateTextView.setError(null);
+                endDateLayout.setError(null);
                 new DatePickerDialog(getContext(),
                         dateEnd,
                         myCalendar.get(Calendar.YEAR),
@@ -155,42 +162,49 @@ public class VacationFragment extends Fragment {
 
                 childPath = dateWord.format(Calendar.getInstance().getTime()) + " (Time In Milli: " +String.valueOf(System.currentTimeMillis()) +")";
                 if(startDate.isEmpty()){
-                    startDateTextView.setError("Start Date is required");
-                    startDateTextView.requestFocus();
+                    startDateLayout.setError("Start Date is required");
+                    editTextStart.requestFocus();
                     return;
                 }
 
                 if(endDate.isEmpty()){
-                    endDateTextView.setError("End Date is required");
-                    endDateTextView.requestFocus();
+                    endDateLayout.setError("End Date is required");
+                    editTextEnd.requestFocus();
                     return;
                 }
 
                 if(additionalDetails.isEmpty()){
-                    details.setError("Details are Required");
+                    detailslayout.setError("Details are Required");
+                    details.requestFocus();
+                    return;
+                }
+
+                if(additionalDetails.length() > 21){
+                    detailslayout.setError("Limit details to 20 characters.");
                     details.requestFocus();
                     return;
                 }
 
                 if(teamName.getText().toString().trim().isEmpty()){
-                    teamName.setError("Team Name cannot be empty");
+                    teamNameLayout.setError("Team Name cannot be empty");
                     teamName.requestFocus();
                     return;
                 }
 
                 if(managerName.getText().toString().trim().isEmpty()){
-                    managerName.setError("Manager name cannot be empty");
+                    managerNameLayout.setError("Manager name cannot be empty");
                     managerName.requestFocus();
                     return;
                 }
 
                 if(approvedBy.getText().toString().trim().isEmpty()){
-                    approvedBy.setError("You need to indicate who approved this leave.");
+                    approvedByLayout.setError("You need to indicate who approved this leave.");
                     approvedBy.requestFocus();
                     return;
                 }
 
                 sendToDatabase(childPath);
+                requireView().clearFocus();
             }
 
         });
@@ -222,29 +236,36 @@ public class VacationFragment extends Fragment {
                 }
             }
         };
-
-        threadFields = new Thread(){
-            @Override
-            public void run(){
-                try{
-                    while(!thread.isInterrupted()) {
-                        Thread.sleep(5000);
-                        requireActivity().runOnUiThread(new Runnable() {
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void run() {
-                                startDateTextView.setError(null);
-                                endDateTextView.setError(null);
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        threadFields.start();
         thread.start();
+
+        // reset error messages
+        details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detailslayout.setError(null);
+            }
+        });
+
+        teamName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                teamNameLayout.setError(null);
+            }
+        });
+
+        managerName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                managerNameLayout.setError(null);
+            }
+        });
+
+        approvedBy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                approvedByLayout.setError(null);
+            }
+        });
         return root;
 
     }
@@ -327,7 +348,6 @@ public class VacationFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        threadFields.interrupt();
         thread.interrupt();
     }
 

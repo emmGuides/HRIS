@@ -6,6 +6,7 @@
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/circle_bg.xml" value="0.1665" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/circle_bg_button.xml" value="0.2165" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/close_button.xml" value="0.177" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/coconuttree.xml" value="0.1655" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/custom_dialog_backgroud.xml" value="0.178" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/download_icon.xml" value="0.177" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/edit_icon.xml" value="0.2165" />
@@ -15,6 +16,7 @@
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/info_icon.xml" value="0.1125" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/info_icon_svg.xml" value="0.106" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/medicine.xml" value="0.159" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/offset_calendar_icon.xml" value="0.141" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/offset_icon.xml" value="0.145" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/offset_icon_bg.xml" value="0.165" />
@@ -51,7 +53,7 @@
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/content_home_screen.xml" value="0.2" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog.xml" value="0.33" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_change_age.xml" value="0.209375" />
-        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_change_email.xml" value="0.75" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_change_email.xml" value="0.410828025477707" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_change_name.xml" value="0.33" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_change_password.xml" value="0.33" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/custom_dialog_change_profile.xml" value="0.25" />
@@ -75,7 +77,7 @@
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_gallery.xml" value="0.16032608695652173" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_offset.xml" value="0.25" />
-        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_overtime.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_overtime.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_reminders.xml" value="0.15625" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_sick.xml" value="0.33" />

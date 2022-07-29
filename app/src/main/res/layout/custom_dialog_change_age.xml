@@ -21,22 +21,35 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
-    <EditText
-        android:id="@+id/newAge_input"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/newAge_input_layout"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Enter New Age"
-        android:inputType="number"
-        android:minWidth="200dp"
-        android:minHeight="40dp"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="New age"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperText=""
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="HardcodedText,TouchTargetSizeCheck"
-        />
+        tools:ignore="Autofill,HardcodedText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newAge_input"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <TextView
         android:id="@+id/textView2"
@@ -50,7 +63,7 @@
         android:textColor="@color/custTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newAge_input"
+        app:layout_constraintTop_toBottomOf="@+id/newAge_input_layout"
         tools:ignore="HardcodedText" />
 
     <View

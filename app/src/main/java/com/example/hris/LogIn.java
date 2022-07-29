@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -81,33 +83,18 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
-        editTextPassword.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
+        editTextEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                editTextPassword.requestFocus();
-                final int rightTouch = 2;
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    if(motionEvent.getRawX() >= editTextPassword.getRight()-editTextPassword.getCompoundDrawables()[rightTouch].getBounds().width()){
-                        int selection = editTextPassword.getSelectionEnd();
-                        if(passwordVisible){
-                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.vis_off, 0);
-                            editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            passwordVisible=false;
-                        }
-                        else {
-                            editTextPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.vis_on, 0);
-                            editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            passwordVisible=true;
-                        }
-                        editTextPassword.setSelection(selection);
-                        return true;
-                    }
-                }
-                return false;
+            public void onFocusChange(View view, boolean b) {
+                email_layout.setStartIconDrawable(b ? R.drawable.email_on : R.drawable.email_icon);
             }
         });
-
+        editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                password_layout.setStartIconDrawable(b ? R.drawable.key_on : R.drawable.key_off);
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -132,16 +119,18 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
 
         if(email.isEmpty()){
             email_layout.setError("Email is required");
+            editTextEmail.requestFocus();
             return;
         }
 
         if(password.isEmpty()){
             password_layout.setError("Password should not be empty");
+            editTextPassword.requestFocus();
             return;
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            editTextEmail.setError("Invalid Email Format");
+            email_layout.setError("Invalid Email format");
             editTextEmail.requestFocus();
             return;
         }

@@ -13,6 +13,16 @@
 
 
     <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="-60sp"
+        android:layout_marginEnd="-10sp"
+        android:layout_height="300dp"
+        android:layout_width="500dp"
+        android:alpha="0.2"
+        android:src="@drawable/cloudforhome_1"/>
+
+    <ImageView
         android:layout_height="300dp"
         android:layout_width="700dp"
         android:alpha="0.2"
@@ -24,113 +34,147 @@
 
     <ImageView
         android:id="@+id/vacation_icon_bg"
-        android:layout_width="148dp"
-        android:layout_height="148dp"
-        android:layout_marginBottom="5dp"
-        android:alpha="0.3"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="25sp"
+        android:alpha="0.1"
         android:src="@drawable/coconuttree"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/vacation_start_date"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.939" />
 
-    <TextView
-        android:id="@+id/vac_start_date_label"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/vacation_start_date_Layout"
+        android:textColorHint="#757575"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperText="Tap to select a date in MM/DD/YYYY format"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:paddingStart="7dp"
-        android:layout_marginTop="100dp"
-        android:text="Start Date"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="100sp"
+        android:hint="Start Date"
+        app:startIconDrawable="@drawable/calendar_for_fields"
+        android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:focusableInTouchMode="true"
-        android:focusable="true"
-        tools:ignore="HardcodedText,RtlHardcoded" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/vacation_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
 
-    <EditText
-        android:id="@+id/vacation_start_date"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:textSize="18sp"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/vacation_end_date_Layout"
+        android:textColorHint="#757575"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperText="Tap to select a date in MM/DD/YYYY format"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:ems="10"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:hint="From: DD/MM/YYYY"
-        android:inputType="date"
+        android:layout_marginTop="20dp"
+        android:hint="End Date"
         android:minHeight="48dp"
-        android:layout_marginTop="-10dp"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/vac_start_date_label"
-        app:layout_constraintHorizontal_bias="0.531"
-        app:layout_constraintStart_toStartOf="@+id/vac_start_date_label"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:ignore="Autofill,HardcodedText,TextFields" />
-
-    <TextView
-        android:id="@+id/vac_end_date_label"
-        android:focusableInTouchMode="true"
-        android:focusable="true"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="7dp"
-        android:text="End Date"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/vacation_start_date"
+        app:startIconDrawable="@drawable/calendar_for_fields"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp"
-        tools:ignore="HardcodedText,RtlHardcoded" />
+        app:layout_constraintTop_toBottomOf="@+id/vacation_start_date_Layout">
 
-    <EditText
-        android:id="@+id/vacation_end_date"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/vacation_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+
+
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:textSize="18sp"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/vacation_additional_details_Layout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:clickable="false"
-        android:layout_marginTop="-10dp"
-        android:cursorVisible="false"
+        android:layout_marginTop="50dp"
         android:ems="10"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:hint="To: DD/MM/YYYY"
-        android:inputType="date"
+        android:hint="Additional Details"
         android:minHeight="48dp"
+        android:textColorHint="#757575"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/vac_end_date_label"
-        app:layout_constraintTop_toBottomOf="@+id/vac_end_date_label"
-        tools:ignore="Autofill,HardcodedText,TextFields" />
-
-    <TextView
-        android:id="@+id/vacation_additional_details_Label"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="Additional Details"
-        android:paddingStart="7dp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/vacation_end_date"
-        android:layout_marginTop="60dp"
-        app:layout_constraintStart_toStartOf="@+id/vacation_additional_details"
-        app:layout_constraintEnd_toEndOf="@id/vacation_additional_details"
-        />
-
-    <EditText
-        android:id="@+id/vacation_additional_details"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:ems="10"
-        android:hint="Details"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:textSize="18sp"
-        android:layout_marginTop="-5dp"
-        app:layout_constraintTop_toBottomOf="@+id/vacation_additional_details_Label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:ignore="Autofill,HardcodedText,TextFields" />
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:startIconDrawable="@drawable/pen_for_fields"
+        app:helperText=""
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toBottomOf="@id/vacation_end_date_Layout"
+        tools:ignore="Autofill,HardcodedText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/vacation_additional_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/vacation_team_Layout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Team Name"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperText=""
+        app:startIconDrawable="@drawable/people_for_fields"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toBottomOf="@id/vacation_additional_details_Layout"
+        tools:ignore="Autofill,HardcodedText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/vacation_team"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
 
     <Button
@@ -146,79 +190,73 @@
         android:layout_marginBottom="150dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vacation_approvedBy"
+        app:layout_constraintTop_toBottomOf="@+id/vacation_approvedBy_Layout"
         tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/vacation_team_Label"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="Team Name"
-        android:layout_marginBottom="-5dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/vacation_team"
-        app:layout_constraintStart_toStartOf="@id/vacation_team"
-        app:layout_constraintEnd_toEndOf="@id/vacation_team"
-        android:layout_marginStart="7dp"
-        />
 
-    <EditText
-        android:id="@+id/vacation_team"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/vacation_projectManager_Layout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/vacation_additional_details"
-        android:hint="Team Name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="60dp"
-        android:inputType="text"
-        />
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Project Manager name"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperText=""
+        app:startIconDrawable="@drawable/one_person_for_fields"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toBottomOf="@id/vacation_team_Layout"
+        tools:ignore="Autofill,HardcodedText">
 
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="Manager name"
-        android:textStyle="bold"
-        android:layout_marginBottom="-5dp"
-        android:layout_marginStart="7dp"
-        app:layout_constraintStart_toStartOf="@+id/vacation_projectManager"
-        app:layout_constraintBottom_toTopOf="@id/vacation_projectManager"
-        />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/vacation_projectManager"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="100sp"
+            />
 
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/vacation_projectManager"
-        android:hint="Name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vacation_team"
-        android:layout_marginTop="60dp"
-        android:inputType="text"
-        />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/vacation_approvedBy_Layout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Approved By"
-        android:textStyle="bold"
-        android:layout_marginBottom="-5dp"
-        android:layout_marginStart="7dp"
-        app:layout_constraintStart_toStartOf="@+id/vacation_approvedBy"
-        app:layout_constraintBottom_toTopOf="@id/vacation_approvedBy"
-        />
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Approved by"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperText=""
+        app:startIconDrawable="@drawable/approved_for_fields"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toBottomOf="@id/vacation_projectManager_Layout"
+        tools:ignore="Autofill,HardcodedText">
 
-    <EditText
-        android:id="@+id/vacation_approvedBy"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="Name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vacation_projectManager"
-        android:layout_marginTop="60dp"
-        android:inputType="text"
-        />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/vacation_approvedBy"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="100sp"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <TextView
         android:id="@+id/text_vacation_days"
@@ -227,12 +265,12 @@
         android:textSize="15sp"
         app:flow_horizontalBias="1.0"
         app:layout_constraintTop_toBottomOf="@+id/vacation_apply"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:textAlignment="center"
-       android:layout_marginTop="30dp"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="60sp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,149 +29,156 @@
         app:layout_constraintTop_toTopOf="parent"
     />
 
-    <TextView
-        android:layout_width="200dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/newName_input_layout"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:id="@+id/newName_input_label"
-        android:text="Enter New Name"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/newName_input"
-        app:layout_constraintBottom_toTopOf="@+id/newName_input"
-        />
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:hint="New Name"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperText="Leave as blank to not change name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toTopOf="@id/editProfile_Header"
+        tools:ignore="Autofill,HardcodedText">
 
-    <EditText
-        android:id="@+id/newName_input"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45sp"
-        android:inputType="text"
-        android:hint="Name"
-        android:minHeight="40dp"
-        android:textAlignment="textStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editProfile_Header"
-        tools:ignore="HardcodedText,TouchTargetSizeCheck"
-        />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newName_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            tools:ignore="TextContrastCheck" />
 
-    <TextView
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/newAge_input_label"
-        android:text="Enter New Age"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/newAge_input"
-        app:layout_constraintBottom_toTopOf="@+id/newAge_input"
-        />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/newAge_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="Age"
-        android:inputType="number"
-        android:minWidth="100dp"
-        android:minHeight="40dp"
-        android:textAlignment="textStart"
-        app:layout_constraintStart_toStartOf="@id/newName_input"
-        app:layout_constraintTop_toBottomOf="@id/newName_input"
-        tools:ignore="HardcodedText,TouchTargetSizeCheck"
-        />
 
-    <TextView
-        android:layout_width="200dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/newAge_input_layout"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:id="@+id/newEmail_input_label"
-        android:text="Enter New Email"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/newEmail_input"
-        app:layout_constraintBottom_toTopOf="@+id/newEmail_input"
-        />
-
-    <EditText
-        android:id="@+id/newEmail_input"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:minHeight="40dp"
-        android:textAlignment="textStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/newAge_input"
-        tools:ignore="HardcodedText,TouchTargetSizeCheck"
-        />
-
-    <TextView
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/oldPassword_input_label"
-        android:text="Enter Old Password"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/oldPassword_input"
-        app:layout_constraintBottom_toTopOf="@+id/oldPassword_input"
-        />
-
-    <EditText
-        android:id="@+id/oldPassword_input"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="Old password"
-        android:inputType="textPassword"
-        android:drawableEnd="@drawable/vis_off"
-        android:paddingEnd="10dp"
-        android:longClickable="false"
-        android:minHeight="40dp"
-        android:textAlignment="textStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/newEmail_input"
-        tools:ignore="HardcodedText,TouchTargetSizeCheck"
-        />
-
-    <TextView
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/newPassword_input_label"
-        android:text="Enter New Password"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/newPassword_input"
-        app:layout_constraintBottom_toTopOf="@+id/newPassword_input"
-        />
-
-    <EditText
-        android:id="@+id/newPassword_input"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="New password"
-        android:inputType="textPassword"
-        android:minHeight="40dp"
-        android:textAlignment="textStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/oldPassword_input"
-        tools:ignore="HardcodedText,TouchTargetSizeCheck"
-        />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"
-        android:text="Make sure inputted fields are correct.\n All fields left blank will not be changed"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:textColor="#f29991"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newPassword_input"
-        tools:ignore="HardcodedText" />
+        android:ems="10"
+        android:hint="New Age"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@id/newName_input_layout"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperText="Leave as blank to not change Age"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toBottomOf="@id/newName_input_layout"
+        tools:ignore="Autofill,HardcodedText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newAge_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            tools:ignore="TextContrastCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/newEmail_input_layout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="New Email"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperText="Email changes will be functional soon."
+        app:helperTextTextColor="#954C4C"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toBottomOf="@id/newAge_input_layout"
+        tools:ignore="Autofill,HardcodedText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newEmail_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            tools:ignore="TextContrastCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/oldPassword_input_layout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Old Password"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:endIconMode="password_toggle"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperTextTextColor="#954C4C"
+        app:helperText="Password changes will be functional soon."
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toBottomOf="@id/newEmail_input_layout"
+        tools:ignore="Autofill,HardcodedText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/oldPassword_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            tools:ignore="TextContrastCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/newPassword_input_layout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="New Password"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:endIconMode="password_toggle"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperTextTextColor="#954C4C"
+        app:helperText="Password changes will be functional soon."
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toBottomOf="@id/oldPassword_input_layout"
+        tools:ignore="Autofill,HardcodedText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newPassword_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            tools:ignore="TextContrastCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <View
         android:id="@+id/divider"
@@ -180,7 +187,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/newPassword_input_layout" />
 
     <Button
         android:id="@+id/btn_cancel"
@@ -197,9 +204,9 @@
         android:textColor="#f23838"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/newEmail_input"
+        app:layout_constraintStart_toStartOf="@+id/newPassword_input_layout"
         app:layout_constraintEnd_toStartOf="@+id/divider"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/newPassword_input_layout"
         tools:ignore="HardcodedText" />
 
     <Button
@@ -213,14 +220,15 @@
         android:background="@android:color/transparent"
         android:stateListAnimator="@null"
         android:text="Save"
-        android:textStyle="bold"
         android:textAllCaps="false"
-        android:textColor="@color/iconCalendarColor"
+        android:textColor="#009688"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/newEmail_input"
+        app:layout_constraintEnd_toEndOf="@id/newPassword_input_layout"
         app:layout_constraintStart_toEndOf="@+id/divider"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/newPassword_input_layout"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>

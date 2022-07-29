@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.hris.databinding.FragmentOvertimeBinding;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -32,10 +33,10 @@ import java.util.Locale;
 public class OvertimeFragment extends Fragment {
 
     EditText overtimeDate, titlePosition, teamOvertime, reasonOvertime, hoursOvertime, approvedByOvertime;
+    TextInputLayout overtimeDateLayout, titlePositionLayout, teamOvertimeLayout, reasonOvertimeLayout,
+            hoursOvertimeLayout, approvedByOvertimeLayout;
     String userID, overtimeDateS, titlePositionS, teamOvertimeS, reasonOvertimeS, hoursOvertimeS, approvedByS, OvertimeS;
     final Calendar myCalendar = Calendar.getInstance();
-    TextView dateOvertimeLabel;
-    Thread thread;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     @SuppressLint("SimpleDateFormat")
@@ -54,14 +55,24 @@ public class OvertimeFragment extends Fragment {
         View root = binding.getRoot();
 
         overtimeDate = binding.overtimeDate;
+        overtimeDateLayout = binding.overtimeDateLayout;
+
         titlePosition = binding.overtimeTitlePosition;
+        titlePositionLayout = binding.overtimeTitlePositionLayout;
+
         teamOvertime = binding.overtimeTeam;
+        teamOvertimeLayout = binding.overtimeTeamLayout;
+
         reasonOvertime = binding.overtimeReason;
+        reasonOvertimeLayout = binding.overtimeReasonLayout;
+
         hoursOvertime = binding.overtimeTotalHours;
+        hoursOvertimeLayout = binding.overtimeTotalHoursLayout;
+
         approvedByOvertime = binding.overtimeApprovedBy;
+        approvedByOvertimeLayout = binding.overtimeApprovedByLayout;
 
         applyButton = binding.overtimeApply;
-        dateOvertimeLabel = binding.overtimeDateLabel;
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
@@ -80,11 +91,51 @@ public class OvertimeFragment extends Fragment {
             }
         };
 
+        // calendar pop up
         overtimeDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dateOvertimeLabel.setError(null);
-                new DatePickerDialog(getContext(), overtimeDatePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                overtimeDateLayout.setError(null);
+                new DatePickerDialog(getContext(), overtimeDatePicker,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        // clear errors
+        titlePosition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titlePositionLayout.setError(null);
+            }
+        });
+
+        teamOvertime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                teamOvertimeLayout.setError(null);
+            }
+        });
+
+        hoursOvertime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hoursOvertimeLayout.setError(null);
+            }
+        });
+
+        reasonOvertime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reasonOvertimeLayout.setError(null);
+            }
+        });
+
+        approvedByOvertime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                approvedByOvertimeLayout.setError(null);
             }
         });
 
@@ -99,66 +150,51 @@ public class OvertimeFragment extends Fragment {
                 approvedByS = approvedByOvertime.getText().toString().trim();
 
                 if(overtimeDateS.isEmpty()){
-                    dateOvertimeLabel.setError("Date is Required");
-                    dateOvertimeLabel.requestFocus();
+                    overtimeDateLayout.setError("Date is Required");
+                    overtimeDate.requestFocus();
                     return;
                 }
 
                 if(titlePositionS.isEmpty()){
-                    titlePosition.setError("Your Position is required");
+                    titlePositionLayout.setError("Your Position is required");
                     titlePosition.requestFocus();
                     return;
                 }
 
                 if(teamOvertimeS.isEmpty()){
-                    teamOvertime.setError("You must indicate your Team.");
+                    teamOvertimeLayout.setError("You must indicate your Team.");
                     teamOvertime.requestFocus();
                     return;
                 }
 
                 if(hoursOvertimeS.isEmpty()){
-                    hoursOvertime.setError("Please indicate the number of hours");
+                    hoursOvertimeLayout.setError("Please indicate the number of hours");
                     hoursOvertime.requestFocus();
                     return;
                 }
 
                 if(reasonOvertimeS.isEmpty()){
-                    reasonOvertime.setError("Reason for Overtime is Required");
+                    reasonOvertimeLayout.setError("Reason for Overtime is Required");
+                    reasonOvertime.requestFocus();
+                    return;
+                }
+
+                if(reasonOvertimeS.length() > 20){
+                    reasonOvertimeLayout.setError("Limit reason to 20 characters");
                     reasonOvertime.requestFocus();
                     return;
                 }
 
                 if(approvedByS.isEmpty()){
-                    approvedByOvertime.setError("Please indicate who approved this overtime.");
+                    approvedByOvertimeLayout.setError("Please indicate who approved this overtime.");
                     approvedByOvertime.requestFocus();
                     return;
                 }
                 sendToDatabase();
+                requireView().clearFocus();
             }
         });
 
-        thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (!thread.isInterrupted()) {
-                        Thread.sleep(10000);
-                        requireActivity().runOnUiThread(new Runnable() {
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void run() {
-                                hoursOvertime.setError(null);
-                                dateOvertimeLabel.setError(null);
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        thread.start();
         return root;
     }
 
@@ -196,7 +232,6 @@ public class OvertimeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        thread.interrupt();
         binding = null;
     }
 }

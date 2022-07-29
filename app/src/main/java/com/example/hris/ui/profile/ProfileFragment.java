@@ -25,6 +25,7 @@ import com.example.hris.Employee;
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentProfileBinding;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -45,7 +46,12 @@ public class ProfileFragment extends Fragment {
             okayProfile, cancelProfile;
 
     EditText emailEditText, nameEditText, ageEditText,
-            emailEditTextProfile, ageEditTextProfile,nameEditTextProfile, passwordEditText_NewProfile, passwordEditText_OldProfile;
+            emailEditTextProfile, ageEditTextProfile, nameEditTextProfile,
+            passwordEditText_NewProfile, passwordEditText_OldProfile;
+
+    TextInputLayout nameLayout, ageLayout, emailLayout,
+            nameProfileLayout, ageProfileLayout, emailProfileLayout,
+            oldPasswordProfileLayout, newPasswordProfileLayout;
 
     Button editProfile;
     boolean passwordVisible;
@@ -88,7 +94,6 @@ public class ProfileFragment extends Fragment {
         changeProfile.setCancelable(false);
         changeProfile.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
-
         // change name dialog
         changeName = new Dialog(getContext());
         changeName.setContentView(R.layout.custom_dialog_change_name);
@@ -129,43 +134,29 @@ public class ProfileFragment extends Fragment {
 
         // Dialog EditTexts
         emailEditText = changeEmail.findViewById(R.id.newEmail_input);
+        emailLayout = changeEmail.findViewById(R.id.newEmail_input_layout);
+
         nameEditText = changeName.findViewById(R.id.newName_input);
+        nameLayout = changeName.findViewById(R.id.newName_input_layout);
+
         ageEditText = changeAge.findViewById(R.id.newAge_input);
+        ageLayout = changeAge.findViewById(R.id.newAge_input_layout);
 
+        // Edit User Profile Main
         emailEditTextProfile = changeProfile.findViewById(R.id.newEmail_input);
-        nameEditTextProfile = changeProfile.findViewById(R.id.newName_input);
-        ageEditTextProfile = changeProfile.findViewById(R.id.newAge_input);
-        passwordEditText_NewProfile = changeProfile.findViewById(R.id.newPassword_input);
-        passwordEditText_OldProfile = changeProfile.findViewById(R.id.oldPassword_input);
+        emailProfileLayout = changeProfile.findViewById(R.id.newEmail_input_layout);
 
-        passwordEditText_OldProfile.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                final int rightTouch = 2;
-                passwordEditText_OldProfile.requestFocus();
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    if(motionEvent.getRawX() >= passwordEditText_OldProfile.getRight()-passwordEditText_OldProfile.getCompoundDrawables()[rightTouch].getBounds().width()){
-                        int selection = passwordEditText_OldProfile.getSelectionEnd();
-                        if(passwordVisible){
-                            passwordEditText_OldProfile.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.vis_off, 0);
-                            passwordEditText_OldProfile.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            passwordEditText_NewProfile.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            passwordVisible=false;
-                        }
-                        else {
-                            passwordEditText_OldProfile.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.vis_on, 0);
-                            passwordEditText_OldProfile.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            passwordEditText_NewProfile.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                            passwordVisible=true;
-                        }
-                        passwordEditText_OldProfile.setSelection(selection);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
+        nameEditTextProfile = changeProfile.findViewById(R.id.newName_input);
+        nameProfileLayout = changeProfile.findViewById(R.id.newName_input_layout);
+
+        ageEditTextProfile = changeProfile.findViewById(R.id.newAge_input);
+        ageProfileLayout = changeProfile.findViewById(R.id.newAge_input_layout);
+
+        passwordEditText_NewProfile = changeProfile.findViewById(R.id.newPassword_input);
+        newPasswordProfileLayout = changeProfile.findViewById(R.id.newPassword_input_layout);
+
+        passwordEditText_OldProfile = changeProfile.findViewById(R.id.oldPassword_input);
+        oldPasswordProfileLayout = changeProfile.findViewById(R.id.oldPassword_input_layout);
 
         // display user details
         reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
@@ -189,10 +180,6 @@ public class ProfileFragment extends Fragment {
                     email.setText(user_oldEmail);
                     age.setText(user_oldAge);
                     position.setText(user_oldPosition);
-
-                    nameEditTextProfile.setHint(user_oldFullName);
-                    emailEditTextProfile.setHint(user_oldEmail);
-                    ageEditTextProfile.setHint(user_oldAge);
                 }
             }
 
@@ -239,7 +226,8 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 String newName = nameEditText.getText().toString().trim();
                 if(newName.isEmpty()){
-                    nameEditText.setError("Name should not be empty!");
+                    nameLayout = changeName.findViewById(R.id.newName_input_layout);
+                    nameLayout.setError("Name should not be empty!");
                     nameEditText.requestFocus();
                     return;
                 }
@@ -247,6 +235,13 @@ public class ProfileFragment extends Fragment {
                 reference.child(userID).child("User Details").child("fullName").setValue(newName);
                 Toast.makeText(getContext(), disp, Toast.LENGTH_LONG).show();
                 changeName.dismiss();
+            }
+        });
+
+        nameEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nameLayout.setError(null);
             }
         });
 
@@ -258,7 +253,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 String newAge = ageEditText.getText().toString().trim();
                 if(newAge.isEmpty()){
-                    ageEditText.setError("Age cannot be empty");
+                    ageLayout.setError("Age cannot be empty");
                     ageEditText.requestFocus();
                     return;
                 }
@@ -271,6 +266,13 @@ public class ProfileFragment extends Fragment {
 
         cancelAge.setOnClickListener(view -> changeAge.dismiss());
 
+        ageEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ageLayout.setError(null);
+            }
+        });
+
         okayEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -278,12 +280,12 @@ public class ProfileFragment extends Fragment {
                 String oldEmail = user_oldEmail;
 
                 if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                    emailEditText.setError("Invalid Email Format");
+                    emailLayout.setError("Invalid Email Format");
                     emailEditText.requestFocus();
                     return;
                 }
                 if(email.equals(oldEmail)){
-                    emailEditText.setError("New and Old email should not be the same.");
+                    emailLayout.setError("New and Old email should not be the same.");
                     emailEditText.requestFocus();
                     return;
                 }
@@ -293,6 +295,13 @@ public class ProfileFragment extends Fragment {
         });
 
         cancelEmail.setOnClickListener(view -> changeEmail.dismiss());
+
+        emailEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                emailLayout.setError(null);
+            }
+        });
 
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -324,12 +333,12 @@ public class ProfileFragment extends Fragment {
                     String oldEmail = user_oldEmail;
 
                     if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                        emailEditTextProfile.setError("Invalid Email Format");
+                        emailProfileLayout.setError("Invalid Email Format");
                         emailEditTextProfile.requestFocus();
                         return;
                     }
                     if(email.equals(oldEmail)){
-                        emailEditTextProfile.setError("New and Old email should not be the same.");
+                        emailProfileLayout.setError("New and Old email should not be the same.");
                         emailEditTextProfile.requestFocus();
                         return;
                     }
@@ -342,6 +351,13 @@ public class ProfileFragment extends Fragment {
                 }
                 Toast.makeText(getActivity(), "Non empty fields updated!", Toast.LENGTH_LONG).show();
                 changeProfile.dismiss();
+            }
+        });
+
+        emailEditTextProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                emailProfileLayout.setError(null);
             }
         });
 

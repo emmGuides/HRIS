@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -15,11 +17,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPassword extends AppCompatActivity {
 
     private EditText emailEditText;
+    private TextInputLayout email_layout;
     private ProgressBar progressBar;
     private Button resetPasswordBUTTON;
     private TextView logInInstead;
@@ -32,6 +36,8 @@ public class ForgotPassword extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
 
         emailEditText = (EditText) findViewById(R.id.email);
+        email_layout = findViewById(R.id.email_layout);
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         resetPasswordBUTTON = (Button) findViewById(R.id.resetPassword_BUTTON);
         logInInstead = (TextView) findViewById(R.id.gobackLogIn);
@@ -52,6 +58,14 @@ public class ForgotPassword extends AppCompatActivity {
             }
         });
 
+        emailEditText.setOnClickListener(view -> email_layout.setError(null));
+        emailEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                email_layout.setStartIconDrawable(b ? R.drawable.email_on : R.drawable.email_icon);
+            }
+        });
+
     }
 
     private void resetPassword(){
@@ -59,13 +73,13 @@ public class ForgotPassword extends AppCompatActivity {
         String extractedEmail = emailEditText.getText().toString().trim();
 
         if(extractedEmail.isEmpty()){
-            emailEditText.setError("Email cannot be empty!");
+            email_layout.setError("Email cannot be empty!");
             emailEditText.requestFocus();
             return;
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(extractedEmail).matches()){
-            emailEditText.setError("Invalid email format!");
+            email_layout.setError("Invalid email format!");
             emailEditText.requestFocus();
             return;
         }
@@ -84,5 +98,7 @@ public class ForgotPassword extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
             }
         });
+
+
     }
 }
