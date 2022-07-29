@@ -45,7 +45,7 @@ public class VacationFragment extends Fragment {
     EditText details;
     EditText teamName, managerName, approvedBy;
     TextView numberOfDays, startDateTextView, endDateTextView;
-    TextInputLayout detailslayout, teamNameLayout, managerNameLayout, approvedByLayout;
+    TextInputLayout detailslayout, teamNameLayout, managerNameLayout, approvedByLayout, startDateLayout, endDateLayout;
     String childPath;
 
 
@@ -84,11 +84,11 @@ public class VacationFragment extends Fragment {
         approvedBy = binding.vacationApprovedBy;
         approvedByLayout = binding.vacationApprovedByLayout;
 
-        startDateTextView = binding.vacStartDateLabel;
-        endDateTextView = binding.vacEndDateLabel;
-
         details = binding.vacationAdditionalDetails;
         detailslayout = binding.vacationAdditionalDetailsLayout;
+
+        startDateLayout = binding.vacationStartDateLayout;
+        endDateLayout = binding.vacationEndDateLayout;
 
         // Button apply
         applyButton = binding.vacationApply;
@@ -132,7 +132,7 @@ public class VacationFragment extends Fragment {
         editTextStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startDateTextView.setError(null);
+                startDateLayout.setError(null);
                 new DatePickerDialog(getContext(),
                         dateStart,
                         myCalendar.get(Calendar.YEAR),
@@ -146,7 +146,7 @@ public class VacationFragment extends Fragment {
         editTextEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                endDateTextView.setError(null);
+                endDateLayout.setError(null);
                 new DatePickerDialog(getContext(),
                         dateEnd,
                         myCalendar.get(Calendar.YEAR),
@@ -162,14 +162,14 @@ public class VacationFragment extends Fragment {
 
                 childPath = dateWord.format(Calendar.getInstance().getTime()) + " (Time In Milli: " +String.valueOf(System.currentTimeMillis()) +")";
                 if(startDate.isEmpty()){
-                    startDateTextView.setError("Start Date is required");
-                    startDateTextView.requestFocus();
+                    startDateLayout.setError("Start Date is required");
+                    editTextStart.requestFocus();
                     return;
                 }
 
                 if(endDate.isEmpty()){
-                    endDateTextView.setError("End Date is required");
-                    endDateTextView.requestFocus();
+                    endDateLayout.setError("End Date is required");
+                    editTextEnd.requestFocus();
                     return;
                 }
 
@@ -230,28 +230,6 @@ public class VacationFragment extends Fragment {
                 }
             }
         };
-
-        threadFields = new Thread(){
-            @Override
-            public void run(){
-                try{
-                    while(!thread.isInterrupted()) {
-                        Thread.sleep(5000);
-                        requireActivity().runOnUiThread(new Runnable() {
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void run() {
-                                startDateTextView.setError(null);
-                                endDateTextView.setError(null);
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        threadFields.start();
         thread.start();
 
         // reset error messages
@@ -364,7 +342,6 @@ public class VacationFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        threadFields.interrupt();
         thread.interrupt();
     }
 
