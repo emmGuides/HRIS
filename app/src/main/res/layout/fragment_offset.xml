@@ -10,158 +10,204 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
 
-        <View
-            android:id="@+id/buffer"
-            android:layout_width="1dp"
-            android:layout_height="35sp"
-            app:layout_constraintTop_toBottomOf="@+id/offset_apply"
-            app:layout_constraintStart_toStartOf="parent"
+        <ImageView
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            android:layout_marginTop="-60sp"
+            android:layout_marginEnd="-10sp"
+            android:layout_height="300dp"
+            android:layout_width="500dp"
+            android:alpha="0.2"
+            android:src="@drawable/cloudforhome_1"/>
+
+        <ImageView
+            android:id="@+id/vacation_icon_bg"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="25sp"
+            android:alpha="0.1"
+            android:src="@drawable/offset_icon_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.939" />
+
 
         <ImageView
             android:layout_height="300dp"
             android:layout_width="700dp"
             android:alpha="0.2"
-            app:layout_constraintTop_toBottomOf="@+id/buffer"
-            android:layout_marginTop="-180sp"
-            android:src="@drawable/cloud_for_bg_2_full"
+            app:layout_constraintTop_toBottomOf="@+id/offset_apply"
+            android:layout_marginTop="-200sp"
+            android:src="@drawable/cloud_for_bg_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="ContentDescription" />
 
-        <ImageView
-            android:layout_width="248dp"
-            android:layout_height="248dp"
-            android:layout_marginBottom="50dp"
-            android:alpha="0.09"
-            android:src="@drawable/offset_icon_bg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.969"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.014" />
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Team Name"
-            android:textStyle="bold"
-            android:textColor="@color/darkerTextColor"
-            app:layout_constraintStart_toStartOf="@+id/offset_Team"
-            app:layout_constraintBottom_toTopOf="@+id/offset_Team"
-            />
-
-        <EditText
-            android:id="@+id/offset_Team"
-            android:hint="Team Name"
-            android:inputType="text"
-            android:layout_marginTop="80dp"
-            android:layout_width="300dp"
-            android:layout_height="48dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Team Leader"
-            android:textStyle="bold"
-            android:textColor="@color/darkerTextColor"
-            app:layout_constraintStart_toStartOf="@+id/offset_TeamLeader"
-            app:layout_constraintBottom_toTopOf="@+id/offset_TeamLeader"
-            />
-
-        <EditText
-            android:layout_marginTop="60dp"
-            android:id="@+id/offset_TeamLeader"
-            android:hint="Team Leader Name"
-            android:layout_width="300dp"
-            android:layout_height="48dp"
-            android:inputType="text"
-            app:layout_constraintTop_toBottomOf="@id/offset_Team"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total Hours to Offset"
-            android:textStyle="bold"
-            android:textColor="@color/darkerTextColor"
-            app:layout_constraintStart_toStartOf="@+id/offset_totalHours"
-            app:layout_constraintBottom_toTopOf="@+id/offset_totalHours"
-            />
-
-        <EditText
-            android:layout_width="100dp"
-            android:hint="Hours"
-            android:layout_marginTop="60dp"
-            android:layout_height="48dp"
-            android:id="@+id/offset_totalHours"
-            android:inputType="number"
-            app:layout_constraintStart_toStartOf="@+id/offset_TeamLeader"
-            app:layout_constraintTop_toBottomOf="@id/offset_TeamLeader"
-            />
-
-        <TextView
-            android:id="@+id/offset_date_label"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/offset_team_Layout"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:focusableInTouchMode="true"
-            android:focusable="true"
-            android:text="Date of Offset"
-            android:textStyle="bold"
-            android:textColor="@color/darkerTextColor"
-            app:layout_constraintStart_toStartOf="@+id/offset_Date"
-            app:layout_constraintBottom_toTopOf="@+id/offset_Date"
-            />
-
-        <EditText
-            android:clickable="false"
-            android:cursorVisible="false"
+            android:layout_marginTop="20sp"
             android:ems="10"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:layout_marginTop="60dp"
-            android:layout_width="150dp"
-            android:layout_height="48dp"
-            android:id="@+id/offset_Date"
-            android:hint="DD/MM/YYYY"
-            app:layout_constraintStart_toStartOf="@id/offset_totalHours"
-            app:layout_constraintTop_toBottomOf="@id/offset_totalHours"
-            />
+            android:hint="Team Name"
+            android:minHeight="48dp"
+            android:textColorHint="#757575"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:helperTextEnabled="true"
+            app:helperText=""
+            app:startIconDrawable="@drawable/people_for_fields"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintTop_toBottomOf="@+id/offset_Date_Layout"
+            tools:ignore="Autofill,HardcodedText">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reason for Offset"
-            android:textStyle="bold"
-            android:textColor="@color/darkerTextColor"
-            app:layout_constraintStart_toStartOf="@+id/offset_reason"
-            app:layout_constraintBottom_toTopOf="@+id/offset_reason"
-            />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/offset_team"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
 
-        <EditText
-            android:inputType="text"
-            android:layout_marginTop="60dp"
-            android:id="@+id/offset_reason"
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/offset_TeamLeader_Layout"
             android:layout_width="300dp"
-            android:layout_height="48dp"
-            android:hint="Indicate Reason"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="Project Manager name"
+            android:minHeight="48dp"
+            android:textColorHint="#757575"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:helperTextEnabled="true"
+            app:helperText=""
+            app:startIconDrawable="@drawable/one_person_for_fields"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintTop_toBottomOf="@id/offset_team_Layout"
+            tools:ignore="Autofill,HardcodedText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/offset_TeamLeader"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="100sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/offset_totalHours_Layout"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="Total Hours"
+            android:minHeight="48dp"
+            android:textColorHint="#757575"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="@id/offset_TeamLeader_Layout"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:helperTextEnabled="true"
+            app:helperText=""
+            app:startIconDrawable="@drawable/clock_plus_for_fields"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintTop_toBottomOf="@id/offset_TeamLeader_Layout"
+            tools:ignore="Autofill,HardcodedText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/offset_totalHours"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/offset_Date_Layout"
+            android:textColorHint="#757575"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:helperTextEnabled="true"
+            app:helperText="Tap to select a date in MM/DD/YYYY format"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100sp"
+            android:hint="Date of offset"
+            app:startIconDrawable="@drawable/calendar_for_fields"
+            android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/offset_Date"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/offset_Date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:cursorVisible="false"
+                android:ems="10"
+                android:textSize="18sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/offset_reason_Layout"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25sp"
+            android:ems="10"
+            android:hint="Additional Details"
+            android:minHeight="48dp"
+            android:textColorHint="#757575"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:helperTextEnabled="true"
+            app:startIconDrawable="@drawable/pen_for_fields"
+            app:helperText=""
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintTop_toBottomOf="@id/offset_totalHours_Layout"
+            tools:ignore="Autofill,HardcodedText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/offset_reason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/offset_apply"
             android:layout_width="300dp"
             android:layout_height="70dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@color/buttonColor"
             android:text="Apply"
             android:textColor="@color/darkerTextColor"
@@ -170,7 +216,7 @@
             android:layout_marginBottom="50dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/offset_reason"
+            app:layout_constraintTop_toBottomOf="@+id/offset_reason_Layout"
             tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

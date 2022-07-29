@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.hris.databinding.FragmentOffsetBinding;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -29,8 +30,10 @@ import java.util.Locale;
 
 public class OffsetFragment extends Fragment {
 
+
     private FragmentOffsetBinding binding;
     EditText offset_teamName, offset_teamLeader, offset_hours, offset_date, offset_reason;
+    TextInputLayout offset_teamNameLayout, offset_teamLeaderLayout, offset_hoursLayout, offset_dateLayout, offset_reasonLayout;
     String userID, offset_teamNameS, offset_teamLeaderS, offset_hoursS, offset_dateS, offset_reasonS;
     final Calendar myCalendar = Calendar.getInstance();
     TextView offsetDateLabel;
@@ -52,13 +55,21 @@ public class OffsetFragment extends Fragment {
         View root = binding.getRoot();
 
         offset_teamName = binding.offsetTeam;
+        offset_teamNameLayout = binding.offsetTeamLayout;
+
         offset_teamLeader = binding.offsetTeamLeader;
-        offset_hours = binding.offsetTotalHours;
+        offset_teamLeaderLayout = binding.offsetTeamLeaderLayout;
+
         offset_date = binding.offsetDate;
+        offset_dateLayout = binding.offsetDateLayout;
+
         offset_reason = binding.offsetReason;
+        offset_reasonLayout = binding.offsetReasonLayout;
+
+        offset_hours = binding.offsetTotalHours;
+        offset_hoursLayout = binding.offsetTotalHoursLayout;
 
         applyButton = binding.offsetApply;
-        offsetDateLabel = binding.offsetDateLabel;
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
@@ -79,8 +90,11 @@ public class OffsetFragment extends Fragment {
         offset_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                offsetDateLabel.setError(null);
-                new DatePickerDialog(getContext(), offsetDatePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                offset_dateLayout.setError(null);
+                new DatePickerDialog(getContext(), offsetDatePicker,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -94,61 +108,73 @@ public class OffsetFragment extends Fragment {
                 offset_reasonS = offset_reason.getText().toString().trim();
 
                 if(offset_teamNameS.isEmpty()){
-                    offset_teamName.setError("Team name is required!");
+                    offset_teamNameLayout.setError("Team name is required!");
                     offset_teamName.requestFocus();
                     return;
                 }
 
                 if(offset_teamLeaderS.isEmpty()){
-                    offset_teamLeader.setError("Team Leader's name is required!");
+                    offset_teamLeaderLayout.setError("Team Leader's name is required!");
                     offset_teamLeader.requestFocus();
                     return;
                 }
 
                 if(offset_hoursS.isEmpty()){
-                    offset_hours.setError("Number Hours required!");
+                    offset_hoursLayout.setError("Number Hours required!");
                     offset_hours.requestFocus();
                     return;
                 }
 
                 if(offset_dateS.isEmpty()){
-                    offsetDateLabel.setError("Date is required!");
+                    offset_dateLayout.setError("Date is required!");
                     offsetDateLabel.requestFocus();
                     return;
                 }
 
                 if(offset_reasonS.isEmpty()){
-                    offset_reason.setError("Reason is required!");
+                    offset_reasonLayout.setError("Reason is required!");
                     offset_reason.requestFocus();
                     return;
                 }
 
+                if(offset_reasonS.length() > 20){
+                    offset_reasonLayout.setError("Limit reason to 20 characters");
+                    offset_reasonLayout.requestFocus();
+                    return;
+                }
                 sendToDatabase();
+                requireView().clearFocus();
             }
         });
 
-        thread = new Thread() {
+        offset_teamName.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                try {
-                    while (!thread.isInterrupted()) {
-                        Thread.sleep(10000);
-                        requireActivity().runOnUiThread(new Runnable() {
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void run() {
-                                offset_hours.setError(null);
-                                offsetDateLabel.setError(null);
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            public void onClick(View view) {
+                offset_teamNameLayout.setError(null);
             }
-        };
+        });
 
-        thread.start();
+        offset_teamLeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                offset_teamLeaderLayout.setError(null);
+            }
+        });
+
+        offset_hours.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                offset_hoursLayout.setError(null);
+            }
+        });
+
+        offset_reason.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                offset_reasonLayout.setError(null);
+            }
+        });
+
         return root;
     }
 
@@ -181,7 +207,6 @@ public class OffsetFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        thread.interrupt();
         binding = null;
     }
 }
