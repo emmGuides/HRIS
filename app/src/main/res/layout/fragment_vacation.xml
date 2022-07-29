@@ -128,7 +128,10 @@
         app:endIconMode="clear_text"
         app:errorEnabled="true"
         app:helperTextEnabled="true"
+        app:startIconDrawable="@drawable/pen_for_fields"
         app:helperText=""
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintTop_toBottomOf="@id/vacation_end_date_Layout"
         tools:ignore="Autofill,HardcodedText">
@@ -158,6 +161,7 @@
         app:errorEnabled="true"
         app:helperTextEnabled="true"
         app:helperText=""
+        app:startIconDrawable="@drawable/people_for_fields"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintTop_toBottomOf="@id/vacation_additional_details_Layout"
         tools:ignore="Autofill,HardcodedText">
@@ -206,6 +210,7 @@
         app:errorEnabled="true"
         app:helperTextEnabled="true"
         app:helperText=""
+        app:startIconDrawable="@drawable/one_person_for_fields"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintTop_toBottomOf="@id/vacation_team_Layout"
         tools:ignore="Autofill,HardcodedText">
@@ -236,6 +241,7 @@
         app:errorEnabled="true"
         app:helperTextEnabled="true"
         app:helperText=""
+        app:startIconDrawable="@drawable/approved_for_fields"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintTop_toBottomOf="@id/vacation_projectManager_Layout"
         tools:ignore="Autofill,HardcodedText">

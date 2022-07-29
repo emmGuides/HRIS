@@ -179,6 +179,12 @@ public class VacationFragment extends Fragment {
                     return;
                 }
 
+                if(additionalDetails.length() > 21){
+                    detailslayout.setError("Limit details to 20 characters.");
+                    details.requestFocus();
+                    return;
+                }
+
                 if(teamName.getText().toString().trim().isEmpty()){
                     teamNameLayout.setError("Team Name cannot be empty");
                     teamName.requestFocus();
