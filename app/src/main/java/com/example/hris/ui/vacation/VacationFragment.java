@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.databinding.FragmentVacationBinding;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +33,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class VacationFragment extends Fragment {
 
@@ -43,7 +45,7 @@ public class VacationFragment extends Fragment {
     EditText details;
     EditText teamName, managerName, approvedBy;
     TextView numberOfDays, startDateTextView, endDateTextView;
-    ProgressBar progressBar;
+    TextInputLayout detailslayout, teamNameLayout, managerNameLayout, approvedByLayout;
     String childPath;
 
 
@@ -74,17 +76,22 @@ public class VacationFragment extends Fragment {
         View root = binding.getRoot();
 
         teamName = binding.vacationTeam;
+        teamNameLayout = binding.vacationTeamLayout;
+
         managerName = binding.vacationProjectManager;
+        managerNameLayout = binding.vacationProjectManagerLayout;
+
         approvedBy = binding.vacationApprovedBy;
+        approvedByLayout = binding.vacationApprovedByLayout;
 
         startDateTextView = binding.vacStartDateLabel;
         endDateTextView = binding.vacEndDateLabel;
 
+        details = binding.vacationAdditionalDetails;
+        detailslayout = binding.vacationAdditionalDetailsLayout;
+
         // Button apply
         applyButton = binding.vacationApply;
-
-        // location
-        details = binding.vacationAdditionalDetails;
 
         // calendar popup
         editTextStart = binding.vacationStartDate;
@@ -167,30 +174,31 @@ public class VacationFragment extends Fragment {
                 }
 
                 if(additionalDetails.isEmpty()){
-                    details.setError("Details are Required");
+                    detailslayout.setError("Details are Required");
                     details.requestFocus();
                     return;
                 }
 
                 if(teamName.getText().toString().trim().isEmpty()){
-                    teamName.setError("Team Name cannot be empty");
+                    teamNameLayout.setError("Team Name cannot be empty");
                     teamName.requestFocus();
                     return;
                 }
 
                 if(managerName.getText().toString().trim().isEmpty()){
-                    managerName.setError("Manager name cannot be empty");
+                    managerNameLayout.setError("Manager name cannot be empty");
                     managerName.requestFocus();
                     return;
                 }
 
                 if(approvedBy.getText().toString().trim().isEmpty()){
-                    approvedBy.setError("You need to indicate who approved this leave.");
+                    approvedByLayout.setError("You need to indicate who approved this leave.");
                     approvedBy.requestFocus();
                     return;
                 }
 
                 sendToDatabase(childPath);
+                requireView().clearFocus();
             }
 
         });
@@ -245,6 +253,35 @@ public class VacationFragment extends Fragment {
         };
         threadFields.start();
         thread.start();
+
+        // reset error messages
+        details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detailslayout.setError(null);
+            }
+        });
+
+        teamName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                teamNameLayout.setError(null);
+            }
+        });
+
+        managerName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                managerNameLayout.setError(null);
+            }
+        });
+
+        approvedBy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                approvedByLayout.setError(null);
+            }
+        });
         return root;
 
     }
