@@ -37,6 +37,7 @@ import com.example.hris.databinding.FragmentSickBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -60,6 +61,8 @@ public class SickFragment extends Fragment {
     final Calendar myCalendar = Calendar.getInstance();
     private FragmentSickBinding binding;
     EditText editTextStart, editTextEnd, details, approvedBy, editTextSelectFile;
+    TextInputLayout startDateLayout, endDateLayout, detailsLayout, approvedByLayout;
+
     TextView numberOfDays, medFormLabel, availmentLabel, startDateLabel, endDateLabel;
     String startDate, endDate, additionalDetails, url = "No File URL";
     Thread thread, threadRadio;
@@ -97,13 +100,14 @@ public class SickFragment extends Fragment {
         availmentLabel = binding.availmentRadioGroupLabel;
 
         approvedBy = binding.sickApprovedBy;
-
-        startDateLabel = binding.startDateLabel;
-        endDateLabel = binding.endDateLabel;
+        approvedByLayout = binding.sickApprovedByLayout;
 
         // calendar popup
         editTextStart = binding.sickStartDate;
+        startDateLayout = binding.sickStartDateLayout;
+
         editTextEnd =  binding.sickEndDate;
+        endDateLayout = binding.sickEndDateLayout;
 
         // button
         applyButton = binding.sickApply;
@@ -114,6 +118,7 @@ public class SickFragment extends Fragment {
         
         // additional Details
         details =  binding.sickAdditionalDetails;
+        detailsLayout = binding.sickAdditionalDetailsLayout;
 
         // days duration
         numberOfDays = binding.textSickDays;
@@ -172,7 +177,7 @@ public class SickFragment extends Fragment {
         editTextStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startDateLabel.setError(null);
+                startDateLayout.setError(null);
                 new DatePickerDialog(getContext(),dateStart,
                         myCalendar.get(Calendar.YEAR),
                         myCalendar.get(Calendar.MONTH),
@@ -184,11 +189,26 @@ public class SickFragment extends Fragment {
         editTextEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                endDateLabel.setError(null);
+                endDateLayout.setError(null);
                 new DatePickerDialog(getContext(),dateEnd,
                         myCalendar.get(Calendar.YEAR),
                         myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        // clear error messages
+        details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detailsLayout.setError(null);
+            }
+        });
+
+        approvedBy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                approvedByLayout.setError(null);
             }
         });
 
@@ -204,19 +224,25 @@ public class SickFragment extends Fragment {
                 String approvedByS = approvedBy.getText().toString().trim();
 
                 if(startDate.isEmpty()){
-                    startDateLabel.setError("Start Date Required");
-                    startDateLabel.requestFocus();
+                    startDateLayout.setError("Start Date Required");
+                    editTextStart.requestFocus();
                     return;
                 }
 
                 if(endDate.isEmpty()){
-                    endDateLabel.setError("End Date Required");
-                    endDateLabel.requestFocus();
+                    endDateLayout.setError("End Date Required");
+                    editTextEnd.requestFocus();
                     return;
                 }
 
                 if(additionalDetails.isEmpty()){
-                    details.setError("Details are Required");
+                    detailsLayout.setError("Details are Required");
+                    details.requestFocus();
+                    return;
+                }
+
+                if(additionalDetails.length() > 20){
+                    detailsLayout.setError("Limit details to 20 characters.");
                     details.requestFocus();
                     return;
                 }
@@ -234,7 +260,7 @@ public class SickFragment extends Fragment {
                 }
 
                 if(approvedByS.isEmpty()){
-                    approvedBy.setError("Approval required");
+                    approvedByLayout.setError("Approval required");
                     approvedBy.requestFocus();
                     return;
                 }
@@ -249,7 +275,7 @@ public class SickFragment extends Fragment {
                 } else {
                     sendToDatabase(childPath);
                 }
-
+                requireView().clearFocus();
             }
         });
 
@@ -316,8 +342,6 @@ public class SickFragment extends Fragment {
                             @SuppressLint("SetTextI18n")
                             @Override
                             public void run() {
-                                startDateLabel.setError(null);
-                                endDateLabel.setError(null);
                                 medFormLabel.setError(null);
                                 availmentLabel.setError(null);
                             }
