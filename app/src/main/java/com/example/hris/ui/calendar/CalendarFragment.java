@@ -47,7 +47,7 @@ import java.util.Objects;
 
 public class CalendarFragment extends Fragment {
 
-    
+
     private FragmentCalendarBinding binding;
 
     private FirebaseUser user;
