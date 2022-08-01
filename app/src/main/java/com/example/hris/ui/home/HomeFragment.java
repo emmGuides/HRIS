@@ -365,11 +365,11 @@ public class HomeFragment extends Fragment {
 
     public void checkBtnStatus (){
         if(timeInsOuts.getText().toString().trim().isEmpty()){
-            timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
+            timeInOutButton.setImageResource(R.drawable.time_in);
         }else if(totalTimedIn.getText().toString().trim().isEmpty() && !(timeInsOuts.getText().toString().trim().isEmpty())){
-            timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_green);
+            timeInOutButton.setImageResource(R.drawable.time_in_filled);
         }else{
-            timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image_off);
+            timeInOutButton.setImageResource(R.drawable.time_in_done);
         }
     }
 

@@ -16,5 +16,6 @@
     <color name="iconCalendarColor">#32a8a4</color>
     <color name="buttonColor">#9ae3e1</color>
     <color name="dividerColor">#dce6e4</color>
-    <color name="textViewColor">#E0FAF5</color>
+    <color name="textViewColor">#AEE9DD</color>
+    <color name="IconFillColor">#E427A89C</color>
 </resources>
