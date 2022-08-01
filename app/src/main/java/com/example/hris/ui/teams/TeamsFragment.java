@@ -1,5 +1,6 @@
 package com.example.hris.ui.teams;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.Employee;
+import com.example.hris.R;
 import com.example.hris.databinding.FragmentTeamsBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,8 +30,9 @@ public class TeamsFragment extends Fragment {
     private FragmentTeamsBinding binding;
 
     private FirebaseUser user;
-    private DatabaseReference reference;
+    private DatabaseReference reference, referenceForTeams;
     private String userID;
+    Dialog createTeam;
     ConstraintLayout employeeView, managerView,
             employeeNoTeamView, managerNoTeamView,
             employeeHasTeamView, managerHasTeamView;
@@ -49,11 +52,13 @@ public class TeamsFragment extends Fragment {
         managerNoTeamView = binding.noTeamsLayoutMANAGER;
         managerHasTeamView = binding.hasTeamsLayoutMANAGER;
 
+
         createTeam_asManager = binding.createTeamAsManager;
 
         // get user and DB
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
+        referenceForTeams = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Teams");
         userID = user.getUid();
 
         reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
@@ -89,6 +94,39 @@ public class TeamsFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        // create team button
+        createTeam_asManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createTeam.show();
+            }
+        });
+
+        // Create Team dialog
+        createTeam = new Dialog(getContext());
+        createTeam.setContentView(R.layout.custom_dialog_teams_create_team);
+        createTeam.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
+        createTeam.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        createTeam.setCancelable(false);
+        createTeam.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        // dialog okay button
+        createTeam.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO
+                createTeam.dismiss();
+            }
+        });
+
+        // dialog cancel button
+        createTeam.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createTeam.dismiss();
             }
         });
 
