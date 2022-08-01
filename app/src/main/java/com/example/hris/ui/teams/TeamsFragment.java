@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.hris.Employee;
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentTeamsBinding;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +27,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class TeamsFragment extends Fragment {
 
 
@@ -31,8 +38,9 @@ public class TeamsFragment extends Fragment {
 
     private FirebaseUser user;
     private DatabaseReference reference, referenceForTeams;
-    private String userID;
+    private String userID, userName;
     Dialog createTeam;
+    TextInputLayout teamNameLayout;
     ConstraintLayout employeeView, managerView,
             employeeNoTeamView, managerNoTeamView,
             employeeHasTeamView, managerHasTeamView;
@@ -67,24 +75,28 @@ public class TeamsFragment extends Fragment {
                 Employee userProfile = snapshot.getValue(Employee.class);
                 if (userProfile != null) {
                     String user_position = userProfile.position;
-
+                    userName = userProfile.fullName;
                     if(user_position.equals("Employee")){
                         employeeView.setVisibility(View.VISIBLE);
-                        if(userProfile.teams.equals("No Team")){
+                        if(Objects.equals(userProfile.teams.get(0), "No team")){
+                            Toast.makeText(getActivity(), "if if", Toast.LENGTH_LONG).show();
                             employeeNoTeamView.setVisibility(View.VISIBLE);
                         }
                         else
                         {
+                            Toast.makeText(getActivity(), "if else", Toast.LENGTH_LONG).show();
                             employeeHasTeamView.setVisibility(View.VISIBLE);
                         }
                     }
                     else{
                         managerView.setVisibility(View.VISIBLE);
-                        if(userProfile.teams.equals("No Team")){
+                        if(Objects.equals(userProfile.teams.get(0), "No team")){
+                            Toast.makeText(getActivity(), userProfile.teams.get(0).toString(), Toast.LENGTH_LONG).show();
                             managerNoTeamView.setVisibility(View.VISIBLE);
                         }
                         else
                         {
+                            Toast.makeText(getActivity(), "else else", Toast.LENGTH_LONG).show();
                             managerHasTeamView.setVisibility(View.VISIBLE);
                         }
                     }
@@ -112,13 +124,23 @@ public class TeamsFragment extends Fragment {
         createTeam.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         createTeam.setCancelable(false);
         createTeam.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        teamNameLayout = createTeam.findViewById(R.id.new_team_layout);
 
         // dialog okay button
         createTeam.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO
-                createTeam.dismiss();
+                EditText userTeamNameInput = createTeam.findViewById(R.id.newTeam_name_input);
+                String newTeamName = userTeamNameInput.getText().toString().trim();
+                if(newTeamName.isEmpty()) {
+                    teamNameLayout.setError("New team name should not be empty!");
+                } else {
+                    create_Team_Method(userTeamNameInput.getText().toString());
+                    Toast.makeText(getActivity(), "Team "+newTeamName+" has been created", Toast.LENGTH_LONG).show();
+                    createTeam.dismiss();
+                }
+
             }
         });
 
@@ -130,7 +152,25 @@ public class TeamsFragment extends Fragment {
             }
         });
 
+        // remove errors
+        createTeam.findViewById(R.id.newTeam_name_input).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                teamNameLayout.setError(null);
+            }
+        });
+
         return root;
+    }
+
+    public void create_Team_Method(String newTeamNameParam){
+        List<String> newTeamName = new ArrayList<>();
+        String creatorName = userID + " (" + userName + ")";
+
+        newTeamName.add(newTeamNameParam);
+        reference.child(userID).child("User Details").child("teams").setValue(newTeamName);
+        referenceForTeams.child(newTeamNameParam).child("Team Leader").setValue(creatorName);
+
     }
 
     @Override
