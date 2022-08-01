@@ -149,6 +149,7 @@ public class TeamsFragment extends Fragment {
                 } else {
                     create_Team_Method(userTeamNameInput.getText().toString());
                     Toast.makeText(getActivity(), "Team "+newTeamName+" has been created", Toast.LENGTH_LONG).show();
+                    managerNoTeamView.setVisibility(View.GONE);
                     createTeam.dismiss();
                 }
 

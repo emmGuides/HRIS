@@ -42,6 +42,7 @@
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/vacation_icon_for_calendar.xml" value="0.141" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/vis_off.xml" value="0.177" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/vis_on.xml" value="0.177" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout-v23/fragment_teams.xml" value="0.15625" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/activity_for_test_only_final.xml" value="0.33" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/activity_home_screen.xml" value="0.28149300155520995" />
@@ -83,7 +84,7 @@
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_reminders.xml" value="0.15625" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_sick.xml" value="0.33" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_slideshow.xml" value="0.25" />
-        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_teams.xml" value="0.16032608695652173" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_teams.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_vacation.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/list_item_layout.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/nav_header_home_screen.xml" value="0.25" />

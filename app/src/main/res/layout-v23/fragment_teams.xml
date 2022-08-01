@@ -190,14 +190,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:text="ADD"
-                app:icon = "@drawable/add_people"
+                android:foreground="@drawable/add_people"
                 android:textAllCaps="false"
                 android:backgroundTint="@color/buttonColor"
                 app:layout_constraintBottom_toBottomOf="@+id/managerHasTeams_teamNameLabel"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="20sp"
-                tools:ignore="HardcodedText" />
+                />
 
             <View
                 android:layout_width="match_parent"
