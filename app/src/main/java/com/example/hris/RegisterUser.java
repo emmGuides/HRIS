@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -129,7 +130,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String password = editTextPassword.getText().toString().trim();
         String age = editTextAge.getText().toString().trim();
         String fullName = editTextFullName.getText().toString().trim();
-        String teams = "No Team";
+        List<String> teams = Collections.singletonList(("No team"));
 
 
         if(fullName.isEmpty()){

@@ -36,20 +36,18 @@
 
     <TextView
         android:id="@+id/greet_user"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:elevation="2dp"
-        android:gravity="right"
-        android:paddingEnd="30dp"
+        android:layout_marginTop="80sp"
+        android:layout_marginBottom="100dp"
+        android:textAlignment="textStart"
+        android:layout_marginStart="5sp"
         android:hint="Good day!"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/announcement_header"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/attendance_header"
+        app:layout_constraintLeft_toLeftOf="@id/attendance_body"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.176"
         tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
@@ -57,15 +55,17 @@
 
     <TextView
         android:id="@+id/announcement_header"
-        android:layout_width="447dp"
-        android:layout_height="43dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_dialog_backgroud"
         android:layout_marginTop="80dp"
-        android:minHeight="40dp"
         android:text="Announcements"
         android:textSize="18sp"
+        android:elevation="5dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/mock_announcements"
-        app:layout_constraintRight_toRightOf="parent"
+        android:padding="11sp"
+        app:layout_constraintStart_toStartOf="@id/mock_announcements"
+        app:layout_constraintEnd_toEndOf="@id/mock_announcements"
         app:layout_constraintTop_toBottomOf="@+id/total_timed_in"
         tools:ignore="HardcodedText,RtlSymmetry" />
 
@@ -73,7 +73,7 @@
         android:id="@+id/mock_announcements"
         android:layout_width="300dp"
         android:layout_height="250dp"
-        android:layout_marginTop="-5dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/announcement_header"
@@ -81,26 +81,24 @@
         />
 
     <TextView
-        android:textAlignment="textEnd"
         android:id="@+id/date_display"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:minHeight="40dp"
-        android:paddingEnd="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10sp"
+        android:text="Today's Date"
+        android:layout_marginEnd="1sp"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/greet_user"
         app:layout_constraintTop_toBottomOf="@id/greet_user"
-        tools:ignore="RtlSymmetry" />
+        tools:ignore="HardcodedText,RtlSymmetry" />
 
     <View
         android:layout_width="match_parent"
         android:layout_marginStart="40sp"
         android:layout_marginEnd="40sp"
         android:layout_height="1dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:background="@color/barColor"
         app:layout_constraintTop_toBottomOf="@+id/date_display"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,17 +106,19 @@
 
     <TextView
         android:id="@+id/attendance_header"
-        android:layout_width="371dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/custom_dialog_backgroud"
+        android:padding="10sp"
         android:minHeight="40dp"
+        android:elevation="5dp"
         android:text="Attendance"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/attendance_body"
+        app:layout_constraintEnd_toEndOf="@id/attendance_body"
+        app:layout_constraintStart_toStartOf="@id/attendance_body"
         app:layout_constraintTop_toBottomOf="@+id/date_display"
-        app:layout_goneMarginTop="50dp"
         tools:ignore="HardcodedText,RtlSymmetry" />
 
     <ImageView
@@ -129,41 +129,42 @@
         app:layout_constraintTop_toBottomOf="@+id/attendance_header"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="-5dp"
+        android:layout_marginTop="35dp"
         tools:ignore="ContentDescription" />
 
-    <TextView
-        android:hint="You haven't timed in yet..."
-        android:id="@+id/Time_ins_outs"
-        android:maxWidth="200dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textAlignment="textEnd"
-        android:paddingEnd="20dp"
-        android:paddingTop="10dp"
-        android:textSize="18sp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toStartOf="@+id/attendance_body"
-        android:backgroundTint="@color/white"
-        app:layout_constraintRight_toLeftOf="@id/Time_ins_outs_Button"
-        app:layout_constraintTop_toBottomOf="@+id/attendance_body"
-        tools:ignore="HardcodedText,RtlSymmetry,TextContrastCheck" />
+        <TextView
+            android:hint="You haven't timed in yet..."
+            android:id="@+id/Time_ins_outs"
+            android:maxWidth="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textAlignment="textEnd"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:textSize="18sp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintStart_toStartOf="@+id/attendance_body"
+            android:backgroundTint="@color/white"
+            app:layout_constraintRight_toLeftOf="@id/Time_ins_outs_Button"
+            app:layout_constraintTop_toBottomOf="@+id/attendance_body"
+            tools:ignore="HardcodedText,RtlSymmetry,TextContrastCheck" />
 
 
-    <TextView
-        android:paddingEnd="20dp"
-        android:textAlignment="textEnd"
-        android:id="@+id/total_timed_in"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:minHeight="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="-20sp"
-        app:layout_constraintStart_toStartOf="@id/attendance_body"
-        app:layout_constraintEnd_toStartOf="@id/Time_ins_outs_Button"
-        app:layout_constraintTop_toBottomOf="@+id/Time_ins_outs"
-        tools:ignore="HardcodedText,RtlSymmetry" />
+        <TextView
+            android:paddingEnd="20dp"
+            android:textAlignment="textEnd"
+            android:id="@+id/total_timed_in"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:minHeight="40dp"
+            android:layout_marginTop="-20sp"
+            android:layout_marginStart="25sp"
+            android:layout_marginEnd="20sp"
+            app:layout_constraintStart_toStartOf="@id/Time_ins_outs"
+            app:layout_constraintTop_toBottomOf="@id/Time_ins_outs"
+            tools:ignore="HardcodedText,RtlSymmetry" />
+
 
     <View
         android:layout_width="match_parent"
@@ -178,19 +179,18 @@
 
     <ImageButton
         android:id="@+id/Time_ins_outs_Button"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="64dp"
+        android:layout_height="63dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="@color/background"
         android:contentDescription="TAP"
-        android:padding="10dp"
-        android:src="@drawable/timeintimeout_button_image_transpa"
-        app:circularflow_defaultRadius="10dp"
+        android:elevation="10dp"
+        android:hapticFeedbackEnabled="true"
+        android:src="@drawable/time_in"
+        android:background="@drawable/custom_bg_round"
         app:layout_constraintBottom_toBottomOf="@id/total_timed_in"
         app:layout_constraintEnd_toEndOf="@+id/attendance_body"
         app:layout_constraintLeft_toRightOf="@+id/Time_ins_outs"
         app:layout_constraintTop_toTopOf="@+id/Time_ins_outs"
-        app:layout_constraintVertical_bias="0.542"
         tools:ignore="HardcodedText,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
 

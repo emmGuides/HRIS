@@ -1,175 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.teams.TeamsFragment">
 
-    <TextView
-        android:id="@+id/text_teams"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <!--EMPLOYEE-->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/employeeLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <!--NO TEAMS MANAGER-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/noTeams_Layout_EMPLOYEE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+        <ImageView
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="-60sp"
+            android:layout_marginEnd="-10sp"
+            android:layout_height="300dp"
+            android:layout_width="500dp"
+            android:alpha="0.3"
+            android:src="@drawable/cloudforhome_1"/>
+
+        <!--EMPLOYEE-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/employeeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/noTeam_Image"
-                android:layout_width="250sp"
-                android:layout_height="250sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+            <!--NO TEAMS EMPLOYEE-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/noTeams_Layout_EMPLOYEE"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="200sp"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/no_teams_found"
-                android:layout_marginTop="0sp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/noTeam_Image"
-                android:text="No teams found!\nContact your Manager"
-                android:textAlignment="center"
-                android:textStyle="bold|italic"
-                android:textSize="18sp"
-                android:layout_marginBottom="30sp"
-                />
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/noTeam_Image"
+                    android:layout_width="250sp"
+                    android:layout_height="250sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/no_teams_found"
+                    android:layout_marginTop="0sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/noTeam_Image"
+                    android:text="No teams found!\nContact your Manager"
+                    android:textAlignment="center"
+                    android:textStyle="bold|italic"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="30sp"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--END OF NO TEAMS EMPLOYEE-->
+
+            <!--HAS TEAMS EMPLOYEE-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/hasTeams_Layout_EMPLOYEE"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone">
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--END OF HAS TEAMS EMPLOYEE-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <!--END OF NO TEAMS MANAGER-->
+        <!--END OF EMPLOYEE-->
 
-        <!--HAS TEAMS MANAGER-->
+
+        <!--MANAGER-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/hasTeams_Layout_EMPLOYEE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/managerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <!--END OF HAS TEAMS MANAGER-->
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <!--END OF EMPLOYEE-->
-
-
-    <!--MANAGER-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/managerLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone">
-
-        <!--NO TEAMS MANAGER-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/noTeams_Layout_MANAGER"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="250sp"
-                android:layout_height="250sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/createTeam_asManager"
-                android:src="@drawable/no_teams_found"
-                android:layout_marginBottom="40sp"
-                />
-
-            <TextView
+            <!--NO TEAMS MANAGER-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/noTeams_Layout_MANAGER"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/createTeam_asManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="No teams found!"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:layout_marginBottom="30sp"
-                />
-
-            <Button
-                android:id="@+id/createTeam_asManager"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="200sp"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:textSize="14sp"
-                android:text="Create New Team"
-                android:backgroundTint="@color/buttonColor"
-                android:textColor="@color/darkerTextColor"
-                android:textAllCaps="false"
-                android:textAlignment="center"
-                tools:ignore="HardcodedText" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="250sp"
+                    android:layout_height="250sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/createTeam_asManager"
+                    android:src="@drawable/no_teams_found"
+                    android:layout_marginBottom="40sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/createTeam_asManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="No teams found!"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="30sp"
+                    />
+
+                <Button
+                    android:id="@+id/createTeam_asManager"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textSize="14sp"
+                    android:text="Create New Team"
+                    android:backgroundTint="@color/buttonColor"
+                    android:textColor="@color/darkerTextColor"
+                    android:textAllCaps="false"
+                    android:textAlignment="center"
+                    tools:ignore="HardcodedText" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--END OF NO TEAMS MANAGER-->
+
+            <!--HAS TEAMS MANAGER-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/hasTeams_Layout_MANAGER"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/managerHasTeams_teamNameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20sp"
+                    android:layout_marginTop="80sp"
+                    android:text="Team Name: "
+                    android:textColor="@color/custTextColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/managerHasTeams_teamNameTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="1sp"
+                    android:layout_marginBottom="5sp"
+                    android:background="@drawable/custom_bg_for_textviews"
+                    android:maxWidth="160sp"
+                    android:maxHeight="100sp"
+                    android:padding="8sp"
+                    android:text="TEAM NAME"
+                    android:textAllCaps="false"
+                    android:elevation="2dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="@+id/managerHasTeams_teamNameLabel"
+                    app:layout_constraintBottom_toBottomOf="@+id/managerHasTeams_teamNameLabel"
+                    app:layout_constraintStart_toEndOf="@id/managerHasTeams_teamNameLabel"
+                    tools:ignore="HardcodedText" />
+
+                <Button
+                    android:id="@+id/managerHasTeams_addMember"
+                    android:layout_width="60sp"
+                    android:layout_height="40sp"
+                    android:layout_marginEnd="20sp"
+                    android:backgroundTint="@color/buttonColor"
+                    android:textAllCaps="false"
+                    android:textColor="@color/darkerTextColor"
+                    android:textSize="12sp"
+                    app:icon="@drawable/add_people"
+                    app:layout_constraintTop_toTopOf="@id/managerHasTeams_teamNameLabel"
+                    app:layout_constraintBottom_toBottomOf="@+id/managerHasTeams_teamNameLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:ignore="HardcodedText" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="50sp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="50sp"
+                    android:background="@color/barColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/managerHasTeams_teamNameTitle" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--END OF HAS TEAMS MANAGER-->
+
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <!--END OF NO TEAMS MANAGER-->
-
-        <!--HAS TEAMS MANAGER-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/hasTeams_Layout_MANAGER"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone">
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <!--END OF HAS TEAMS MANAGER-->
-
-
+        <!--END OF MANAGER-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <!--END OF MANAGER-->
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
