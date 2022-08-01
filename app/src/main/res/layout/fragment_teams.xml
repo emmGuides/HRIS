@@ -6,21 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.teams.TeamsFragment">
 
-    <TextView
-        android:id="@+id/text_teams"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="-60sp"
+        android:layout_marginEnd="-10sp"
+        android:layout_height="300dp"
+        android:layout_width="500dp"
+        android:alpha="0.2"
+        android:src="@drawable/cloudforhome_1"/>
 
     <!--EMPLOYEE-->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,11 +28,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="gone">
 
-        <!--NO TEAMS MANAGER-->
+        <!--NO TEAMS EMPLOYEE-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/noTeams_Layout_EMPLOYEE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,13 +64,13 @@
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <!--END OF NO TEAMS MANAGER-->
+        <!--END OF NO TEAMS EMPLOYEE-->
 
         <!--HAS TEAMS MANAGER-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/hasTeams_Layout_EMPLOYEE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +78,7 @@
             android:visibility="gone">
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <!--END OF HAS TEAMS MANAGER-->
+        <!--END OF HAS TEAMS EMPLOYEE-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <!--END OF EMPLOYEE-->
@@ -98,7 +93,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <!--NO TEAMS MANAGER-->
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -154,13 +149,26 @@
         <!--HAS TEAMS MANAGER-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/hasTeams_Layout_MANAGER"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone">
+
+            <TextView
+                android:id="@+id/managerHasTeams_teamNameTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TEAM NAME"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="50sp"
+                android:layout_marginStart="20sp"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--END OF HAS TEAMS MANAGER-->

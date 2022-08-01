@@ -45,6 +45,7 @@ public class TeamsFragment extends Fragment {
             employeeNoTeamView, managerNoTeamView,
             employeeHasTeamView, managerHasTeamView;
     Button createTeam_asManager;
+    TextView managerHasTeam_TeamName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,8 +61,9 @@ public class TeamsFragment extends Fragment {
         managerNoTeamView = binding.noTeamsLayoutMANAGER;
         managerHasTeamView = binding.hasTeamsLayoutMANAGER;
 
-
         createTeam_asManager = binding.createTeamAsManager;
+
+        managerHasTeam_TeamName = binding.managerHasTeamsTeamNameTitle;
 
         // get user and DB
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -76,27 +78,36 @@ public class TeamsFragment extends Fragment {
                 if (userProfile != null) {
                     String user_position = userProfile.position;
                     userName = userProfile.fullName;
+
+                    // if user is just an employee
                     if(user_position.equals("Employee")){
                         employeeView.setVisibility(View.VISIBLE);
+
+                        // if user is just an employee and does NOT have a team
                         if(Objects.equals(userProfile.teams.get(0), "No team")){
-                            Toast.makeText(getActivity(), "if if", Toast.LENGTH_LONG).show();
                             employeeNoTeamView.setVisibility(View.VISIBLE);
                         }
+
+                        // if user is just an employee and does have a team
                         else
                         {
-                            Toast.makeText(getActivity(), "if else", Toast.LENGTH_LONG).show();
                             employeeHasTeamView.setVisibility(View.VISIBLE);
                         }
                     }
+
+                    // if user is a MANAGER
                     else{
                         managerView.setVisibility(View.VISIBLE);
+
+                        // if user is a MANAGER and does NOT have a team
                         if(Objects.equals(userProfile.teams.get(0), "No team")){
-                            Toast.makeText(getActivity(), userProfile.teams.get(0).toString(), Toast.LENGTH_LONG).show();
                             managerNoTeamView.setVisibility(View.VISIBLE);
                         }
+
+                        // if user is a MANAGER and does have a team
                         else
                         {
-                            Toast.makeText(getActivity(), "else else", Toast.LENGTH_LONG).show();
+                            managerHasTeam_TeamName.setText(userProfile.teams.get(0));
                             managerHasTeamView.setVisibility(View.VISIBLE);
                         }
                     }
