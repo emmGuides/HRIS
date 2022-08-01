@@ -16,10 +16,10 @@
         android:layout_marginStart="8sp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="Add new Memebers"
+        android:text="Add new Members"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/new_team_layout"
+        app:layout_constraintStart_toStartOf="@+id/lookForEmployee_layout"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 

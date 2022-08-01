@@ -9,4 +9,5 @@
     <color name="iconCalendarColor">#E4A4C3C1</color>
     <color name="buttonColor">#22413e</color>
     <color name="dividerColor">#3a3a3b</color>
+    <color name="textViewColor">#353536</color>
 </resources>

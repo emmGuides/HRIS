@@ -19,7 +19,7 @@
             android:layout_marginEnd="-10sp"
             android:layout_height="300dp"
             android:layout_width="500dp"
-            android:alpha="0.1"
+            android:alpha="0.3"
             android:src="@drawable/cloudforhome_1"/>
 
         <!--EMPLOYEE-->
@@ -37,6 +37,7 @@
                 android:id="@+id/noTeams_Layout_EMPLOYEE"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="200sp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,13 +95,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <!--NO TEAMS MANAGER-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/noTeams_Layout_MANAGER"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginTop="200sp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -174,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="1sp"
                     android:layout_marginBottom="5sp"
-                    android:background="@drawable/custom_dialog_backgroud"
+                    android:background="@drawable/custom_bg_for_textviews"
                     android:maxWidth="175sp"
                     android:maxHeight="100sp"
                     android:padding="3sp"
