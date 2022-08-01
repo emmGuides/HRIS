@@ -38,13 +38,13 @@ public class TeamsFragment extends Fragment {
 
     private FirebaseUser user;
     private DatabaseReference reference, referenceForTeams;
-    private String userID, userName;
-    Dialog createTeam;
-    TextInputLayout teamNameLayout;
+    private String userID, userName, teamName;
+    Dialog createTeam, browseMembers;
+    TextInputLayout teamNameLayout, lookForMember_layout;
     ConstraintLayout employeeView, managerView,
             employeeNoTeamView, managerNoTeamView,
             employeeHasTeamView, managerHasTeamView;
-    Button createTeam_asManager;
+    Button createTeam_asManager, addMembers_asManager;
     TextView managerHasTeam_TeamName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -62,6 +62,7 @@ public class TeamsFragment extends Fragment {
         managerHasTeamView = binding.hasTeamsLayoutMANAGER;
 
         createTeam_asManager = binding.createTeamAsManager;
+        addMembers_asManager = binding.managerHasTeamsAddMember;
 
         managerHasTeam_TeamName = binding.managerHasTeamsTeamNameTitle;
 
@@ -78,6 +79,7 @@ public class TeamsFragment extends Fragment {
                 if (userProfile != null) {
                     String user_position = userProfile.position;
                     userName = userProfile.fullName;
+                    teamName = userProfile.teams.get(0);
 
                     // if user is just an employee
                     if(user_position.equals("Employee")){
@@ -169,6 +171,47 @@ public class TeamsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 teamNameLayout.setError(null);
+            }
+        });
+
+
+        // Look for members dialog
+        browseMembers = new Dialog(getContext());
+        browseMembers.setContentView(R.layout.custom_dialog_teams_browse_for_members);
+        browseMembers.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
+        browseMembers.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        browseMembers.setCancelable(false);
+        browseMembers.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        lookForMember_layout = browseMembers.findViewById(R.id.lookForEmployee_layout);
+
+        browseMembers.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                browseMembers.dismiss();
+            }
+        });
+
+        browseMembers.findViewById(R.id.lookForEmployee).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lookForMember_layout.setError(null);
+            }
+        });
+
+        // show add members dialog
+        addMembers_asManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                browseMembers.show();
+            }
+        });
+
+        // show details
+        addMembers_asManager.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(getActivity(), "Add new members to team '" + teamName + "'", Toast.LENGTH_LONG).show();
+                return false;
             }
         });
 
