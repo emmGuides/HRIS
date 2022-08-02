@@ -21,6 +21,7 @@ import com.example.hris.Employee;
 import com.example.hris.ListAdapter;
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentTeamsBinding;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -60,8 +61,6 @@ public class TeamsFragment extends Fragment {
         binding = FragmentTeamsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        names.add("cocka"); emails.add("boba");
-
         employeeView = binding.employeeLayout;
         employeeNoTeamView = binding.noTeamsLayoutEMPLOYEE;
         employeeHasTeamView = binding.hasTeamsLayoutEMPLOYEE;
@@ -92,11 +91,10 @@ public class TeamsFragment extends Fragment {
         lookForMember_layout = browseMembers.findViewById(R.id.lookForEmployee_layout);
 
 
-        ValueEventListener eventListener = new ValueEventListener() {
+        ValueEventListener getEmployees = reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()){
-                    //Toast.makeText(getActivity(), Objects.requireNonNull(ds.child("User Details").child("fullName").getValue()).toString(), Toast.LENGTH_LONG).show();
                     String name = Objects.requireNonNull(ds.child("User Details").child("fullName").getValue()).toString();
                     String email = Objects.requireNonNull(ds.child("User Details").child("email").getValue()).toString();
                     Toast.makeText(getActivity(), name+" "+email, Toast.LENGTH_LONG).show();
@@ -104,28 +102,26 @@ public class TeamsFragment extends Fragment {
                     Toast.makeText(getActivity(), names.toString(), Toast.LENGTH_LONG).show();
                     emails.add(email);
                 }
+
+                ArrayList<Employee> employeeArrayList = new ArrayList<>();
+                for(int i = 0; i < names.size(); i++){
+
+                    Employee employee = new Employee(names.get(i),null,emails.get(i),null,null);
+                    employeeArrayList.add(employee);
+
+                }
+
+                ListAdapter listAdapter = new ListAdapter(getActivity(),employeeArrayList);
+                ListView listViewBrowse = browseMembers.findViewById(R.id.listView_lookForEmployees);
+                listViewBrowse.setAdapter(listAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        };
-        reference.addValueEventListener(eventListener);
-        // reference.addListenerForSingleValueEvent(eventListener);
+        });
 
-
-        ArrayList<Employee> employeeArrayList = new ArrayList<>();
-        for(int i = 0; i < names.size(); i++){
-
-            Employee employee = new Employee(names.get(i),null,emails.get(i),null,null);
-            employeeArrayList.add(employee);
-
-        }
-
-        ListAdapter listAdapter = new ListAdapter(getActivity(),employeeArrayList);
-        ListView listViewBrowse = browseMembers.findViewById(R.id.listView_lookForEmployees);
-        listViewBrowse.setAdapter(listAdapter);
         // listViewBrowse.setAdapter(listAdapter);
 
             reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
