@@ -114,7 +114,7 @@ public class TeamsFragment extends Fragment {
         });
 
 
-        ValueEventListener getEmployees = reference.addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -303,9 +303,10 @@ public class TeamsFragment extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
+    // show dialog and add team-less employees to manager's team
     private void verifyAddingShow(String toBeAdded_ID, String toBeAdded_name, String teamName) {
         TextView changeTextView = verifyAdding.findViewById(R.id.textView_doubleCheck);
-        changeTextView.setText("Do you wish to add "+toBeAdded_name+" to "+teamName+"?");
+        changeTextView.setText("Do you wish to add "+toBeAdded_name+" to '"+teamName+"'?");
         verifyAdding.show();
         verifyAdding.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
             @Override
