@@ -7,20 +7,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.Employee;
+import com.example.hris.ListAdapter;
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentTeamsBinding;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,6 +51,11 @@ public class TeamsFragment extends Fragment {
             employeeHasTeamView, managerHasTeamView;
     Button createTeam_asManager, addMembers_asManager;
     TextView managerHasTeam_TeamName;
+    ListView listViewBrowse;
+
+    ArrayList<String> names = new ArrayList<>();
+    ArrayList<String> emails = new ArrayList<>();
+    ArrayList<String> lastTimeInS = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -72,7 +82,61 @@ public class TeamsFragment extends Fragment {
         referenceForTeams = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Teams");
         userID = user.getUid();
 
-        reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
+
+        // Look for members dialog
+        browseMembers = new Dialog(getContext());
+        browseMembers.setContentView(R.layout.custom_dialog_teams_browse_for_members);
+        browseMembers.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
+        browseMembers.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        browseMembers.setCancelable(false);
+        browseMembers.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        listViewBrowse = browseMembers.findViewById(R.id.listView_lookForEmployees);
+        listViewBrowse.setEmptyView(browseMembers.findViewById(R.id.emptyListAddMembers));
+        lookForMember_layout = browseMembers.findViewById(R.id.lookForEmployee_layout);
+
+
+        ValueEventListener getEmployees = reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    String name = Objects.requireNonNull(ds.child("User Details").child("fullName").getValue()).toString();
+                    String email = Objects.requireNonNull(ds.child("User Details").child("email").getValue()).toString();
+                    String position = Objects.requireNonNull(ds.child("User Details").child("position").getValue()).toString();
+                    String lastTimeIn = Objects.requireNonNull(ds.child("User Details").child("lastTimeIn").getValue()).toString();
+                    String teams = Objects.requireNonNull(ds.child("User Details").child("teams").child("0").getValue()).toString();
+
+                    if(!position.equals("Manager") && teams.equals("No team")){
+                        names.add(name);
+                        emails.add(email);
+                        lastTimeInS.add(lastTimeIn);
+                    }
+
+                }
+
+                ArrayList<Employee> employeeArrayList = new ArrayList<>();
+                for(int i = 0; i < names.size(); i++){
+
+                    Employee employee = new Employee(names.get(i),null,emails.get(i),null,null,lastTimeInS.get(i));
+                    employeeArrayList.add(employee);
+
+                }
+
+                if(getActivity() != null){
+                    ListAdapter listAdapter = new ListAdapter(getActivity(),employeeArrayList);
+                    listViewBrowse = browseMembers.findViewById(R.id.listView_lookForEmployees);
+                    listViewBrowse.setAdapter(listAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        // listViewBrowse.setAdapter(listAdapter);
+
+            reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Employee userProfile = snapshot.getValue(Employee.class);
@@ -173,16 +237,6 @@ public class TeamsFragment extends Fragment {
                 teamNameLayout.setError(null);
             }
         });
-
-
-        // Look for members dialog
-        browseMembers = new Dialog(getContext());
-        browseMembers.setContentView(R.layout.custom_dialog_teams_browse_for_members);
-        browseMembers.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
-        browseMembers.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        browseMembers.setCancelable(false);
-        browseMembers.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        lookForMember_layout = browseMembers.findViewById(R.id.lookForEmployee_layout);
 
         browseMembers.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override

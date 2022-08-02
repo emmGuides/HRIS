@@ -350,7 +350,6 @@ public class HomeFragment extends Fragment {
             timeInsOuts.setText("Timed out:  "+ currTime);
 
             Snackbar.make(requireView(),"Timed Out Done", Snackbar.LENGTH_LONG).show();
-            // timeInOutButton.setImageResource(R.drawable.timeintimeout_button_image);
 
             toAdd.add(time.format(timeInFromDB));
             toAdd.add(Long.toString(timeInFromDB));
@@ -360,6 +359,7 @@ public class HomeFragment extends Fragment {
         }
         // send to DB:
         reference.child(userID).child("Time Ins and Outs").child(formattedDate).setValue(toAdd);
+        reference.child(userID).child("User Details").child("lastTimeIn").setValue(formattedDate);
         toAdd.clear();
     }
 

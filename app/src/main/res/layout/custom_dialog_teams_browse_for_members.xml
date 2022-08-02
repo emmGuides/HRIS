@@ -68,12 +68,42 @@
     <ListView
         android:id="@+id/listView_lookForEmployees"
         android:layout_width="wrap_content"
+        android:layout_height="300sp"
+        app:layout_constraintTop_toBottomOf="@id/lookForEmployee_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="20sp"
+        tools:listitem="@layout/list_item"
+        />
+
+    <TextView
+        android:id="@+id/emptyListAddMembers"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="- No record found. -"
+        android:textStyle="italic"
+        android:textColor="@color/custTextColor"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintTop_toBottomOf="@id/lookForEmployee_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="20sp"
+        android:textAlignment="center"
+        tools:ignore="HardcodedText" />
+
+    <View
+        android:id="@+id/buffer"
+        android:backgroundTint="@color/darkerTextColor"
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20sp"
+        android:layout_marginBottom="5sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/listView_lookForEmployees"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
 
