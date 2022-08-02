@@ -343,6 +343,13 @@ public class TeamsFragment extends Fragment {
         reference.child(userID).child("User Details").child("teams").setValue(newTeamName);
         referenceForTeams.child(newTeamNameParam).child("Team Leader").setValue(creatorName);
 
+
+        employeeArrayList.clear();
+        names.clear();
+        emails.clear();
+        IDs.clear();
+        lastTimeInS.clear();
+        listAdapter.notifyDataSetChanged();
     }
 
     @Override
