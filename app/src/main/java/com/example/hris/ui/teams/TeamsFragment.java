@@ -52,10 +52,11 @@ public class TeamsFragment extends Fragment {
     ConstraintLayout employeeView, managerView,
             employeeNoTeamView, managerNoTeamView,
             employeeHasTeamView, managerHasTeamView;
+
     Button createTeam_asManager, addMembers_asManager;
     TextView managerHasTeam_TeamName;
-    ListView listViewBrowse;
-    ListAdapter listAdapter;
+    ListView listViewBrowse, listViewShowEmployees_Manager;
+    ListAdapter listAdapter, listAdapter_display;
     Employee userProfile;
 
     ArrayList<String> names = new ArrayList<>();
@@ -63,6 +64,13 @@ public class TeamsFragment extends Fragment {
     ArrayList<String> lastTimeInS = new ArrayList<>();
     ArrayList<String> IDs = new ArrayList<>();
     ArrayList<Employee> employeeArrayList = new ArrayList<>();
+
+    ArrayList<String> namesForDisplay = new ArrayList<>();
+    ArrayList<String> emailsForDisplay = new ArrayList<>();
+    ArrayList<String> lastTimeInSforDisplay = new ArrayList<>();
+    ArrayList<String> IDsForDisplay = new ArrayList<>();
+    ArrayList<Employee> employeeArrayListForDisplay = new ArrayList<>();
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -187,7 +195,7 @@ public class TeamsFragment extends Fragment {
         createTeam.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO
+
                 EditText userTeamNameInput = createTeam.findViewById(R.id.newTeam_name_input);
                 String newTeamName = userTeamNameInput.getText().toString().trim();
                 if(newTeamName.isEmpty()) {
@@ -252,7 +260,6 @@ public class TeamsFragment extends Fragment {
             }
         });
 
-        // TODO: make it so that users would not need to refresh the Fragment to show updated members list
         //
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -305,6 +312,69 @@ public class TeamsFragment extends Fragment {
 
             }
         });
+        //TODO: display list 
+        try{
+            referenceForTeams.child(teamName).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    for(DataSnapshot ds : snapshot.getChildren()){
+
+                        String nameAndID = Objects.requireNonNull(ds.getValue()).toString();
+                        String ID = nameAndID.substring(nameAndID.indexOf("(")+1, nameAndID.indexOf(")"));
+                        IDsForDisplay.add(ID);
+
+                    }
+
+                    for(int i = 0; i < IDsForDisplay.size(); i++){
+                        reference.child(IDsForDisplay.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                namesForDisplay.add(String.valueOf(snapshot.child("fullName").getValue()));
+                                emailsForDisplay.add(String.valueOf(snapshot.child("email").getValue()));
+                                lastTimeInS.add(String.valueOf(snapshot.child("lastTimeIn").getValue()));
+
+                                String name = String.valueOf(snapshot.child("fullName").getValue());
+                                String email = String.valueOf(snapshot.child("email").getValue());
+                                String lastTimeIn = String.valueOf(snapshot.child("lastTimeIn").getValue());
+
+                                Employee employeeForDisplay = new Employee(name,null, email,null,null, lastTimeIn);
+                                employeeArrayListForDisplay.add(employeeForDisplay);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+
+                    if(getActivity() != null){
+                        listAdapter_display = new ListAdapter(getActivity(), employeeArrayListForDisplay);
+                        listViewShowEmployees_Manager = binding.listViewShowEmployeesManager;
+                        listViewShowEmployees_Manager.setAdapter(listAdapter_display);
+                        listAdapter_display.notifyDataSetChanged();
+                        listViewShowEmployees_Manager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                Toast.makeText(getActivity(), employeeArrayListForDisplay.get(i).fullName, Toast.LENGTH_LONG).show();
+                            }
+
+                        });
+                        listAdapter_display.notifyDataSetChanged();
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        } catch (Exception noTeamsYet) {
+            // nothing for now
+        }
+
 
         return root;
     }
@@ -318,7 +388,7 @@ public class TeamsFragment extends Fragment {
         verifyAdding.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                referenceForTeams.child(teamName).child("Team Member" + "(" + Calendar.getInstance().getTimeInMillis()+")").setValue(toBeAdded_name);
+                referenceForTeams.child(teamName).child("Team Member" + "(" + Calendar.getInstance().getTimeInMillis()+")").setValue(toBeAdded_name + " (" + toBeAdded_ID + ")");
                 reference.child(toBeAdded_ID).child("User Details").child("teams").child("0").setValue(teamName);
                 if(getActivity() != null){
                     Toast.makeText(getActivity(), toBeAdded_name + " added to "+teamName + "!", Toast.LENGTH_LONG).show();
@@ -337,7 +407,7 @@ public class TeamsFragment extends Fragment {
 
     public void create_Team_Method(String newTeamNameParam){
         List<String> newTeamName = new ArrayList<>();
-        String creatorName = userID + " (" + userName + ")";
+        String creatorName = userName + " (" + userID + ")";
 
         newTeamName.add(newTeamNameParam);
         reference.child(userID).child("User Details").child("teams").setValue(newTeamName);

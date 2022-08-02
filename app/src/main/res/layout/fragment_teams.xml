@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:minHeight="1000dp">
 
 
         <ImageView
@@ -95,7 +96,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <!--NO TEAMS MANAGER-->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -153,11 +154,38 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/hasTeams_Layout_MANAGER"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:layout_height="match_parent"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <ListView
+                    android:id="@+id/listView_showEmployees_Manager"
+                    android:layout_width="350dp"
+                    android:dividerHeight="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50sp"
+                    app:layout_constraintTop_toBottomOf="@id/separator"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/buffer"
+                    android:layout_marginBottom="20sp"
+                    tools:listitem="@layout/list_item"
+                    />
+
+                <View
+                    android:id="@+id/buffer"
+                    android:background="@color/custTextColor"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20sp"
+                    android:layout_marginBottom="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/listView_showEmployees_Manager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
                 <TextView
                     android:id="@+id/managerHasTeams_teamNameLabel"
@@ -208,6 +236,7 @@
                     tools:ignore="HardcodedText" />
 
                 <View
+                    android:id="@+id/separator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="20sp"
