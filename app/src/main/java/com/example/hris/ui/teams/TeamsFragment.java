@@ -167,60 +167,14 @@ public class TeamsFragment extends Fragment {
                             //
                             //TODO: display list
                             try{
+
                                 referenceForTeams.child(teamName).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        // Toast.makeText(getActivity(), teamName, Toast.LENGTH_LONG).show();
-
                                         for(DataSnapshot ds : snapshot.getChildren()){
-
-                                            String nameAndID = Objects.requireNonNull(ds.getValue()).toString();
-                                            String ID = nameAndID.substring(nameAndID.indexOf("(")+1, nameAndID.indexOf(")"));
-                                            // Toast.makeText(getActivity(), ID, Toast.LENGTH_SHORT).show();
-                                            IDsForDisplay.add(ID);
-
+                                            //TODO HERE HERE HERE
+                                            Toast.makeText(getActivity(), Objects.requireNonNull(ds.getValue()).toString(), Toast.LENGTH_LONG).show();
                                         }
-
-                                        for(int i = 0; i < IDsForDisplay.size(); i++){
-                                            reference.child(IDsForDisplay.get(i)).addValueEventListener(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                    namesForDisplay.add(String.valueOf(snapshot.child("fullName").getValue()));
-                                                    emailsForDisplay.add(String.valueOf(snapshot.child("email").getValue()));
-                                                    lastTimeInS.add(String.valueOf(snapshot.child("lastTimeIn").getValue()));
-
-                                                    String name = String.valueOf(snapshot.child("fullName").getValue());
-                                                    String email = String.valueOf(snapshot.child("email").getValue());
-                                                    String lastTimeIn = String.valueOf(snapshot.child("lastTimeIn").getValue());
-
-                                                    Employee employeeForDisplay = new Employee(name,null, email,null,null, lastTimeIn);
-                                                    employeeArrayListForDisplay.add(employeeForDisplay);
-
-                                                    Toast.makeText(getActivity(), employeeArrayListForDisplay.get(0).fullName, Toast.LENGTH_LONG).show();
-                                                    if(getActivity() != null){
-                                                        listAdapter_display = new ListAdapter(getActivity(), employeeArrayListForDisplay);
-                                                        listViewShowEmployees_Manager = binding.listViewShowEmployeesManager;
-                                                        listViewShowEmployees_Manager.setAdapter(listAdapter_display);
-                                                        listAdapter_display.notifyDataSetChanged();
-                                                        listViewShowEmployees_Manager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                                            @Override
-                                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                                                Toast.makeText(getActivity(), employeeArrayListForDisplay.get(i).fullName, Toast.LENGTH_LONG).show();
-                                                            }
-
-                                                        });
-                                                        listAdapter_display.notifyDataSetChanged();
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                                }
-                                            });
-
-                                        }
-
                                     }
 
                                     @Override
@@ -228,8 +182,9 @@ public class TeamsFragment extends Fragment {
 
                                     }
                                 });
-                            } catch (Exception noTeamsYet) {
-                                Toast.makeText(getActivity(), "oops something went wrong" + teamName, Toast.LENGTH_LONG).show();
+
+                            } catch (Exception noTeamsYet){
+                                Toast.makeText(getActivity(), "oops something went wrong " + teamName, Toast.LENGTH_LONG).show();
                             }
                         }
                     }
@@ -394,7 +349,9 @@ public class TeamsFragment extends Fragment {
         verifyAdding.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                referenceForTeams.child(teamName).child("Team Member" + "(" + Calendar.getInstance().getTimeInMillis()+")").setValue(toBeAdded_name + " (" + toBeAdded_ID + ")");
+                referenceForTeams.child(teamName).child("Team Member" + "(" + Calendar.getInstance().getTimeInMillis()+")")
+                                .setValue(toBeAdded_name + " (" + toBeAdded_ID + ")");
+
                 reference.child(toBeAdded_ID).child("User Details").child("teams").child("0").setValue(teamName);
                 if(getActivity() != null){
                     Toast.makeText(getActivity(), toBeAdded_name + " added to "+teamName + "!", Toast.LENGTH_LONG).show();
