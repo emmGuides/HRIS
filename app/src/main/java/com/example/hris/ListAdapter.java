@@ -1,5 +1,6 @@
 package com.example.hris;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ public class ListAdapter extends ArrayAdapter<Employee> {
         super(context, R.layout.list_item, employeeArrayList);
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -34,6 +36,7 @@ public class ListAdapter extends ArrayAdapter<Employee> {
 
         employeeName.setText(employee.fullName);
         employeeEmail.setText(employee.email);
+        lastTimeIn.setText("Last timed in: "+employee.lastTimeIn);
 
         return convertView;
     }

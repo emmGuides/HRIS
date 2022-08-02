@@ -38,7 +38,7 @@ import java.util.Objects;
 
 public class TeamsFragment extends Fragment {
 
-    
+
     private FragmentTeamsBinding binding;
 
     private FirebaseUser user;
@@ -55,6 +55,7 @@ public class TeamsFragment extends Fragment {
 
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> emails = new ArrayList<>();
+    ArrayList<String> lastTimeInS = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -101,10 +102,13 @@ public class TeamsFragment extends Fragment {
                     String name = Objects.requireNonNull(ds.child("User Details").child("fullName").getValue()).toString();
                     String email = Objects.requireNonNull(ds.child("User Details").child("email").getValue()).toString();
                     String position = Objects.requireNonNull(ds.child("User Details").child("position").getValue()).toString();
+                    String lastTimeIn = Objects.requireNonNull(ds.child("User Details").child("lastTimeIn").getValue()).toString();
+                    String teams = Objects.requireNonNull(ds.child("User Details").child("teams").child("0").getValue()).toString();
 
-                    if(!position.equals("Manager")){
+                    if(!position.equals("Manager") && teams.equals("No team")){
                         names.add(name);
                         emails.add(email);
+                        lastTimeInS.add(lastTimeIn);
                     }
 
                 }
@@ -112,7 +116,7 @@ public class TeamsFragment extends Fragment {
                 ArrayList<Employee> employeeArrayList = new ArrayList<>();
                 for(int i = 0; i < names.size(); i++){
 
-                    Employee employee = new Employee(names.get(i),null,emails.get(i),null,null);
+                    Employee employee = new Employee(names.get(i),null,emails.get(i),null,null,lastTimeInS.get(i));
                     employeeArrayList.add(employee);
 
                 }

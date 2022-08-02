@@ -131,6 +131,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String age = editTextAge.getText().toString().trim();
         String fullName = editTextFullName.getText().toString().trim();
         List<String> teams = Collections.singletonList(("No team"));
+        String lastTimeIn = "Never";
 
 
         if(fullName.isEmpty()){
@@ -186,7 +187,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(task.isSuccessful()){
-                            Employee employee = new Employee(fullName, age, email, position, teams);
+                            Employee employee = new Employee(fullName, age, email, position, teams, lastTimeIn);
 
                             FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees")
                                     .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("User Details")
