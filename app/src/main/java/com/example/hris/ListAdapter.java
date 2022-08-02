@@ -31,7 +31,6 @@ public class ListAdapter extends ArrayAdapter<Employee> {
         TextView employeeName = convertView.findViewById(R.id.employee_name);
         TextView employeeEmail = convertView.findViewById(R.id.employee_email);
         TextView lastTimeIn = convertView.findViewById(R.id.last_timeIn);
-        ImageButton addEmployee = convertView.findViewById(R.id.add_this_employee);
 
         employeeName.setText(employee.fullName);
         employeeEmail.setText(employee.email);
