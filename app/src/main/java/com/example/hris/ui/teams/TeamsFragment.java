@@ -163,6 +163,74 @@ public class TeamsFragment extends Fragment {
                         {
                             managerHasTeam_TeamName.setText(userProfile.teams.get(0));
                             managerHasTeamView.setVisibility(View.VISIBLE);
+
+                            //
+                            //TODO: display list
+                            try{
+                                referenceForTeams.child(teamName).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        // Toast.makeText(getActivity(), teamName, Toast.LENGTH_LONG).show();
+
+                                        for(DataSnapshot ds : snapshot.getChildren()){
+
+                                            String nameAndID = Objects.requireNonNull(ds.getValue()).toString();
+                                            String ID = nameAndID.substring(nameAndID.indexOf("(")+1, nameAndID.indexOf(")"));
+                                            // Toast.makeText(getActivity(), ID, Toast.LENGTH_SHORT).show();
+                                            IDsForDisplay.add(ID);
+
+                                        }
+
+                                        for(int i = 0; i < IDsForDisplay.size(); i++){
+                                            reference.child(IDsForDisplay.get(i)).addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    namesForDisplay.add(String.valueOf(snapshot.child("fullName").getValue()));
+                                                    emailsForDisplay.add(String.valueOf(snapshot.child("email").getValue()));
+                                                    lastTimeInS.add(String.valueOf(snapshot.child("lastTimeIn").getValue()));
+
+                                                    String name = String.valueOf(snapshot.child("fullName").getValue());
+                                                    String email = String.valueOf(snapshot.child("email").getValue());
+                                                    String lastTimeIn = String.valueOf(snapshot.child("lastTimeIn").getValue());
+
+                                                    Employee employeeForDisplay = new Employee(name,null, email,null,null, lastTimeIn);
+                                                    employeeArrayListForDisplay.add(employeeForDisplay);
+
+                                                    Toast.makeText(getActivity(), employeeArrayListForDisplay.get(0).fullName, Toast.LENGTH_LONG).show();
+                                                    if(getActivity() != null){
+                                                        listAdapter_display = new ListAdapter(getActivity(), employeeArrayListForDisplay);
+                                                        listViewShowEmployees_Manager = binding.listViewShowEmployeesManager;
+                                                        listViewShowEmployees_Manager.setAdapter(listAdapter_display);
+                                                        listAdapter_display.notifyDataSetChanged();
+                                                        listViewShowEmployees_Manager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                            @Override
+                                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                                Toast.makeText(getActivity(), employeeArrayListForDisplay.get(i).fullName, Toast.LENGTH_LONG).show();
+                                                            }
+
+                                                        });
+                                                        listAdapter_display.notifyDataSetChanged();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            } catch (Exception noTeamsYet) {
+                                Toast.makeText(getActivity(), "oops something went wrong" + teamName, Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 }
@@ -290,7 +358,7 @@ public class TeamsFragment extends Fragment {
                 }
 
                 if(getActivity() != null){
-                    listAdapter = new ListAdapter(getActivity(),employeeArrayList);
+                    listAdapter = new ListAdapter(getActivity(), employeeArrayList);
                     listViewBrowse = browseMembers.findViewById(R.id.listView_lookForEmployees);
                     listViewBrowse.setAdapter(listAdapter);
                     listAdapter.notifyDataSetChanged();
@@ -312,68 +380,6 @@ public class TeamsFragment extends Fragment {
 
             }
         });
-        //TODO: display list 
-        try{
-            referenceForTeams.child(teamName).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    for(DataSnapshot ds : snapshot.getChildren()){
-
-                        String nameAndID = Objects.requireNonNull(ds.getValue()).toString();
-                        String ID = nameAndID.substring(nameAndID.indexOf("(")+1, nameAndID.indexOf(")"));
-                        IDsForDisplay.add(ID);
-
-                    }
-
-                    for(int i = 0; i < IDsForDisplay.size(); i++){
-                        reference.child(IDsForDisplay.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                namesForDisplay.add(String.valueOf(snapshot.child("fullName").getValue()));
-                                emailsForDisplay.add(String.valueOf(snapshot.child("email").getValue()));
-                                lastTimeInS.add(String.valueOf(snapshot.child("lastTimeIn").getValue()));
-
-                                String name = String.valueOf(snapshot.child("fullName").getValue());
-                                String email = String.valueOf(snapshot.child("email").getValue());
-                                String lastTimeIn = String.valueOf(snapshot.child("lastTimeIn").getValue());
-
-                                Employee employeeForDisplay = new Employee(name,null, email,null,null, lastTimeIn);
-                                employeeArrayListForDisplay.add(employeeForDisplay);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    }
-
-                    if(getActivity() != null){
-                        listAdapter_display = new ListAdapter(getActivity(), employeeArrayListForDisplay);
-                        listViewShowEmployees_Manager = binding.listViewShowEmployeesManager;
-                        listViewShowEmployees_Manager.setAdapter(listAdapter_display);
-                        listAdapter_display.notifyDataSetChanged();
-                        listViewShowEmployees_Manager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                Toast.makeText(getActivity(), employeeArrayListForDisplay.get(i).fullName, Toast.LENGTH_LONG).show();
-                            }
-
-                        });
-                        listAdapter_display.notifyDataSetChanged();
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        } catch (Exception noTeamsYet) {
-            // nothing for now
-        }
 
 
         return root;
