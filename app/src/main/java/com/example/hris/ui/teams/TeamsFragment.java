@@ -38,7 +38,7 @@ import java.util.Objects;
 
 public class TeamsFragment extends Fragment {
 
-
+    
     private FragmentTeamsBinding binding;
 
     private FirebaseUser user;
@@ -51,6 +51,7 @@ public class TeamsFragment extends Fragment {
             employeeHasTeamView, managerHasTeamView;
     Button createTeam_asManager, addMembers_asManager;
     TextView managerHasTeam_TeamName;
+    ListView listViewBrowse;
 
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> emails = new ArrayList<>();
@@ -88,6 +89,8 @@ public class TeamsFragment extends Fragment {
         browseMembers.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         browseMembers.setCancelable(false);
         browseMembers.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        listViewBrowse = browseMembers.findViewById(R.id.listView_lookForEmployees);
+        listViewBrowse.setEmptyView(browseMembers.findViewById(R.id.emptyListAddMembers));
         lookForMember_layout = browseMembers.findViewById(R.id.lookForEmployee_layout);
 
 
@@ -97,10 +100,13 @@ public class TeamsFragment extends Fragment {
                 for(DataSnapshot ds : snapshot.getChildren()){
                     String name = Objects.requireNonNull(ds.child("User Details").child("fullName").getValue()).toString();
                     String email = Objects.requireNonNull(ds.child("User Details").child("email").getValue()).toString();
-                    Toast.makeText(getActivity(), name+" "+email, Toast.LENGTH_LONG).show();
-                    names.add(name);
-                    Toast.makeText(getActivity(), names.toString(), Toast.LENGTH_LONG).show();
-                    emails.add(email);
+                    String position = Objects.requireNonNull(ds.child("User Details").child("position").getValue()).toString();
+
+                    if(!position.equals("Manager")){
+                        names.add(name);
+                        emails.add(email);
+                    }
+
                 }
 
                 ArrayList<Employee> employeeArrayList = new ArrayList<>();
@@ -111,9 +117,11 @@ public class TeamsFragment extends Fragment {
 
                 }
 
-                ListAdapter listAdapter = new ListAdapter(getActivity(),employeeArrayList);
-                ListView listViewBrowse = browseMembers.findViewById(R.id.listView_lookForEmployees);
-                listViewBrowse.setAdapter(listAdapter);
+                if(getActivity() != null){
+                    ListAdapter listAdapter = new ListAdapter(getActivity(),employeeArrayList);
+                    listViewBrowse = browseMembers.findViewById(R.id.listView_lookForEmployees);
+                    listViewBrowse.setAdapter(listAdapter);
+                }
             }
 
             @Override
