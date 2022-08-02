@@ -1,10 +1,12 @@
 package com.example.hris.ui.teams;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -33,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,7 +47,7 @@ public class TeamsFragment extends Fragment {
     private FirebaseUser user;
     private DatabaseReference reference, referenceForTeams;
     private String userID, userName, teamName;
-    Dialog createTeam, browseMembers;
+    Dialog createTeam, browseMembers, verifyAdding;
     TextInputLayout teamNameLayout, lookForMember_layout;
     ConstraintLayout employeeView, managerView,
             employeeNoTeamView, managerNoTeamView,
@@ -52,10 +55,12 @@ public class TeamsFragment extends Fragment {
     Button createTeam_asManager, addMembers_asManager;
     TextView managerHasTeam_TeamName;
     ListView listViewBrowse;
+    Employee userProfile;
 
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> emails = new ArrayList<>();
     ArrayList<String> lastTimeInS = new ArrayList<>();
+    ArrayList<String> IDs = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -94,21 +99,38 @@ public class TeamsFragment extends Fragment {
         listViewBrowse.setEmptyView(browseMembers.findViewById(R.id.emptyListAddMembers));
         lookForMember_layout = browseMembers.findViewById(R.id.lookForEmployee_layout);
 
+        // verify adding member
+        verifyAdding = new Dialog(getContext());
+        verifyAdding.setContentView(R.layout.custom_dialog_add_member);
+        verifyAdding.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
+        verifyAdding.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        verifyAdding.setCancelable(false);
+        verifyAdding.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        verifyAdding.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verifyAdding.dismiss();
+            }
+        });
+
 
         ValueEventListener getEmployees = reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 for(DataSnapshot ds : snapshot.getChildren()){
                     String name = Objects.requireNonNull(ds.child("User Details").child("fullName").getValue()).toString();
                     String email = Objects.requireNonNull(ds.child("User Details").child("email").getValue()).toString();
                     String position = Objects.requireNonNull(ds.child("User Details").child("position").getValue()).toString();
                     String lastTimeIn = Objects.requireNonNull(ds.child("User Details").child("lastTimeIn").getValue()).toString();
                     String teams = Objects.requireNonNull(ds.child("User Details").child("teams").child("0").getValue()).toString();
+                    String ID = ds.getKey();
 
                     if(!position.equals("Manager") && teams.equals("No team")){
                         names.add(name);
                         emails.add(email);
                         lastTimeInS.add(lastTimeIn);
+                        IDs.add(ID);
                     }
 
                 }
@@ -116,7 +138,7 @@ public class TeamsFragment extends Fragment {
                 ArrayList<Employee> employeeArrayList = new ArrayList<>();
                 for(int i = 0; i < names.size(); i++){
 
-                    Employee employee = new Employee(names.get(i),null,emails.get(i),null,null,lastTimeInS.get(i));
+                    Employee employee = new Employee(names.get(i),null,emails.get(i),null,null, lastTimeInS.get(i));
                     employeeArrayList.add(employee);
 
                 }
@@ -125,7 +147,15 @@ public class TeamsFragment extends Fragment {
                     ListAdapter listAdapter = new ListAdapter(getActivity(),employeeArrayList);
                     listViewBrowse = browseMembers.findViewById(R.id.listView_lookForEmployees);
                     listViewBrowse.setAdapter(listAdapter);
+                    listViewBrowse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            verifyAddingShow(IDs.get(i), names.get(i) ,userProfile.teams.get(0));
+                        }
+                    });
                 }
+
+
             }
 
             @Override
@@ -139,7 +169,7 @@ public class TeamsFragment extends Fragment {
             reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Employee userProfile = snapshot.getValue(Employee.class);
+                userProfile = snapshot.getValue(Employee.class);
                 if (userProfile != null) {
                     String user_position = userProfile.position;
                     userName = userProfile.fullName;
@@ -270,6 +300,24 @@ public class TeamsFragment extends Fragment {
         });
 
         return root;
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void verifyAddingShow(String toBeAdded_ID, String toBeAdded_name, String teamName) {
+        TextView changeTextView = verifyAdding.findViewById(R.id.textView_doubleCheck);
+        changeTextView.setText("Do you wish to add "+toBeAdded_name+" to "+teamName+"?");
+        verifyAdding.show();
+        verifyAdding.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                referenceForTeams.child(teamName).child("Team Member" + "(" + Calendar.getInstance().getTimeInMillis()+")").setValue(toBeAdded_name);
+                reference.child(toBeAdded_ID).child("User Details").child("teams").child("0").setValue(teamName);
+                if(getActivity() != null){
+                    Toast.makeText(getActivity(), toBeAdded_name + " added to "+teamName + "!", Toast.LENGTH_LONG).show();
+                }
+                verifyAdding.dismiss();
+            }
+        });
     }
 
     public void create_Team_Method(String newTeamNameParam){
