@@ -65,6 +65,16 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
+    <ListView
+        android:id="@+id/listView_lookForEmployees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/lookForEmployee_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20sp"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
