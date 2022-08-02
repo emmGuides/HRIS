@@ -36,6 +36,6 @@ public class ListAdapter extends ArrayAdapter<Employee> {
         employeeName.setText(employee.fullName);
         employeeEmail.setText(employee.email);
 
-        return super.getView(position, convertView, parent);
+        return convertView;
     }
 }
