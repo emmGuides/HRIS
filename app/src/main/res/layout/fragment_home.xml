@@ -13,7 +13,57 @@
     android:layout_height="wrap_content"
     tools:context=".ui.home.HomeFragment"
     >
+        <View
+            android:layout_width="00dp"
+            android:layout_height="00dp"
+            android:layout_marginTop="-20dp"
+            android:layout_marginBottom="-20dp"
+            android:layout_marginStart="-10dp"
+            android:layout_marginEnd="-10dp"
+            android:background="@drawable/custom_bg_for_layouts"
+            app:layout_constraintStart_toStartOf="@id/attendance_body"
+            app:layout_constraintEnd_toEndOf="@id/attendance_body"
+            app:layout_constraintTop_toTopOf="@id/greet_user"
+            app:layout_constraintBottom_toBottomOf="@+id/date_display"
+            android:elevation="5dp"
+            />
+        <View
+            android:layout_width="00dp"
+            android:layout_height="00dp"
+            android:layout_marginTop="-20dp"
+            android:layout_marginBottom="-20dp"
+            android:layout_marginStart="-10dp"
+            android:layout_marginEnd="-10dp"
+            android:background="@drawable/custom_bg_for_layouts"
+            app:layout_constraintStart_toStartOf="@id/attendance_body"
+            app:layout_constraintEnd_toEndOf="@id/attendance_body"
+            app:layout_constraintTop_toTopOf="@id/announcement_header"
+            app:layout_constraintBottom_toBottomOf="@+id/mock_announcements"
+            android:elevation="5dp"
+            />
 
+        <View
+            android:layout_width="00dp"
+            android:layout_height="00dp"
+            android:layout_marginTop="-20dp"
+            android:layout_marginBottom="-20dp"
+            android:layout_marginStart="-10dp"
+            android:layout_marginEnd="-10dp"
+            android:background="@drawable/custom_bg_for_layouts"
+            app:layout_constraintStart_toStartOf="@id/attendance_body"
+            app:layout_constraintEnd_toEndOf="@id/attendance_body"
+            app:layout_constraintTop_toTopOf="@id/attendance_header"
+            app:layout_constraintBottom_toBottomOf="@+id/Time_ins_outs_Button"
+            android:elevation="5dp"
+            />
+
+        <View
+            android:layout_width="1sp"
+            android:layout_height="100sp"
+            app:layout_constraintTop_toBottomOf="@+id/mock_announcements"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
     <ImageView
         android:layout_height="300dp"
@@ -34,17 +84,31 @@
         android:alpha="0.2"
         android:src="@drawable/cloudforhome_1"/>
 
+        <ImageView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="-60sp"
+            android:layout_marginEnd="-10sp"
+            android:layout_height="300dp"
+            android:layout_width="500dp"
+            android:alpha="0.09"
+            android:src="@drawable/cloud_for_bg_2_full"/>
+
+
+
     <TextView
         android:id="@+id/greet_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="2dp"
+        android:elevation="6dp"
         android:layout_marginTop="80sp"
+        android:maxWidth="240dp"
         android:layout_marginBottom="100dp"
+        android:textColor="@color/darkerTextColor"
         android:textAlignment="textStart"
-        android:layout_marginStart="5sp"
-        android:hint="Good day!"
-        android:textSize="20sp"
+        android:layout_marginStart="15sp"
+        android:hint="GOOD DAY!"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/attendance_header"
         app:layout_constraintLeft_toLeftOf="@id/attendance_body"
@@ -57,15 +121,16 @@
         android:id="@+id/announcement_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_dialog_backgroud"
+        android:background="@drawable/custom_bg_for_layouts"
         android:layout_marginTop="80dp"
+        android:paddingStart="30sp"
         android:text="Announcements"
-        android:textSize="18sp"
+        android:textColor="@color/darkerTextColor"
+        android:textSize="20sp"
         android:elevation="5dp"
         android:textStyle="bold"
         android:padding="11sp"
         app:layout_constraintStart_toStartOf="@id/mock_announcements"
-        app:layout_constraintEnd_toEndOf="@id/mock_announcements"
         app:layout_constraintTop_toBottomOf="@+id/total_timed_in"
         tools:ignore="HardcodedText,RtlSymmetry" />
 
@@ -74,6 +139,7 @@
         android:layout_width="300dp"
         android:layout_height="250dp"
         android:layout_marginTop="15dp"
+        android:elevation="7dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/announcement_header"
@@ -84,39 +150,34 @@
         android:id="@+id/date_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginStart="10sp"
         android:text="Today's Date"
+        android:textColor="@color/darkerTextColor"
         android:layout_marginEnd="1sp"
         android:textSize="16sp"
+        android:elevation="6dp"
         app:layout_constraintStart_toStartOf="@id/greet_user"
         app:layout_constraintTop_toBottomOf="@id/greet_user"
         tools:ignore="HardcodedText,RtlSymmetry" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_marginStart="40sp"
-        android:layout_marginEnd="40sp"
-        android:layout_height="1dp"
-        android:layout_marginTop="60dp"
-        android:background="@color/barColor"
-        app:layout_constraintTop_toBottomOf="@+id/date_display"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+
+
 
     <TextView
         android:id="@+id/attendance_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/custom_dialog_backgroud"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/custom_bg_for_layouts"
         android:padding="10sp"
+        android:textColor="@color/darkerTextColor"
+        android:paddingStart="30sp"
         android:minHeight="40dp"
         android:elevation="5dp"
         android:text="Attendance"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/attendance_body"
         app:layout_constraintStart_toStartOf="@id/attendance_body"
         app:layout_constraintTop_toBottomOf="@+id/date_display"
         tools:ignore="HardcodedText,RtlSymmetry" />
@@ -129,8 +190,10 @@
         app:layout_constraintTop_toBottomOf="@+id/attendance_header"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="15dp"
+        android:elevation="6dp"
         tools:ignore="ContentDescription" />
+
 
         <TextView
             android:hint="You haven't timed in yet..."
@@ -142,11 +205,13 @@
             android:textAlignment="textEnd"
             android:paddingEnd="10dp"
             android:paddingTop="10dp"
+            android:elevation="6dp"
+            android:layout_marginEnd="5dp"
             android:textSize="18sp"
             android:layout_marginStart="20dp"
             app:layout_constraintStart_toStartOf="@+id/attendance_body"
             android:backgroundTint="@color/white"
-            app:layout_constraintRight_toLeftOf="@id/Time_ins_outs_Button"
+            app:layout_constraintEnd_toStartOf="@id/Time_ins_outs_Button"
             app:layout_constraintTop_toBottomOf="@+id/attendance_body"
             tools:ignore="HardcodedText,RtlSymmetry,TextContrastCheck" />
 
@@ -158,24 +223,13 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:minHeight="40dp"
+            android:elevation="6dp"
             android:layout_marginTop="-20sp"
             android:layout_marginStart="25sp"
-            android:layout_marginEnd="20sp"
-            app:layout_constraintStart_toStartOf="@id/Time_ins_outs"
+            app:layout_constraintEnd_toEndOf="@id/Time_ins_outs"
             app:layout_constraintTop_toBottomOf="@id/Time_ins_outs"
             tools:ignore="HardcodedText,RtlSymmetry" />
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_marginStart="40sp"
-        android:layout_marginEnd="40sp"
-        android:layout_height="1dp"
-        android:layout_marginTop="40dp"
-        android:background="@color/barColor"
-        app:layout_constraintTop_toBottomOf="@+id/total_timed_in"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageButton
         android:id="@+id/Time_ins_outs_Button"
@@ -192,6 +246,7 @@
         app:layout_constraintLeft_toRightOf="@+id/Time_ins_outs"
         app:layout_constraintTop_toTopOf="@+id/Time_ins_outs"
         tools:ignore="HardcodedText,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

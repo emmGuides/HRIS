@@ -163,31 +163,33 @@
                     android:id="@+id/managerHasTeams_teamNameLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20sp"
-                    android:layout_marginTop="80sp"
-                    android:text="Team Name: "
+                    android:layout_marginTop="3sp"
+                    android:text="Team Name"
+                    android:layout_marginStart="10sp"
                     android:textColor="@color/custTextColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="@id/managerHasTeams_teamNameTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/managerHasTeams_teamNameTitle"
+                    />
 
                 <TextView
                     android:id="@+id/managerHasTeams_teamNameTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="1sp"
+                    android:layout_marginStart="20sp"
                     android:layout_marginBottom="5sp"
                     android:background="@drawable/custom_bg_for_textviews"
                     android:maxWidth="160sp"
                     android:maxHeight="100sp"
                     android:padding="8sp"
                     android:text="TEAM NAME"
+                    android:textColor="@color/darkerTextColor"
                     android:textAllCaps="false"
                     android:elevation="2dp"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="@+id/managerHasTeams_teamNameLabel"
-                    app:layout_constraintBottom_toBottomOf="@+id/managerHasTeams_teamNameLabel"
-                    app:layout_constraintStart_toEndOf="@id/managerHasTeams_teamNameLabel"
+                    android:layout_marginTop="80sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="HardcodedText" />
 
                 <Button
@@ -200,20 +202,20 @@
                     android:textColor="@color/darkerTextColor"
                     android:textSize="12sp"
                     app:icon="@drawable/add_people"
-                    app:layout_constraintTop_toTopOf="@id/managerHasTeams_teamNameLabel"
-                    app:layout_constraintBottom_toBottomOf="@+id/managerHasTeams_teamNameLabel"
+                    app:layout_constraintTop_toTopOf="@id/managerHasTeams_teamNameTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/managerHasTeams_teamNameTitle"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:ignore="HardcodedText" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginStart="50sp"
+                    android:layout_marginStart="20sp"
                     android:layout_marginTop="18dp"
-                    android:layout_marginEnd="50sp"
+                    android:layout_marginEnd="20sp"
                     android:background="@color/barColor"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/managerHasTeams_teamNameTitle" />
+                    app:layout_constraintTop_toBottomOf="@id/managerHasTeams_teamNameLabel" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

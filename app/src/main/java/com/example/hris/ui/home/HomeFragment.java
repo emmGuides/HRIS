@@ -166,13 +166,13 @@ public class HomeFragment extends Fragment {
                     }
 
                     if (Integer.parseInt(greet.format(currentTime.getTime())) < 13){
-                        homeGreeting.setText("Good Morning, "+ firstName);
+                        homeGreeting.setText("Good Morning, "+ firstName+"!");
                     }
                     else if (Integer.parseInt(greet.format(currentTime.getTime())) < 18) {
-                        homeGreeting.setText("Good Afternoon, "+ firstName);
+                        homeGreeting.setText("Good Afternoon, "+ firstName+"!");
                     }
                     else {
-                        homeGreeting.setText("Good Evening, "+ firstName);
+                        homeGreeting.setText("Good Evening, "+ firstName+"!");
                     }
 
                 }
