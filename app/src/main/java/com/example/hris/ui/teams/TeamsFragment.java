@@ -305,11 +305,6 @@ public class TeamsFragment extends Fragment {
 
             }
         });
-        employeeArrayList.clear();
-        names.clear();
-        emails.clear();
-        IDs.clear();
-        lastTimeInS.clear();
 
         return root;
     }
@@ -328,8 +323,13 @@ public class TeamsFragment extends Fragment {
                 if(getActivity() != null){
                     Toast.makeText(getActivity(), toBeAdded_name + " added to "+teamName + "!", Toast.LENGTH_LONG).show();
                 }
-                employeeArrayList.remove(indexToBeRemoved);
+                employeeArrayList.clear();
+                names.clear();
+                emails.clear();
+                IDs.clear();
+                lastTimeInS.clear();
                 listAdapter.notifyDataSetChanged();
+
                 verifyAdding.dismiss();
             }
         });
