@@ -69,11 +69,21 @@
         android:id="@+id/listView_lookForEmployees"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxHeight="300dp"
         app:layout_constraintTop_toBottomOf="@id/lookForEmployee_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="20sp"
+        tools:listitem="@layout/list_item"
+        />
+
+    <View
+        android:id="@+id/buffer"
+        android:layout_width="1dp"
+        android:layout_height="100dp"
+        app:layout_constraintTop_toBottomOf="@id/listView_lookForEmployees"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
 
