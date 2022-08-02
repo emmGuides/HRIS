@@ -55,12 +55,14 @@ public class TeamsFragment extends Fragment {
     Button createTeam_asManager, addMembers_asManager;
     TextView managerHasTeam_TeamName;
     ListView listViewBrowse;
+    ListAdapter listAdapter;
     Employee userProfile;
 
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> emails = new ArrayList<>();
     ArrayList<String> lastTimeInS = new ArrayList<>();
     ArrayList<String> IDs = new ArrayList<>();
+    ArrayList<Employee> employeeArrayList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -113,60 +115,8 @@ public class TeamsFragment extends Fragment {
             }
         });
 
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for(DataSnapshot ds : snapshot.getChildren()){
-                    String name = Objects.requireNonNull(ds.child("User Details").child("fullName").getValue()).toString();
-                    String email = Objects.requireNonNull(ds.child("User Details").child("email").getValue()).toString();
-                    String position = Objects.requireNonNull(ds.child("User Details").child("position").getValue()).toString();
-                    String lastTimeIn = Objects.requireNonNull(ds.child("User Details").child("lastTimeIn").getValue()).toString();
-                    String teams = Objects.requireNonNull(ds.child("User Details").child("teams").child("0").getValue()).toString();
-                    String ID = ds.getKey();
-
-                    if(!position.equals("Manager") && teams.equals("No team")){
-                        names.add(name);
-                        emails.add(email);
-                        lastTimeInS.add(lastTimeIn);
-                        IDs.add(ID);
-                    }
-
-                }
-
-                ArrayList<Employee> employeeArrayList = new ArrayList<>();
-                for(int i = 0; i < names.size(); i++){
-
-                    Employee employee = new Employee(names.get(i),null,emails.get(i),null,null, lastTimeInS.get(i));
-                    employeeArrayList.add(employee);
-
-                }
-
-                if(getActivity() != null){
-                    ListAdapter listAdapter = new ListAdapter(getActivity(),employeeArrayList);
-                    listViewBrowse = browseMembers.findViewById(R.id.listView_lookForEmployees);
-                    listViewBrowse.setAdapter(listAdapter);
-                    listViewBrowse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            verifyAddingShow(IDs.get(i), names.get(i) ,userProfile.teams.get(0));
-                        }
-                    });
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        // listViewBrowse.setAdapter(listAdapter);
-
-            reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
+        // conditional rendering
+        reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userProfile = snapshot.getValue(Employee.class);
@@ -286,6 +236,9 @@ public class TeamsFragment extends Fragment {
         addMembers_asManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(listAdapter != null){
+                    listAdapter.notifyDataSetChanged();
+                }
                 browseMembers.show();
             }
         });
@@ -299,12 +252,71 @@ public class TeamsFragment extends Fragment {
             }
         });
 
+        // TODO: make it so that users would not need to refresh the Fragment to show updated members list
+        //
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    String name = Objects.requireNonNull(ds.child("User Details").child("fullName").getValue()).toString();
+                    String email = Objects.requireNonNull(ds.child("User Details").child("email").getValue()).toString();
+                    String position = Objects.requireNonNull(ds.child("User Details").child("position").getValue()).toString();
+                    String lastTimeIn = Objects.requireNonNull(ds.child("User Details").child("lastTimeIn").getValue()).toString();
+                    String teams = Objects.requireNonNull(ds.child("User Details").child("teams").child("0").getValue()).toString();
+                    String ID = ds.getKey();
+
+                    if(!position.equals("Manager") && teams.equals("No team")){
+                        names.add(name);
+                        emails.add(email);
+                        lastTimeInS.add(lastTimeIn);
+                        IDs.add(ID);
+                    }
+
+                }
+
+                for(int i = 0; i < names.size(); i++){
+
+                    Employee employee = new Employee(names.get(i),null,emails.get(i),null,null, lastTimeInS.get(i));
+                    employeeArrayList.add(employee);
+
+                }
+
+                if(getActivity() != null){
+                    listAdapter = new ListAdapter(getActivity(),employeeArrayList);
+                    listViewBrowse = browseMembers.findViewById(R.id.listView_lookForEmployees);
+                    listViewBrowse.setAdapter(listAdapter);
+                    listAdapter.notifyDataSetChanged();
+                    listViewBrowse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            verifyAddingShow(IDs.get(i), names.get(i), userProfile.teams.get(0), i);
+                        }
+
+                    });
+                    listAdapter.notifyDataSetChanged();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        employeeArrayList.clear();
+        names.clear();
+        emails.clear();
+        IDs.clear();
+        lastTimeInS.clear();
+
         return root;
     }
 
     @SuppressLint("SetTextI18n")
     // show dialog and add team-less employees to manager's team
-    private void verifyAddingShow(String toBeAdded_ID, String toBeAdded_name, String teamName) {
+    private void verifyAddingShow(String toBeAdded_ID, String toBeAdded_name, String teamName, int indexToBeRemoved) {
         TextView changeTextView = verifyAdding.findViewById(R.id.textView_doubleCheck);
         changeTextView.setText("Do you wish to add "+toBeAdded_name+" to '"+teamName+"'?");
         verifyAdding.show();
@@ -316,6 +328,8 @@ public class TeamsFragment extends Fragment {
                 if(getActivity() != null){
                     Toast.makeText(getActivity(), toBeAdded_name + " added to "+teamName + "!", Toast.LENGTH_LONG).show();
                 }
+                employeeArrayList.remove(indexToBeRemoved);
+                listAdapter.notifyDataSetChanged();
                 verifyAdding.dismiss();
             }
         });
