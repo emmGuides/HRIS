@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable-night/appbar_12.xml" value="0.147" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable-notnight/appbar_12.xml" value="0.1405" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/circle_bg.xml" value="0.1665" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/circle_bg_button.xml" value="0.2165" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/close_button.xml" value="0.177" />
@@ -30,6 +32,7 @@
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/overtime_icon_for_calendar.xml" value="0.141" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/profile_icon.xml" value="0.1555" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/rectangle_bg.xml" value="0.1665" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/reminder_placeholder_icon.xml" value="0.2165" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/roundbutton.xml" value="0.1665" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/sick_icon.xml" value="0.145" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/sick_icon_for_calendar.xml" value="0.142" />
@@ -91,13 +94,14 @@
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_offset.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_overtime.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
-        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_reminders.xml" value="0.15625" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_reminders.xml" value="0.33" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_sick.xml" value="0.33" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_slideshow.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_teams.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/fragment_vacation.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/list_item.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/list_item_layout.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/list_item_reminders.xml" value="0.5" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/layout/nav_header_home_screen.xml" value="0.25" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/menu/home_screen.xml" value="0.209375" />

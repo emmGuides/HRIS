@@ -4,6 +4,7 @@
     tools:context=".ui.home.HomeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightBackground"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -20,7 +21,7 @@
             android:layout_marginBottom="-20dp"
             android:layout_marginStart="-10dp"
             android:layout_marginEnd="-10dp"
-            android:background="@drawable/custom_bg_for_layouts"
+            android:background="@drawable/custom_dialog_backgroud"
             app:layout_constraintStart_toStartOf="@id/attendance_body"
             app:layout_constraintEnd_toEndOf="@id/attendance_body"
             app:layout_constraintTop_toTopOf="@id/greet_user"
@@ -34,7 +35,7 @@
             android:layout_marginBottom="-20dp"
             android:layout_marginStart="-10dp"
             android:layout_marginEnd="-10dp"
-            android:background="@drawable/custom_bg_for_layouts"
+            android:background="@drawable/custom_dialog_backgroud"
             app:layout_constraintStart_toStartOf="@id/attendance_body"
             app:layout_constraintEnd_toEndOf="@id/attendance_body"
             app:layout_constraintTop_toTopOf="@id/announcement_header"
@@ -49,7 +50,7 @@
             android:layout_marginBottom="-20dp"
             android:layout_marginStart="-10dp"
             android:layout_marginEnd="-10dp"
-            android:background="@drawable/custom_bg_for_layouts"
+            android:background="@drawable/custom_dialog_backgroud"
             app:layout_constraintStart_toStartOf="@id/attendance_body"
             app:layout_constraintEnd_toEndOf="@id/attendance_body"
             app:layout_constraintTop_toTopOf="@id/attendance_header"
@@ -85,14 +86,16 @@
         android:src="@drawable/cloudforhome_1"/>
 
         <ImageView
+            android:id="@+id/firstCloud"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="-60sp"
             android:layout_marginEnd="-10sp"
             android:layout_height="300dp"
             android:layout_width="500dp"
-            android:alpha="0.09"
+            android:alpha="0.1"
             android:src="@drawable/cloud_for_bg_2_full"/>
+
 
 
 
@@ -108,7 +111,7 @@
         android:textAlignment="textStart"
         android:layout_marginStart="15sp"
         android:hint="GOOD DAY!"
-        android:textSize="24sp"
+        android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/attendance_header"
         app:layout_constraintLeft_toLeftOf="@id/attendance_body"
@@ -121,7 +124,7 @@
         android:id="@+id/announcement_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_bg_for_layouts"
+        android:background="@drawable/custom_dialog_backgroud"
         android:layout_marginTop="80dp"
         android:paddingStart="30sp"
         android:text="Announcements"
@@ -169,7 +172,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:background="@drawable/custom_bg_for_layouts"
+        android:background="@drawable/custom_dialog_backgroud"
         android:padding="10sp"
         android:textColor="@color/darkerTextColor"
         android:paddingStart="30sp"
