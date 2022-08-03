@@ -19,4 +19,5 @@
     <color name="textViewColor">#AEE9DD</color>
     <color name="IconFillColor">#E427A89C</color>
     <color name="layoutBGColor">#FBFFFE</color>
+    <color name="lightBackground">#F6F8FA</color>
 </resources>

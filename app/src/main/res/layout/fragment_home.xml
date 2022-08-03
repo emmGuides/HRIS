@@ -4,6 +4,7 @@
     tools:context=".ui.home.HomeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightBackground"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -85,13 +86,25 @@
         android:src="@drawable/cloudforhome_1"/>
 
         <ImageView
+            android:id="@+id/firstCloud"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="-60sp"
             android:layout_marginEnd="-10sp"
             android:layout_height="300dp"
             android:layout_width="500dp"
-            android:alpha="0.09"
+            android:alpha="0.15"
+            android:src="@drawable/cloud_for_bg_2_full"/>
+
+        <ImageView
+            app:layout_constraintTop_toBottomOf="@id/firstCloud"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="-10sp"
+            android:layout_marginTop="40sp"
+            android:layout_height="300dp"
+            android:layout_width="500dp"
+            android:rotationY="180"
+            android:alpha="0.15"
             android:src="@drawable/cloud_for_bg_2_full"/>
 
 
@@ -108,7 +121,7 @@
         android:textAlignment="textStart"
         android:layout_marginStart="15sp"
         android:hint="GOOD DAY!"
-        android:textSize="24sp"
+        android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/attendance_header"
         app:layout_constraintLeft_toLeftOf="@id/attendance_body"
