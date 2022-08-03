@@ -54,8 +54,8 @@ public class TeamsFragment extends Fragment {
             employeeHasTeamView, managerHasTeamView;
 
     Button createTeam_asManager, addMembers_asManager;
-    TextView managerHasTeam_TeamName, emptyDisplayList_Manager;
-    ListView listViewBrowse, listViewShowEmployees_Manager;
+    TextView managerHasTeam_TeamName, emptyDisplayList_Manager, employeeHasTeam_TeamName, emptyDisplayList_Employee;
+    ListView listViewBrowse, listViewShowEmployees_Manager, listViewShowEmployees_Employee;
     ListAdapter listAdapter, listAdapter_display;
     Employee userProfile;
 
@@ -82,6 +82,7 @@ public class TeamsFragment extends Fragment {
         employeeView = binding.employeeLayout;
         employeeNoTeamView = binding.noTeamsLayoutEMPLOYEE;
         employeeHasTeamView = binding.hasTeamsLayoutEMPLOYEE;
+        listViewShowEmployees_Employee = binding.listViewShowEmployeesEmployee;
 
         managerView = binding.managerLayout;
         managerNoTeamView = binding.noTeamsLayoutMANAGER;
@@ -93,6 +94,9 @@ public class TeamsFragment extends Fragment {
 
         managerHasTeam_TeamName = binding.managerHasTeamsTeamNameTitle;
         emptyDisplayList_Manager = binding.emptyDisplayList;
+
+        employeeHasTeam_TeamName = binding.employeeHasTeamsTeamNameTitle;
+        emptyDisplayList_Employee = binding.emptyDisplayListEmployee;
 
         // get user and DB
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -150,6 +154,66 @@ public class TeamsFragment extends Fragment {
                         else
                         {
                             employeeHasTeamView.setVisibility(View.VISIBLE);
+                            employeeHasTeam_TeamName.setText(userProfile.teams.get(0));
+
+                            //
+                            try{
+
+                                referenceForTeams.child(teamName).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                        for(DataSnapshot ds : snapshot.getChildren()){
+
+                                            //Toast.makeText(getActivity(), Objects.requireNonNull(ds.getValue()).toString(), Toast.LENGTH_LONG).show();
+                                            String name = Objects.requireNonNull(ds.child("Name").getValue()).toString();
+                                            String email = Objects.requireNonNull(ds.child("Email").getValue()).toString();
+                                            String ID = Objects.requireNonNull(ds.child("ID").getValue()).toString();
+                                            String position = ds.getKey();
+
+                                            if(!Objects.requireNonNull(ID).trim().equals(userID)){
+                                                namesForDisplay.add(name);
+                                                emailsForDisplay.add(email);
+                                                IDsForDisplay.add(ID);
+                                            }
+
+                                        }
+
+
+                                        for(int i = 0; i < namesForDisplay.size(); i++){
+
+                                            Employee employee = new Employee(namesForDisplay.get(i),null, emailsForDisplay.get(i),null,null, "to be implemented");
+                                            employeeArrayListForDisplay.add(employee);
+
+                                        }
+
+                                        if(getActivity() != null){
+                                            listAdapter_display = new ListAdapter(getActivity(), employeeArrayListForDisplay);
+                                            listViewShowEmployees_Employee.setAdapter(listAdapter_display);
+                                            listViewShowEmployees_Employee.setEmptyView(emptyDisplayList_Employee);
+                                            listAdapter_display.notifyDataSetChanged();
+                                            listViewShowEmployees_Employee.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                @Override
+                                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                    //TODO do stuff when employee taps on a team member's item
+                                                    Toast.makeText(getActivity(), namesForDisplay.get(i), Toast.LENGTH_LONG).show();
+                                                }
+
+                                            });
+                                            listAdapter_display.notifyDataSetChanged();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                            } catch (Exception noTeamsYet){
+                                Toast.makeText(getActivity(), "oops something went wrong " + teamName, Toast.LENGTH_LONG).show();
+                            }
+
                         }
                     }
 
