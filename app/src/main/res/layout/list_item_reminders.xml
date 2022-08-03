@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/icon_for_reminders_placeholder"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/reminder_placeholder_icon"
+        />
+
+    <TextView
+        android:id="@+id/reminder_context"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reminder Context"
+        app:layout_constraintStart_toEndOf="@id/assignee_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10sp"
+        android:layout_marginTop="10sp"
+        android:textSize="19sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/reminder_context"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Reminder Type"
+        android:layout_marginEnd="10sp"
+        />
+
+    <TextView
+        android:id="@+id/assignee_name"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:text="Assignee name"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/icon_for_reminders_placeholder"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10sp"
+        />
+    <TextView
+        android:id="@+id/important_date"
+        android:layout_width="wrap_content"
+        android:minWidth="130sp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/assignee_name"
+        app:layout_constraintStart_toStartOf="@id/assignee_name"
+        android:text="Important Date"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginStart="1sp"
+        />
+        
+    <TextView
+        android:id="@+id/details_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Details:"
+        android:textStyle="bold|italic"
+        app:layout_constraintTop_toBottomOf="@+id/important_date"
+        android:layout_marginTop="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/details"
+        app:layout_constraintStart_toStartOf="@id/details"
+        />
+    <TextView
+        android:id="@+id/details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/important_date"
+        app:layout_constraintStart_toStartOf="@id/important_date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Details Should be placed here"
+        android:layout_marginTop="15sp"
+        android:textSize="16sp"
+        />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
