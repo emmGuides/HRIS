@@ -27,6 +27,7 @@ import com.example.hris.R;
 import com.example.hris.databinding.FragmentTeamsBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Tasks;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -268,7 +269,11 @@ public class TeamsFragment extends Fragment {
                                                 @Override
                                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                                     //TODO do stuff when employee taps on a team member's item
-                                                    Toast.makeText(getActivity(), namesForDisplay.get(i), Toast.LENGTH_LONG).show();
+                                                    try{
+                                                        Snackbar.make(requireView(), "You tapped '" + namesForDisplay.get(i) + "', functionality will be implemented soon!", Snackbar.LENGTH_LONG).show();
+                                                    } catch (Exception snackBarError){
+                                                        Toast.makeText(getActivity(), "You tapped '" + namesForDisplay.get(i) + "', functionality will be implemented soon!", Toast.LENGTH_LONG).show();
+                                                    }
                                                 }
 
                                             });
