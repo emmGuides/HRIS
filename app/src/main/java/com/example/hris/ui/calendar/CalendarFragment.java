@@ -282,7 +282,6 @@ public class CalendarFragment extends Fragment {
             }
         });
 
-        // TODO: testo
         sickLeaveLog.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {

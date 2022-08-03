@@ -352,7 +352,8 @@ public class TeamsFragment extends Fragment {
                                                 @SuppressLint("SetTextI18n")
                                                 @Override
                                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                                    //TODO send Reminder
+
+                                                    // send Reminder
                                                     sendReminderTo.setText("Send Reminder to '"+namesForDisplay.get(i)+"'");
                                                     sendReminderDialog.show();
                                                     sendReminderDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
