@@ -87,6 +87,7 @@ public class TeamsFragment extends Fragment {
         managerView = binding.managerLayout;
         managerNoTeamView = binding.noTeamsLayoutMANAGER;
         managerHasTeamView = binding.hasTeamsLayoutMANAGER;
+        listViewShowEmployees_Manager = binding.listViewShowEmployeesManager;
 
         createTeam_asManager = binding.createTeamAsManager;
         addMembers_asManager = binding.managerHasTeamsAddMember;
@@ -174,9 +175,41 @@ public class TeamsFragment extends Fragment {
                                 referenceForTeams.child(teamName).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                                         for(DataSnapshot ds : snapshot.getChildren()){
                                             //TODO HERE HERE HERE
                                             Toast.makeText(getActivity(), Objects.requireNonNull(ds.getValue()).toString(), Toast.LENGTH_LONG).show();
+                                            String name = Objects.requireNonNull(ds.child("Name").getValue()).toString();
+                                            String email = Objects.requireNonNull(ds.child("Email").getValue()).toString();
+                                            String ID = Objects.requireNonNull(ds.child("ID").getValue()).toString();
+
+
+                                            namesForDisplay.add(name);
+                                            emailsForDisplay.add(email);
+                                            IDsForDisplay.add(ID);
+
+                                        }
+
+
+                                        for(int i = 0; i < namesForDisplay.size(); i++){
+
+                                            Employee employee = new Employee(namesForDisplay.get(i),null, emailsForDisplay.get(i),null,null, null);
+                                            employeeArrayListForDisplay.add(employee);
+
+                                        }
+
+                                        if(getActivity() != null){
+                                            listAdapter_display = new ListAdapter(getActivity(), employeeArrayListForDisplay);
+                                            listViewShowEmployees_Manager.setAdapter(listAdapter_display);
+                                            listAdapter_display.notifyDataSetChanged();
+                                            listViewShowEmployees_Manager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                @Override
+                                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                    Toast.makeText(getActivity(), namesForDisplay.get(i), Toast.LENGTH_LONG).show();
+                                                }
+
+                                            });
+                                            listAdapter_display.notifyDataSetChanged();
                                         }
                                     }
 
@@ -292,6 +325,7 @@ public class TeamsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for(DataSnapshot ds : snapshot.getChildren()){
+
                     String name = Objects.requireNonNull(ds.child("User Details").child("fullName").getValue()).toString();
                     String email = Objects.requireNonNull(ds.child("User Details").child("email").getValue()).toString();
                     String position = Objects.requireNonNull(ds.child("User Details").child("position").getValue()).toString();
