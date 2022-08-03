@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable-night/appbar_12.xml" value="0.147" />
+        <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable-notnight/appbar_12.xml" value="0.1405" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/circle_bg.xml" value="0.1665" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/circle_bg_button.xml" value="0.2165" />
         <entry key="..\:/Users/Emmanuel Guides/Desktop/HRIS/app/src/main/res/drawable/close_button.xml" value="0.177" />

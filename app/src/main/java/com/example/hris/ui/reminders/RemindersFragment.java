@@ -72,7 +72,6 @@ public class RemindersFragment extends Fragment {
 
 
                     for (DataSnapshot ds : snapshot.getChildren()){
-                        Toast.makeText(getActivity(), ds.getKey(), Toast.LENGTH_SHORT).show();
 
                         String accomplished = String.valueOf(ds.child("Accomplished").getValue());
                         String assignedBy = String.valueOf(ds.child("Assigned By").getValue());
