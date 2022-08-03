@@ -36,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,7 +47,7 @@ public class TeamsFragment extends Fragment {
 
     private FirebaseUser user;
     private DatabaseReference reference, referenceForTeams;
-    private String userID, userName, teamName;
+    private String userID, userName, teamName, userEmail;
     Dialog createTeam, browseMembers, verifyAdding;
     TextInputLayout teamNameLayout, lookForMember_layout;
     ConstraintLayout employeeView, managerView,
@@ -64,6 +65,7 @@ public class TeamsFragment extends Fragment {
     ArrayList<String> lastTimeInS = new ArrayList<>();
     ArrayList<String> IDs = new ArrayList<>();
     ArrayList<Employee> employeeArrayList = new ArrayList<>();
+    HashMap<String, String> toBeAdded = new HashMap<>();
 
     ArrayList<String> namesForDisplay = new ArrayList<>();
     ArrayList<String> emailsForDisplay = new ArrayList<>();
@@ -132,6 +134,7 @@ public class TeamsFragment extends Fragment {
                     String user_position = userProfile.position;
                     userName = userProfile.fullName;
                     teamName = userProfile.teams.get(0);
+                    userEmail = userProfile.email;
 
                     // if user is just an employee
                     if(user_position.equals("Employee")){
@@ -320,7 +323,7 @@ public class TeamsFragment extends Fragment {
                     listViewBrowse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            verifyAddingShow(IDs.get(i), names.get(i), userProfile.teams.get(0), i);
+                            verifyAddingShow(IDs.get(i), names.get(i), userProfile.teams.get(0), emails.get(i), i);
                         }
 
                     });
@@ -342,15 +345,19 @@ public class TeamsFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     // show dialog and add team-less employees to manager's team
-    private void verifyAddingShow(String toBeAdded_ID, String toBeAdded_name, String teamName, int indexToBeRemoved) {
+    private void verifyAddingShow(String toBeAdded_ID, String toBeAdded_name, String teamName, String toBeAddedEmail,int indexToBeRemoved) {
         TextView changeTextView = verifyAdding.findViewById(R.id.textView_doubleCheck);
         changeTextView.setText("Do you wish to add "+toBeAdded_name+" to '"+teamName+"'?");
         verifyAdding.show();
         verifyAdding.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                referenceForTeams.child(teamName).child("Team Member" + "(" + Calendar.getInstance().getTimeInMillis()+")")
-                                .setValue(toBeAdded_name + " (" + toBeAdded_ID + ")");
+
+                toBeAdded.put("Name", toBeAdded_name);
+                toBeAdded.put("ID", toBeAdded_ID);
+                toBeAdded.put("Email", toBeAddedEmail);
+                referenceForTeams.child(teamName).child("Team Member" + "(" + Calendar.getInstance().getTimeInMillis()+")").setValue(toBeAdded);
+                toBeAdded.clear();
 
                 reference.child(toBeAdded_ID).child("User Details").child("teams").child("0").setValue(teamName);
                 if(getActivity() != null){
@@ -374,7 +381,12 @@ public class TeamsFragment extends Fragment {
 
         newTeamName.add(newTeamNameParam);
         reference.child(userID).child("User Details").child("teams").setValue(newTeamName);
-        referenceForTeams.child(newTeamNameParam).child("Team Leader").setValue(creatorName);
+
+        toBeAdded.put("Name", userName);
+        toBeAdded.put("ID", userID);
+        toBeAdded.put("Email", userEmail);
+        referenceForTeams.child(newTeamNameParam).child("Team Leader").setValue(toBeAdded);
+        toBeAdded.clear();
 
 
         employeeArrayList.clear();
