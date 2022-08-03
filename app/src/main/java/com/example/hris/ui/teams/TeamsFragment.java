@@ -42,7 +42,6 @@ import java.util.Objects;
 
 public class TeamsFragment extends Fragment {
 
-
     private FragmentTeamsBinding binding;
 
     private FirebaseUser user;
@@ -178,15 +177,17 @@ public class TeamsFragment extends Fragment {
 
                                         for(DataSnapshot ds : snapshot.getChildren()){
                                             //TODO HERE HERE HERE
-                                            Toast.makeText(getActivity(), Objects.requireNonNull(ds.getValue()).toString(), Toast.LENGTH_LONG).show();
+                                            //Toast.makeText(getActivity(), Objects.requireNonNull(ds.getValue()).toString(), Toast.LENGTH_LONG).show();
                                             String name = Objects.requireNonNull(ds.child("Name").getValue()).toString();
                                             String email = Objects.requireNonNull(ds.child("Email").getValue()).toString();
                                             String ID = Objects.requireNonNull(ds.child("ID").getValue()).toString();
+                                            String position = ds.getKey();
 
-
-                                            namesForDisplay.add(name);
-                                            emailsForDisplay.add(email);
-                                            IDsForDisplay.add(ID);
+                                            if(!Objects.requireNonNull(position).trim().equals("Team Leader")){
+                                                namesForDisplay.add(name);
+                                                emailsForDisplay.add(email);
+                                                IDsForDisplay.add(ID);
+                                            }
 
                                         }
 
@@ -197,6 +198,7 @@ public class TeamsFragment extends Fragment {
                                             employeeArrayListForDisplay.add(employee);
 
                                         }
+                                        Toast.makeText(getActivity(), employeeArrayListForDisplay.toString(), Toast.LENGTH_SHORT).show();
 
                                         if(getActivity() != null){
                                             listAdapter_display = new ListAdapter(getActivity(), employeeArrayListForDisplay);
@@ -305,6 +307,7 @@ public class TeamsFragment extends Fragment {
             public void onClick(View view) {
                 if(listAdapter != null){
                     listAdapter.notifyDataSetChanged();
+                    listAdapter_display.notifyDataSetChanged();
                 }
                 browseMembers.show();
             }
@@ -402,7 +405,15 @@ public class TeamsFragment extends Fragment {
                 emails.clear();
                 IDs.clear();
                 lastTimeInS.clear();
+
+                employeeArrayListForDisplay.clear();
+                namesForDisplay.clear();
+                emailsForDisplay.clear();
+                IDsForDisplay.clear();
+                lastTimeInSforDisplay.clear();
+
                 listAdapter.notifyDataSetChanged();
+                listAdapter_display.notifyDataSetChanged();
 
                 verifyAdding.dismiss();
             }
@@ -429,6 +440,7 @@ public class TeamsFragment extends Fragment {
         IDs.clear();
         lastTimeInS.clear();
         listAdapter.notifyDataSetChanged();
+        listAdapter_display.notifyDataSetChanged();
     }
 
     @Override
