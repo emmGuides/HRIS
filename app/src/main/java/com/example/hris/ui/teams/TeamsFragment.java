@@ -54,7 +54,7 @@ public class TeamsFragment extends Fragment {
             employeeHasTeamView, managerHasTeamView;
 
     Button createTeam_asManager, addMembers_asManager;
-    TextView managerHasTeam_TeamName;
+    TextView managerHasTeam_TeamName, emptyDisplayList_Manager;
     ListView listViewBrowse, listViewShowEmployees_Manager;
     ListAdapter listAdapter, listAdapter_display;
     Employee userProfile;
@@ -92,6 +92,7 @@ public class TeamsFragment extends Fragment {
         addMembers_asManager = binding.managerHasTeamsAddMember;
 
         managerHasTeam_TeamName = binding.managerHasTeamsTeamNameTitle;
+        emptyDisplayList_Manager = binding.emptyDisplayList;
 
         // get user and DB
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -201,6 +202,7 @@ public class TeamsFragment extends Fragment {
                                         if(getActivity() != null){
                                             listAdapter_display = new ListAdapter(getActivity(), employeeArrayListForDisplay);
                                             listViewShowEmployees_Manager.setAdapter(listAdapter_display);
+                                            listViewShowEmployees_Manager.setEmptyView(emptyDisplayList_Manager);
                                             listAdapter_display.notifyDataSetChanged();
                                             listViewShowEmployees_Manager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                                 @Override
