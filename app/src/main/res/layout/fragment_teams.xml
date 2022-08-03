@@ -169,8 +169,10 @@
                     android:layout_marginBottom="30sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="No Employees under this team.\nTry adding new members as manager."
+                    android:textAlignment="center"
+                    android:text=" - No Employees under this team. - \n - Try adding new members as manager - "
                     />
+
                 <ListView
                     android:id="@+id/listView_showEmployees_Manager"
                     android:layout_width="350dp"
