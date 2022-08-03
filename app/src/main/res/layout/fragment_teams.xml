@@ -153,11 +153,50 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/hasTeams_Layout_MANAGER"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/empty_DisplayList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/separator"
+                    android:layout_marginTop="30sp"
+                    app:layout_constraintBottom_toBottomOf="@id/buffer"
+                    android:layout_marginBottom="30sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="No Employees under this team.\nTry adding new members as manager."
+                    />
+                <ListView
+                    android:id="@+id/listView_showEmployees_Manager"
+                    android:layout_width="350dp"
+                    android:dividerHeight="1dp"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="30sp"
+                    app:layout_constraintTop_toBottomOf="@id/separator"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/buffer"
+                    android:layout_marginBottom="20sp"
+                    tools:listitem="@layout/list_item"
+                    />
+
+                <View
+                    android:id="@+id/buffer"
+                    android:background="@color/custTextColor"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20sp"
+                    android:layout_marginBottom="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/listView_showEmployees_Manager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
                 <TextView
                     android:id="@+id/managerHasTeams_teamNameLabel"
@@ -185,7 +224,7 @@
                     android:textColor="@color/darkerTextColor"
                     android:textAllCaps="false"
                     android:elevation="2dp"
-                    android:textSize="16sp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     android:layout_marginTop="80sp"
                     app:layout_constraintTop_toTopOf="parent"
@@ -208,6 +247,7 @@
                     tools:ignore="HardcodedText" />
 
                 <View
+                    android:id="@+id/separator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="20sp"
