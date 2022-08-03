@@ -80,6 +80,93 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:visibility="gone">
 
+                <TextView
+                    android:id="@+id/empty_DisplayList_Employee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/separator_employee"
+                    android:layout_marginTop="30sp"
+                    app:layout_constraintBottom_toBottomOf="@id/buffer_employee"
+                    android:layout_marginBottom="30sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textAlignment="center"
+                    android:text=" - No Employees under this team -"
+                />
+
+                <ListView
+                    android:id="@+id/listView_showEmployees_Employee"
+                    android:layout_width="350dp"
+                    android:dividerHeight="1dp"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="30sp"
+                    app:layout_constraintTop_toBottomOf="@id/separator_employee"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/buffer_employee"
+                    android:layout_marginBottom="20sp"
+                    tools:listitem="@layout/list_item"
+                    />
+
+                <View
+                    android:id="@+id/buffer_employee"
+                    android:background="@color/custTextColor"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20sp"
+                    android:layout_marginBottom="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/listView_showEmployees_Employee"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/employeeHasTeams_teamNameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3sp"
+                    android:text="Team Name"
+                    android:layout_marginStart="10sp"
+                    android:textColor="@color/custTextColor"
+                    app:layout_constraintStart_toStartOf="@id/employeeHasTeams_teamNameTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/employeeHasTeams_teamNameTitle"
+                    />
+
+                <TextView
+                    android:id="@+id/employeeHasTeams_teamNameTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20sp"
+                    android:layout_marginBottom="5sp"
+                    android:background="@drawable/custom_bg_for_textviews"
+                    android:maxWidth="160sp"
+                    android:maxHeight="100sp"
+                    android:padding="8sp"
+                    android:text="TEAM NAME"
+                    android:textColor="@color/darkerTextColor"
+                    android:textAllCaps="false"
+                    android:elevation="2dp"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="80sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="HardcodedText" />
+
+                <View
+                    android:id="@+id/separator_employee"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20sp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="20sp"
+                    android:background="@color/barColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/employeeHasTeams_teamNameLabel" />
+
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
             <!--END OF HAS TEAMS EMPLOYEE-->
 

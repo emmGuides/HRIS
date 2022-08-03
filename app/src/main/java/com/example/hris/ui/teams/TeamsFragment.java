@@ -1,6 +1,7 @@
 package com.example.hris.ui.teams;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.example.hris.Employee;
 import com.example.hris.ListAdapter;
 import com.example.hris.R;
 import com.example.hris.databinding.FragmentTeamsBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,10 +37,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class TeamsFragment extends Fragment {
@@ -46,18 +52,23 @@ public class TeamsFragment extends Fragment {
 
     private FirebaseUser user;
     private DatabaseReference reference, referenceForTeams;
+    SimpleDateFormat date = new SimpleDateFormat("MMMM dd, yyyy");
+
     private String userID, userName, teamName, userEmail;
-    Dialog createTeam, browseMembers, verifyAdding;
+    Dialog createTeam, browseMembers, verifyAdding, sendReminderDialog;
     TextInputLayout teamNameLayout, lookForMember_layout;
     ConstraintLayout employeeView, managerView,
             employeeNoTeamView, managerNoTeamView,
             employeeHasTeamView, managerHasTeamView;
 
     Button createTeam_asManager, addMembers_asManager;
-    TextView managerHasTeam_TeamName, emptyDisplayList_Manager;
-    ListView listViewBrowse, listViewShowEmployees_Manager;
+    TextView managerHasTeam_TeamName, emptyDisplayList_Manager, employeeHasTeam_TeamName, emptyDisplayList_Employee, sendReminderTo;
+    EditText sendReminderDate, sendReminderDetails;
+    TextInputLayout sendReminderDateLayout, sendReminderDetailsLayout;
+    ListView listViewBrowse, listViewShowEmployees_Manager, listViewShowEmployees_Employee;
     ListAdapter listAdapter, listAdapter_display;
     Employee userProfile;
+    String managerName = "None", managerID = "None";
 
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> emails = new ArrayList<>();
@@ -82,6 +93,7 @@ public class TeamsFragment extends Fragment {
         employeeView = binding.employeeLayout;
         employeeNoTeamView = binding.noTeamsLayoutEMPLOYEE;
         employeeHasTeamView = binding.hasTeamsLayoutEMPLOYEE;
+        listViewShowEmployees_Employee = binding.listViewShowEmployeesEmployee;
 
         managerView = binding.managerLayout;
         managerNoTeamView = binding.noTeamsLayoutMANAGER;
@@ -93,6 +105,9 @@ public class TeamsFragment extends Fragment {
 
         managerHasTeam_TeamName = binding.managerHasTeamsTeamNameTitle;
         emptyDisplayList_Manager = binding.emptyDisplayList;
+
+        employeeHasTeam_TeamName = binding.employeeHasTeamsTeamNameTitle;
+        emptyDisplayList_Employee = binding.emptyDisplayListEmployee;
 
         // get user and DB
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -126,6 +141,67 @@ public class TeamsFragment extends Fragment {
             }
         });
 
+        // sendReminders dialog
+        sendReminderDialog = new Dialog(getContext());
+        sendReminderDialog.setContentView(R.layout.custom_dialog_teams_send_reminder);
+        sendReminderDialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
+        sendReminderDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        sendReminderDialog.setCancelable(true);
+        sendReminderDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        sendReminderDate = sendReminderDialog.findViewById(R.id.sendReminder_Date);
+        sendReminderDateLayout = sendReminderDialog.findViewById(R.id.sendReminder_Date_Layout);
+        sendReminderTo = sendReminderDialog.findViewById(R.id.sendReminderTo);
+        sendReminderDetails = sendReminderDialog.findViewById(R.id.reminder_details);
+        sendReminderDetailsLayout = sendReminderDialog.findViewById(R.id.reminder_details_layout);
+        sendReminderDialog.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendReminderDialog.dismiss();
+            }
+        });
+
+        sendReminderDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendReminderDetailsLayout.setError(null);
+            }
+        });
+
+        sendReminderDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendReminderDateLayout.setError(null);
+            }
+        });
+
+        final Calendar myCalendar = Calendar.getInstance();
+
+        // calendar popup
+        DatePickerDialog.OnDateSetListener overtimeDatePicker = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, month);
+                myCalendar.set(Calendar.DAY_OF_MONTH, day);
+
+                String myFormat = "MM/dd/yy";
+                SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+                sendReminderDate.setText(dateFormat.format(myCalendar.getTime()));
+            }
+        };
+
+        // calendar pop up
+        sendReminderDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendReminderDateLayout.setError(null);
+                new DatePickerDialog(getContext(), overtimeDatePicker,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
         // conditional rendering
         reference.child(userID).child("User Details").addValueEventListener(new ValueEventListener() {
             @Override
@@ -150,6 +226,66 @@ public class TeamsFragment extends Fragment {
                         else
                         {
                             employeeHasTeamView.setVisibility(View.VISIBLE);
+                            employeeHasTeam_TeamName.setText(userProfile.teams.get(0));
+
+                            //
+                            try{
+
+                                referenceForTeams.child(teamName).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                        for(DataSnapshot ds : snapshot.getChildren()){
+
+                                            //Toast.makeText(getActivity(), Objects.requireNonNull(ds.getValue()).toString(), Toast.LENGTH_LONG).show();
+                                            String name = Objects.requireNonNull(ds.child("Name").getValue()).toString();
+                                            String email = Objects.requireNonNull(ds.child("Email").getValue()).toString();
+                                            String ID = Objects.requireNonNull(ds.child("ID").getValue()).toString();
+                                            String position = ds.getKey();
+
+                                            if(!Objects.requireNonNull(ID).trim().equals(userID)){
+                                                namesForDisplay.add(name);
+                                                emailsForDisplay.add(email);
+                                                IDsForDisplay.add(ID);
+                                            }
+
+                                        }
+
+
+                                        for(int i = 0; i < namesForDisplay.size(); i++){
+
+                                            Employee employee = new Employee(namesForDisplay.get(i),null, emailsForDisplay.get(i),null,null, "to be implemented");
+                                            employeeArrayListForDisplay.add(employee);
+
+                                        }
+
+                                        if(getActivity() != null){
+                                            listAdapter_display = new ListAdapter(getActivity(), employeeArrayListForDisplay);
+                                            listViewShowEmployees_Employee.setAdapter(listAdapter_display);
+                                            listViewShowEmployees_Employee.setEmptyView(emptyDisplayList_Employee);
+                                            listAdapter_display.notifyDataSetChanged();
+                                            listViewShowEmployees_Employee.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                @Override
+                                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                    //TODO do stuff when employee taps on a team member's item
+                                                    Toast.makeText(getActivity(), namesForDisplay.get(i), Toast.LENGTH_LONG).show();
+                                                }
+
+                                            });
+                                            listAdapter_display.notifyDataSetChanged();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                            } catch (Exception noTeamsYet){
+                                Toast.makeText(getActivity(), "oops something went wrong " + teamName, Toast.LENGTH_LONG).show();
+                            }
+
                         }
                     }
 
@@ -187,6 +323,9 @@ public class TeamsFragment extends Fragment {
                                                 namesForDisplay.add(name);
                                                 emailsForDisplay.add(email);
                                                 IDsForDisplay.add(ID);
+                                            } else {
+                                                managerName = name;
+                                                managerID = ID;
                                             }
 
                                         }
@@ -205,10 +344,53 @@ public class TeamsFragment extends Fragment {
                                             listViewShowEmployees_Manager.setEmptyView(emptyDisplayList_Manager);
                                             listAdapter_display.notifyDataSetChanged();
                                             listViewShowEmployees_Manager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                @SuppressLint("SetTextI18n")
                                                 @Override
                                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                                     //TODO send Reminder
-                                                    Toast.makeText(getActivity(), namesForDisplay.get(i), Toast.LENGTH_LONG).show();
+                                                    sendReminderTo.setText("Send Reminder to '"+namesForDisplay.get(i)+"'");
+                                                    sendReminderDialog.show();
+                                                    sendReminderDialog.findViewById(R.id.btn_okay).setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+
+                                                            HashMap<String, String> toBeAdded_Reminder = new HashMap<>();
+                                                            String importantDate = "None";
+                                                            String details = "None";
+                                                            String formattedDate = date.format(Calendar.getInstance().getTime());
+
+                                                            if(sendReminderDetails.getText().toString().isEmpty()){
+                                                                sendReminderDetailsLayout.setError("Details cannot be Empty");
+                                                            }
+                                                            else if(sendReminderDetails.getText().toString().length() > 20){
+                                                                sendReminderDetailsLayout.setError("Limit Details to 20 characters");
+                                                            }
+                                                            else{
+                                                                importantDate = sendReminderDate.getText().toString().trim();
+                                                                details = sendReminderDetails.getText().toString().trim();
+                                                                toBeAdded_Reminder.put("Important Date", importantDate.isEmpty() ? "Indefinite" : importantDate);
+                                                                toBeAdded_Reminder.put("Details", details);
+                                                                toBeAdded_Reminder.put("Accomplished", "false");
+                                                                toBeAdded_Reminder.put("Assigned By", managerName);
+                                                                toBeAdded_Reminder.put("Assignee ID", managerID);
+                                                                toBeAdded_Reminder.put("Reminder Type", "Team");
+                                                                toBeAdded_Reminder.put("Reminder Type Context", teamName);
+
+
+                                                                reference.child(IDsForDisplay.get(i))
+                                                                         .child("Reminders")
+                                                                         .child(formattedDate + " (" + Calendar.getInstance().getTimeInMillis() + ")")
+                                                                         .setValue(toBeAdded_Reminder).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void unused) {
+                                                                                Toast.makeText(getActivity(), "Reminder added", Toast.LENGTH_LONG).show();
+                                                                                toBeAdded_Reminder.clear();
+                                                                                sendReminderDialog.dismiss();
+                                                                            }
+                                                                        });
+                                                            }
+                                                        }
+                                                    });
                                                 }
 
                                             });
