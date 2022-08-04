@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +66,7 @@ public class TeamsFragment extends Fragment {
 
     Button createTeam_asManager, addMembers_asManager;
     TextView managerHasTeam_TeamName, emptyDisplayList_Manager, employeeHasTeam_TeamName, emptyDisplayList_Employee, sendReminderTo;
-    EditText sendReminderDate, sendReminderDetails, sendReminderHeader;
+    EditText sendReminderDate, sendReminderDetails, sendReminderHeader, filterEmployees;
     TextInputLayout sendReminderDateLayout, sendReminderDetailsLayout, sendReminderHeaderLayout;
     ListView listViewBrowse, listViewShowEmployees_Manager, listViewShowEmployees_Employee;
     ListAdapter listAdapter, listAdapter_display;
@@ -127,6 +129,30 @@ public class TeamsFragment extends Fragment {
         listViewBrowse = browseMembers.findViewById(R.id.listView_lookForEmployees);
         listViewBrowse.setEmptyView(browseMembers.findViewById(R.id.emptyListAddMembers));
         lookForMember_layout = browseMembers.findViewById(R.id.lookForEmployee_layout);
+
+        //TODO: filter employees
+//        filterEmployees = browseMembers.findViewById(R.id.lookForEmployee);
+//        filterEmployees.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                if(getActivity()!=null){
+//                    listAdapter.getFilter().filter(charSequence);
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
+
+
+
 
         // verify adding member
         verifyAdding = new Dialog(getContext());
@@ -283,6 +309,12 @@ public class TeamsFragment extends Fragment {
                                                     } catch (Exception snackBarError){
                                                         Toast.makeText(getActivity(), "You tapped '" + namesForDisplay.get(i) + "', functionality will be implemented soon!", Toast.LENGTH_LONG).show();
                                                     }
+                                                    try{
+                                                        requireView().clearFocus();
+                                                    } catch (Exception noView){
+                                                        //nothing for now
+                                                    }
+
                                                 }
 
                                             });
@@ -417,6 +449,11 @@ public class TeamsFragment extends Fragment {
                                                                                 sendReminderDialog.dismiss();
                                                                             }
                                                                         });
+                                                            }
+                                                            try{
+                                                                requireView().clearFocus();
+                                                            } catch (Exception noView){
+                                                                //nothing for now
                                                             }
                                                         }
                                                     });
@@ -580,6 +617,11 @@ public class TeamsFragment extends Fragment {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             verifyAddingShow(IDs.get(i), names.get(i), userProfile.teams.get(0), emails.get(i), lastTimeInS.get(i), i);
+                            try{
+                                requireView().clearFocus();
+                            } catch (Exception noView){
+                                //nothing for now
+                            }
                         }
 
                     });

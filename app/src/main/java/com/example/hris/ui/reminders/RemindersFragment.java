@@ -136,11 +136,13 @@ public class RemindersFragment extends Fragment {
                                     importantDate_addtlDetails.setText("Comply by: " + importantDate_list.get(i));
                                     header_addtlDetails.setText(header_list.get(i));
                                     additionalDetails.show();
-//                                    try{
-//                                        Snackbar.make(requireView(), "You tapped a " + reminderType_list.get(i) + " " +  reminderTypeContext_list.get(i) + " reminder, given by " + assignedBy_list.get(i), Snackbar.LENGTH_LONG).show();
-//                                    } catch (Exception snackBarError){
-//                                        Toast.makeText(getActivity(), "You tapped a " + reminderType_list.get(i) + " " +  reminderTypeContext_list.get(i) + " reminder, given by " + assignedBy_list.get(i), Toast.LENGTH_LONG).show();
-//                                    }
+
+                                    try{
+                                        requireView().clearFocus();
+                                    } catch (Exception noView){
+                                        //nothing for now
+                                    }
+
                                 }
 
                             });

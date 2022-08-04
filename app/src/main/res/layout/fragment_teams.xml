@@ -80,6 +80,37 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:visibility="gone">
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lookForEmployee_layout"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:ems="10"
+                    android:hint="Look for an employee"
+                    android:minHeight="48dp"
+                    android:textColorHint="#757575"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/person_search"
+                    app:errorEnabled="true"
+                    app:helperTextEnabled="true"
+                    app:helperText="Employee Search function still in development"
+                    app:helperTextTextColor="#D86B6B"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:layout_constraintTop_toBottomOf="@+id/separator_employee"
+                    tools:ignore="Autofill,HardcodedText">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lookForEmployee"
+                        android:inputType="text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <TextView
                     android:id="@+id/empty_DisplayList_Employee"
                     android:layout_width="wrap_content"
@@ -99,8 +130,8 @@
                     android:layout_width="350dp"
                     android:divider="@null"
                     android:layout_height="400dp"
-                    android:layout_marginTop="30sp"
-                    app:layout_constraintTop_toBottomOf="@id/separator_employee"
+                    android:layout_marginTop="10sp"
+                    app:layout_constraintTop_toBottomOf="@id/lookForEmployee_layout"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/buffer_employee"
@@ -246,6 +277,38 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lookForEmployeeManager_layout"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:ems="10"
+                    android:hint="Look for an employee"
+                    android:minHeight="48dp"
+                    android:textColorHint="#757575"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/person_search"
+                    app:errorEnabled="true"
+                    app:helperTextEnabled="true"
+                    app:helperText="Employee Search function still in development"
+                    app:helperTextTextColor="#D86B6B"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:layout_constraintTop_toBottomOf="@+id/separator"
+                    tools:ignore="Autofill,HardcodedText">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lookForEmployee_manager"
+                        android:inputType="text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <TextView
                     android:id="@+id/empty_DisplayList"
                     android:layout_width="wrap_content"
@@ -265,9 +328,9 @@
                     android:layout_width="350dp"
                     android:dividerHeight="1dp"
                     android:layout_height="400dp"
-                    android:layout_marginTop="30sp"
+                    android:layout_marginTop="10sp"
                     android:divider="@null"
-                    app:layout_constraintTop_toBottomOf="@id/separator"
+                    app:layout_constraintTop_toBottomOf="@id/lookForEmployeeManager_layout"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/buffer"

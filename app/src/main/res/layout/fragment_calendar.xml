@@ -14,6 +14,24 @@
     android:layout_height="wrap_content"
     tools:context=".ui.calendar.CalendarFragment">
 
+
+
+    <View
+        android:id="@+id/logsView"
+        android:layout_width="00dp"
+        android:layout_height="00dp"
+        android:background="@drawable/custom_background_home"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/offset_calendar_icon"
+        app:layout_constraintEnd_toEndOf="@id/timeInOutLog_BUTTON"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/timeInOut_img_calendar"
+        app:layout_constraintTop_toTopOf="@id/logsLabel"
+        android:layout_marginEnd="-23dp"
+        android:layout_marginStart="-15dp"
+        android:layout_marginBottom="-10dp"
+        app:layout_constraintVertical_bias="1.0" />
+
     <ImageView
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +59,7 @@
         android:layout_marginTop="40dp"
         android:elevation="5dp"
         android:src="@drawable/time_in_time_out_btnimage_for_calendar"
-        app:layout_constraintStart_toStartOf="@id/barLine_calendarPlaceholder"
+        app:layout_constraintStart_toStartOf="@id/calendar_placeholder_image"
         app:layout_constraintTop_toBottomOf="@+id/barLine_calendarPlaceholder" />
 
     <TextView
@@ -49,6 +67,7 @@
         android:layout_height="wrap_content"
         android:text="All time Ins and Outs are here"
         android:textStyle="italic"
+        android:elevation="5dp"
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toStartOf="@+id/timeInOutLog_BUTTON"
         app:layout_constraintEnd_toEndOf="@+id/timeInOutLog_BUTTON"
@@ -64,7 +83,7 @@
         android:textAllCaps="false"
         android:layout_width="160dp"
         android:minHeight="50dp"
-        android:elevation="5dp"
+        android:elevation="6dp"
         android:textStyle="bold"
         android:layout_height="wrap_content"
         android:textSize="11sp"
@@ -101,7 +120,7 @@
         android:layout_marginTop="40dp"
         android:elevation="5dp"
         app:layout_constraintTop_toBottomOf="@id/barLine_underTimeInOut"
-        app:layout_constraintStart_toStartOf="@id/barLine_underTimeInOut"
+        app:layout_constraintStart_toStartOf="@id/calendar_placeholder_image"
         />
 
     <TextView
@@ -110,6 +129,7 @@
         android:text="All Vacation Leaves are here"
         android:textStyle="italic"
         android:layout_marginStart="10dp"
+        android:elevation="5dp"
         app:layout_constraintStart_toStartOf="@+id/VacationLog_BUTTON"
         app:layout_constraintEnd_toEndOf="@+id/VacationLog_BUTTON"
         app:layout_constraintBottom_toTopOf="@+id/VacationLog_BUTTON"
@@ -126,7 +146,7 @@
         android:layout_height="wrap_content"
         android:textSize="11sp"
         android:textStyle="bold"
-        android:elevation="5dp"
+        android:elevation="6dp"
         android:textAllCaps="false"
         android:layout_marginTop="44dp"
         android:layout_marginStart="30dp"
@@ -160,7 +180,7 @@
         android:layout_height="wrap_content"
         android:elevation="5dp"
         android:src="@drawable/sick_icon_for_calendar"
-        app:layout_constraintStart_toStartOf="@+id/barLine_underVacation"
+        app:layout_constraintStart_toStartOf="@+id/calendar_placeholder_image"
         app:layout_constraintTop_toBottomOf="@id/barLine_underVacation"
         />
 
@@ -170,6 +190,7 @@
         android:text="All Sick Leaves are here"
         android:textStyle="italic"
         android:layout_marginStart="10dp"
+        android:elevation="5dp"
         app:layout_constraintStart_toStartOf="@+id/SickLog_BUTTON"
         app:layout_constraintEnd_toEndOf="@+id/SickLog_BUTTON"
         app:layout_constraintBottom_toTopOf="@+id/SickLog_BUTTON"
@@ -188,7 +209,7 @@
         android:layout_marginEnd="20dp"
         android:textAllCaps="false"
         android:textStyle="bold"
-        android:elevation="5dp"
+        android:elevation="6dp"
         android:textColor="@color/darkerTextColor"
         android:backgroundTint="@color/buttonColor"
         android:elegantTextHeight="true"
@@ -220,7 +241,7 @@
         android:elevation="5dp"
         android:layout_height="wrap_content"
         android:src="@drawable/overtime_icon_for_calendar"
-        app:layout_constraintStart_toStartOf="@id/barLine_underSick"
+        app:layout_constraintStart_toStartOf="@id/calendar_placeholder_image"
         app:layout_constraintTop_toBottomOf="@id/barLine_underSick"
         />
 
@@ -229,6 +250,7 @@
         android:layout_height="wrap_content"
         android:text="All Overtimes are here"
         android:textStyle="italic"
+        android:elevation="5dp"
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toStartOf="@+id/overtimeLog_BUTTON"
         app:layout_constraintEnd_toEndOf="@+id/overtimeLog_BUTTON"
@@ -246,7 +268,7 @@
         android:layout_marginTop="44dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="20dp"
-        android:elevation="5dp"
+        android:elevation="6dp"
         android:textAllCaps="false"
         android:textStyle="bold"
         android:textColor="@color/darkerTextColor"
@@ -279,6 +301,7 @@
         android:layout_height="wrap_content"
         android:text="All Offsets are here"
         android:textStyle="italic"
+        android:elevation="5dp"
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toStartOf="@+id/offsetLog_BUTTON"
         app:layout_constraintEnd_toEndOf="@+id/offsetLog_BUTTON"
@@ -292,7 +315,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/offset_calendar_icon"
-        app:layout_constraintStart_toStartOf="@id/barLine_underOvertime"
+        app:layout_constraintStart_toStartOf="@id/calendar_placeholder_image"
         app:layout_constraintTop_toBottomOf="@id/barLine_underOvertime"
         android:layout_marginTop="40dp"
         android:elevation="5dp"
@@ -308,7 +331,7 @@
         android:textAllCaps="false"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="20dp"
-        android:elevation="5dp"
+        android:elevation="6dp"
         android:textStyle="bold"
         android:textColor="@color/darkerTextColor"
         android:backgroundTint="@color/buttonColor"
@@ -356,23 +379,24 @@
         android:contentDescription="Calendar Placeholder"
         tools:ignore="HardcodedText" />
 
+
     <TextView
+        android:id="@+id/logsLabel"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_background_home"
-        app:layout_constraintBottom_toTopOf="@id/barLine_calendarPlaceholder"
-        android:text="Logs"
+        android:layout_marginBottom="20dp"
         android:elevation="5dp"
         android:padding="15sp"
+        android:text="Logs"
         android:textAlignment="center"
+        android:textColor="@color/darkerTextColor"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/darkerTextColor"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/barLine_calendarPlaceholder"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="HardcodedText,RtlSymmetry"
-        />
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText,RtlSymmetry" />
 
     <View
         android:id="@+id/barLine_calendarPlaceholder"
