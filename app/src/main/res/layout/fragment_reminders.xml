@@ -82,13 +82,14 @@
     <ListView
         android:id="@+id/listView_showReminders"
         android:layout_width="match_parent"
+        android:maxWidth="300dp"
         android:layout_height="wrap_content"
         android:divider="@null"
         android:maxHeight="300sp"
         tools:layout_editor_absoluteY="153dp"
         app:layout_constraintTop_toBottomOf="@id/filterReminders_layout"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
         android:layout_marginTop="25sp"
         tools:listitem="@layout/list_item_reminders" />
 

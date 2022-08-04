@@ -21,4 +21,5 @@
     <color name="layoutBGColor">#FBFFFE</color>
     <color name="lightBackground">#F6F8FA</color>
     <color name="bgForHome">#E6FFFFFF</color>
+    <color name="launcher">#172A34</color>
 </resources>

@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <ImageView
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +77,7 @@
 
     <View
         android:id="@+id/anchor"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_marginStart="50sp"
         android:layout_marginEnd="40sp"
         android:layout_height="1dp"

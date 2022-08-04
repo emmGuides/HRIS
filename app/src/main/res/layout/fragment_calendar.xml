@@ -89,13 +89,12 @@
         android:textSize="11sp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="44dp"
-        android:layout_marginEnd="20dp"
         android:elegantTextHeight="true"
         android:text="View Time in and Out Log"
         app:layout_constraintBottom_toBottomOf="@+id/timeInOut_img_calendar"
         app:layout_constraintStart_toEndOf="@+id/timeInOut_img_calendar"
         app:layout_constraintTop_toTopOf="@+id/timeInOut_img_calendar"
-        app:layout_constraintEnd_toEndOf="@id/barLine_calendarPlaceholder"
+        app:layout_constraintEnd_toEndOf="@id/calendar_placeholder_image"
         tools:ignore="HardcodedText" />
 
     <View
@@ -153,7 +152,7 @@
         android:layout_marginEnd="20dp"
         android:elegantTextHeight="true"
         android:text="View Vacation Leave Log"
-        app:layout_constraintEnd_toEndOf="@id/barLine_underTimeInOut"
+        app:layout_constraintEnd_toEndOf="@id/calendar_placeholder_image"
         app:layout_constraintTop_toTopOf="@id/vacation_calendar"
         app:layout_constraintBottom_toBottomOf="@id/vacation_calendar"
         app:layout_constraintStart_toEndOf="@id/vacation_calendar"
@@ -217,7 +216,7 @@
         app:layout_constraintStart_toEndOf="@+id/sick_icon_calendar"
         app:layout_constraintTop_toTopOf="@id/sick_icon_calendar"
         app:layout_constraintBottom_toBottomOf="@id/sick_icon_calendar"
-        app:layout_constraintEnd_toEndOf="@id/barLine_underVacation"
+        app:layout_constraintEnd_toEndOf="@id/calendar_placeholder_image"
         tools:ignore="HardcodedText" />
 
     <View
@@ -275,7 +274,7 @@
         android:backgroundTint="@color/buttonColor"
         android:elegantTextHeight="true"
         android:text="View Overtime Log"
-        app:layout_constraintEnd_toEndOf="@id/barLine_underSick"
+        app:layout_constraintEnd_toEndOf="@id/calendar_placeholder_image"
         app:layout_constraintStart_toEndOf="@id/overtime_calendar_icon"
         app:layout_constraintTop_toTopOf="@id/overtime_calendar_icon"
         app:layout_constraintBottom_toBottomOf="@+id/overtime_calendar_icon"
@@ -336,7 +335,7 @@
         android:textColor="@color/darkerTextColor"
         android:backgroundTint="@color/buttonColor"
         android:text="Offset Log"
-        app:layout_constraintEnd_toEndOf="@id/barLine_underOvertime"
+        app:layout_constraintEnd_toEndOf="@id/calendar_placeholder_image"
         app:layout_constraintStart_toEndOf="@id/offset_calendar_icon"
         app:layout_constraintTop_toTopOf="@id/offset_calendar_icon"
         app:layout_constraintBottom_toBottomOf="@id/offset_calendar_icon"
