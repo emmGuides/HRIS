@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <View
@@ -11,10 +13,10 @@
         android:layout_marginStart="-5dp"
         android:layout_marginEnd="-5sp"
         android:layout_marginTop="-15dp"
-        android:layout_marginBottom="-20dp"
+        android:layout_marginBottom="-15dp"
         android:background="@drawable/custom_background_home"
         android:elevation="4dp"
-        app:layout_constraintBottom_toBottomOf="@id/details"
+        app:layout_constraintBottom_toBottomOf="@id/important_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/icon_for_reminders_placeholder"
@@ -38,26 +40,28 @@
     <TextView
         android:id="@+id/reminder_context"
         android:layout_width="wrap_content"
-        android:maxWidth="100sp"
-        android:gravity="end"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
         android:layout_marginEnd="8dp"
         android:elevation="5dp"
+        android:gravity="end"
+        android:maxWidth="100sp"
         android:text="Reminder Context"
-        android:textSize="19sp"
+        android:textSize="16sp"
+        android:layout_marginBottom="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
         android:elevation="5dp"
         android:id="@+id/reminder_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/reminder_context"
+        app:layout_constraintBottom_toTopOf="@+id/reminder_context"
         app:layout_constraintEnd_toEndOf="@id/reminder_context"
         android:text="Reminder Type"
+        android:textStyle="italic"
         />
 
     <TextView
@@ -95,41 +99,14 @@
         app:layout_constraintTop_toBottomOf="@id/assignee_name"
         app:layout_constraintStart_toStartOf="@id/assignee_name"
         android:text="Important Date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20sp"
         android:textStyle="bold"
         android:textSize="16sp"
         android:layout_marginStart="1sp"
         />
 
-    <TextView
-        android:elevation="5dp"
-        android:id="@+id/details_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Details:"
-        android:textStyle="bold|italic"
-        app:layout_constraintTop_toBottomOf="@+id/important_date"
-        android:layout_marginTop="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/details"
-        app:layout_constraintStart_toStartOf="@id/details"
-        />
 
-    <TextView
-        android:elevation="5dp"
-        android:id="@+id/details"
-        android:layout_width="wrap_content"
-        android:maxWidth="250dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/important_date"
-        app:layout_constraintStart_toStartOf="@id/important_date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/reminder_context"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginEnd="40dp"
-        android:text="when i was a young boy my fateher to me into the city"
-        android:layout_marginTop="15sp"
-        android:layout_marginBottom="25dp"
-        android:textSize="16sp"
-        />
 
 
 

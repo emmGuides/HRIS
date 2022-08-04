@@ -45,14 +45,12 @@ public class ListAdapter_Reminders extends ArrayAdapter<Reminders> {
         TextView importantDate = convertView.findViewById(R.id.important_date);
         TextView reminderContext = convertView.findViewById(R.id.reminder_context);
         TextView reminderType = convertView.findViewById(R.id.reminder_type);
-        TextView details = convertView.findViewById(R.id.details);
         TextView header = convertView.findViewById(R.id.item_header);
 
         assigneeName.setText("From: " + reminder.assignee_Name);
         importantDate.setText(reminder.importantDate);
         reminderContext.setText(reminder.reminderContext);
         reminderType.setText(reminder.reminderType);
-        details.setText(reminder.details);
         header.setText(reminder.header);
 
         return convertView;

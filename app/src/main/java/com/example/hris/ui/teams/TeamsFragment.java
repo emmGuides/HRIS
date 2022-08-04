@@ -177,6 +177,13 @@ public class TeamsFragment extends Fragment {
             }
         });
 
+        sendReminderHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendReminderHeaderLayout.setError(null);
+            }
+        });
+
         final Calendar myCalendar = Calendar.getInstance();
 
         // calendar popup
@@ -374,6 +381,9 @@ public class TeamsFragment extends Fragment {
                                                             else if (sendReminderHeader.getText().toString().length() > 20){
                                                                 sendReminderHeaderLayout.setError("Limit header to 20 characters");
                                                             }
+                                                            else if(sendReminderDetails.getText().toString().isEmpty()){
+                                                                sendReminderDetailsLayout.setError("Details are required");
+                                                            }
                                                             else if(sendReminderDetails.getText().toString().length() > 50){
                                                                 sendReminderDetailsLayout.setError("Limit details to 50 characters");
                                                             }
@@ -382,7 +392,7 @@ public class TeamsFragment extends Fragment {
                                                                 details = sendReminderDetails.getText().toString().trim();
                                                                 header = sendReminderHeader.getText().toString().trim();
                                                                 toBeAdded_Reminder.put("Important Date", importantDate.isEmpty() ? "Indefinite" : importantDate);
-                                                                toBeAdded_Reminder.put("Details", details.isEmpty() ? "No additional details" : details);
+                                                                toBeAdded_Reminder.put("Details", details);
                                                                 toBeAdded_Reminder.put("Header", header);
                                                                 toBeAdded_Reminder.put("Accomplished", "false");
                                                                 toBeAdded_Reminder.put("Assigned By", managerName);
@@ -399,6 +409,7 @@ public class TeamsFragment extends Fragment {
                                                                             public void onSuccess(Void unused) {
                                                                                 Toast.makeText(getActivity(), "Reminder added", Toast.LENGTH_LONG).show();
                                                                                 toBeAdded_Reminder.clear();
+                                                                                sendReminderDate.setText(null); sendReminderHeader.setText(null); sendReminderDetails.setText(null);
                                                                                 sendReminderDialog.dismiss();
                                                                             }
                                                                         });
