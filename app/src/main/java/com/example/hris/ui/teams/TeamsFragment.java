@@ -377,15 +377,19 @@ public class TeamsFragment extends Fragment {
 
                                                             if(sendReminderHeader.getText().toString().isEmpty()){
                                                                 sendReminderHeaderLayout.setError("Header should not be empty");
+                                                                sendReminderHeader.requestFocus();
                                                             }
                                                             else if (sendReminderHeader.getText().toString().length() > 20){
                                                                 sendReminderHeaderLayout.setError("Limit header to 20 characters");
+                                                                sendReminderHeader.requestFocus();
                                                             }
                                                             else if(sendReminderDetails.getText().toString().isEmpty()){
                                                                 sendReminderDetailsLayout.setError("Details are required");
+                                                                sendReminderDetails.requestFocus();
                                                             }
                                                             else if(sendReminderDetails.getText().toString().length() > 100){
                                                                 sendReminderDetailsLayout.setError("Limit details to 100 characters");
+                                                                sendReminderDetails.requestFocus();
                                                             }
                                                             else{
                                                                 importantDate = sendReminderDate.getText().toString().trim();
