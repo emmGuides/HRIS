@@ -34,7 +34,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
-        android:hint="Important Date to note"
+        android:hint="Date (Optional)"
         app:startIconDrawable="@drawable/calendar_for_fields"
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,12 +57,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/reminder_details_layout"
+        android:id="@+id/reminder_header_layout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Details"
+        android:hint="Header (Required)"
         android:minHeight="48dp"
         android:textColorHint="#757575"
         android:textSize="18sp"
@@ -72,11 +72,43 @@
         app:errorEnabled="true"
         app:helperTextEnabled="true"
         app:startIconDrawable="@drawable/pen_for_fields"
-        app:helperText="Limit details to 20 characters"
+        app:helperText="Limit header to 20 characters"
         app:counterEnabled="true"
         app:counterMaxLength="20"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintTop_toBottomOf="@id/sendReminder_Date_Layout"
+        tools:ignore="Autofill,HardcodedText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reminder_header"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/reminder_details_layout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Details (Optional)"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:startIconDrawable="@drawable/pen_for_fields"
+        app:helperText="Limit details to 50 characters"
+        app:counterEnabled="true"
+        app:counterMaxLength="50"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toBottomOf="@id/reminder_header_layout"
         tools:ignore="Autofill,HardcodedText">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -94,12 +126,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="10dp"
         android:text="Make sure inputted details are correct."
         android:textAlignment="center"
         android:textColor="@color/custTextColor"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reminder_details_layout"
         tools:ignore="HardcodedText" />

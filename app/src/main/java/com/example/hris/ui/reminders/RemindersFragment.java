@@ -80,9 +80,10 @@ public class RemindersFragment extends Fragment {
                         String importantDate = String.valueOf(ds.child("Important Date").getValue());
                         String reminderType = String.valueOf(ds.child("Reminder Type").getValue());
                         String reminderTypeContext = String.valueOf(ds.child("Reminder Type Context").getValue());
+                        String header = String.valueOf(ds.child("Header").getValue());
 
                         if(accomplished.equals("false")){
-                            Reminders reminderToAdd = new Reminders(accomplished, assignedBy, assigneeID, details, importantDate, reminderType, reminderTypeContext);
+                            Reminders reminderToAdd = new Reminders(accomplished, assignedBy, assigneeID, details, importantDate, reminderType, reminderTypeContext, header);
                             remindersArrayList.add(reminderToAdd);
 
                             accomplished_list.add(accomplished);

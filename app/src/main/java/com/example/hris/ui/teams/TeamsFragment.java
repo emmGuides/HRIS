@@ -64,8 +64,8 @@ public class TeamsFragment extends Fragment {
 
     Button createTeam_asManager, addMembers_asManager;
     TextView managerHasTeam_TeamName, emptyDisplayList_Manager, employeeHasTeam_TeamName, emptyDisplayList_Employee, sendReminderTo;
-    EditText sendReminderDate, sendReminderDetails;
-    TextInputLayout sendReminderDateLayout, sendReminderDetailsLayout;
+    EditText sendReminderDate, sendReminderDetails, sendReminderHeader;
+    TextInputLayout sendReminderDateLayout, sendReminderDetailsLayout, sendReminderHeaderLayout;
     ListView listViewBrowse, listViewShowEmployees_Manager, listViewShowEmployees_Employee;
     ListAdapter listAdapter, listAdapter_display;
     Employee userProfile;
@@ -154,6 +154,8 @@ public class TeamsFragment extends Fragment {
         sendReminderTo = sendReminderDialog.findViewById(R.id.sendReminderTo);
         sendReminderDetails = sendReminderDialog.findViewById(R.id.reminder_details);
         sendReminderDetailsLayout = sendReminderDialog.findViewById(R.id.reminder_details_layout);
+        sendReminderHeader = sendReminderDialog.findViewById(R.id.reminder_header);
+        sendReminderHeaderLayout = sendReminderDialog.findViewById(R.id.reminder_header_layout);
         sendReminderDialog.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -363,19 +365,25 @@ public class TeamsFragment extends Fragment {
                                                             HashMap<String, String> toBeAdded_Reminder = new HashMap<>();
                                                             String importantDate = "None";
                                                             String details = "None";
+                                                            String header = "None";
                                                             String formattedDate = date.format(Calendar.getInstance().getTime());
 
-                                                            if(sendReminderDetails.getText().toString().isEmpty()){
-                                                                sendReminderDetailsLayout.setError("Details cannot be Empty");
+                                                            if(sendReminderHeader.getText().toString().isEmpty()){
+                                                                sendReminderHeaderLayout.setError("Header should not be empty");
                                                             }
-                                                            else if(sendReminderDetails.getText().toString().length() > 20){
-                                                                sendReminderDetailsLayout.setError("Limit Details to 20 characters");
+                                                            else if (sendReminderHeader.getText().toString().length() > 20){
+                                                                sendReminderHeaderLayout.setError("Limit header to 20 characters");
+                                                            }
+                                                            else if(sendReminderDetails.getText().toString().length() > 50){
+                                                                sendReminderDetailsLayout.setError("Limit details to 50 characters");
                                                             }
                                                             else{
                                                                 importantDate = sendReminderDate.getText().toString().trim();
                                                                 details = sendReminderDetails.getText().toString().trim();
+                                                                header = sendReminderHeader.getText().toString().trim();
                                                                 toBeAdded_Reminder.put("Important Date", importantDate.isEmpty() ? "Indefinite" : importantDate);
-                                                                toBeAdded_Reminder.put("Details", details);
+                                                                toBeAdded_Reminder.put("Details", details.isEmpty() ? "No additional details" : details);
+                                                                toBeAdded_Reminder.put("Header", header);
                                                                 toBeAdded_Reminder.put("Accomplished", "false");
                                                                 toBeAdded_Reminder.put("Assigned By", managerName);
                                                                 toBeAdded_Reminder.put("Assignee ID", managerID);
