@@ -55,13 +55,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
-    <TextView
+    <Button
         android:id="@+id/btn_okay"
-        android:layout_width="90sp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm"
         android:textStyle="bold"
         android:textAlignment="center"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:gravity="center"
         android:textAllCaps="false"
         android:paddingTop="5dp"
@@ -75,7 +76,7 @@
         android:layout_marginEnd="10sp"
         app:drawableEndCompat="@drawable/download_icon" />
 
-    <TextView
+    <Button
         android:id="@+id/btn_cancel"
         android:layout_width="90sp"
         android:layout_height="wrap_content"
@@ -83,6 +84,8 @@
         android:text="Cancel"
         android:textColor="#eb4034"
         android:layout_marginBottom="40dp"
+        android:textAllCaps="false"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_marginTop="30dp"
         android:layout_marginStart="10sp"
         android:paddingTop="5dp"
