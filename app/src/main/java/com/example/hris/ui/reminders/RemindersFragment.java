@@ -1,5 +1,7 @@
 package com.example.hris.ui.reminders;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hris.ListAdapter;
 import com.example.hris.ListAdapter_Reminders;
+import com.example.hris.R;
 import com.example.hris.Reminders;
 import com.example.hris.databinding.FragmentRemindersBinding;
 import com.example.hris.databinding.FragmentTeamsBinding;
@@ -48,6 +51,10 @@ public class RemindersFragment extends Fragment {
     ArrayList<String> importantDate_list = new ArrayList<>();
     ArrayList<String> reminderType_list = new ArrayList<>();
     ArrayList<String> reminderTypeContext_list = new ArrayList<>();
+    ArrayList<String> header_list = new ArrayList<>();
+
+    Dialog additionalDetails;
+    TextView header_addtlDetails, importantDate_addtlDetails, assignee_addtlDetails, details_addtlDetails;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -63,6 +70,24 @@ public class RemindersFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://hris-c2ba2-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Employees");
         userID = user.getUid();
+
+        // additional details
+        additionalDetails = new Dialog(getContext());
+        additionalDetails.setContentView(R.layout.custom_dialog_reminder_addtl_details);
+        additionalDetails.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_backgroud);
+        additionalDetails.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        additionalDetails.setCancelable(true);
+        additionalDetails.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        assignee_addtlDetails = additionalDetails.findViewById(R.id.assignee);
+        details_addtlDetails = additionalDetails.findViewById(R.id.details);
+        header_addtlDetails = additionalDetails.findViewById(R.id.header);
+        importantDate_addtlDetails = additionalDetails.findViewById(R.id.date);
+        additionalDetails.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                additionalDetails.dismiss();
+            }
+        });
 
         // start
         try {
@@ -93,7 +118,8 @@ public class RemindersFragment extends Fragment {
                             importantDate_list.add(importantDate);
                             reminderType_list.add(reminderType);
                             reminderTypeContext_list.add(reminderTypeContext);
-                          }
+                            header_list.add(header);
+                        }
 
                         if(getActivity() != null){
                             listAdapter_Reminders = new ListAdapter_Reminders(getActivity(), remindersArrayList);
@@ -101,14 +127,20 @@ public class RemindersFragment extends Fragment {
                             remindersList.setEmptyView(emptyDisplayList_Reminders);
                             listAdapter_Reminders.notifyDataSetChanged();
                             remindersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @SuppressLint("SetTextI18n")
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                     //TODO do stuff when employee taps on a reminder item
-                                    try{
-                                        Snackbar.make(requireView(), "You tapped a " + reminderType_list.get(i) + " " +  reminderTypeContext_list.get(i) + " reminder, given by " + assignedBy_list.get(i), Snackbar.LENGTH_LONG).show();
-                                    } catch (Exception snackBarError){
-                                        Toast.makeText(getActivity(), "You tapped a " + reminderType_list.get(i) + " " +  reminderTypeContext_list.get(i) + " reminder, given by " + assignedBy_list.get(i), Toast.LENGTH_LONG).show();
-                                    }
+                                    assignee_addtlDetails.setText("From: " + assignedBy_list.get(i));
+                                    details_addtlDetails.setText(details_list.get(i));
+                                    importantDate_addtlDetails.setText("Comply by: " + importantDate_list.get(i));
+                                    header_addtlDetails.setText(header_list.get(i));
+                                    additionalDetails.show();
+//                                    try{
+//                                        Snackbar.make(requireView(), "You tapped a " + reminderType_list.get(i) + " " +  reminderTypeContext_list.get(i) + " reminder, given by " + assignedBy_list.get(i), Snackbar.LENGTH_LONG).show();
+//                                    } catch (Exception snackBarError){
+//                                        Toast.makeText(getActivity(), "You tapped a " + reminderType_list.get(i) + " " +  reminderTypeContext_list.get(i) + " reminder, given by " + assignedBy_list.get(i), Toast.LENGTH_LONG).show();
+//                                    }
                                 }
 
                             });

@@ -384,8 +384,8 @@ public class TeamsFragment extends Fragment {
                                                             else if(sendReminderDetails.getText().toString().isEmpty()){
                                                                 sendReminderDetailsLayout.setError("Details are required");
                                                             }
-                                                            else if(sendReminderDetails.getText().toString().length() > 50){
-                                                                sendReminderDetailsLayout.setError("Limit details to 50 characters");
+                                                            else if(sendReminderDetails.getText().toString().length() > 100){
+                                                                sendReminderDetailsLayout.setError("Limit details to 100 characters");
                                                             }
                                                             else{
                                                                 importantDate = sendReminderDate.getText().toString().trim();
