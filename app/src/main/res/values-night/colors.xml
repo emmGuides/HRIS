@@ -12,4 +12,5 @@
     <color name="textViewColor">#353536</color>
     <color name="layoutBGColor">#212323</color>
     <color name="lightBackground">#000000</color>
+    <color name="bgForHome">#A61B1E1E</color>
 </resources>
