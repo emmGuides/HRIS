@@ -1,0 +1,293 @@
+# Development Log:
+      June 21, 2022: 
+		- Initialized Android Studio project, HRIS
+		- Started making standard Register and Login views 
+		- Added validation for correct user inputs on both the Register and Log In Views
+		- Linked Application to a Firebase Realtime Database
+		- Added Employee Write Operations for Name, Age, and Email (details written not final) to database
+		- Added User Log in and Registration functionalities
+		- Added a placeholder for the home screen after user logs in
+		- Changed application logo/icon
+		- Current Application Demonstration: https://youtu.be/YMS57gfBR6A  
+      
+      June 22, 2022:
+		- Changed Homescreen's empty view to Android Navigation Drawer
+		- made a Figma Design file
+		- made high fidelity wireframes for the pre-existing Login and Register pages
+		- made high fidelity wireframe for the rest of the homepage basic layout
+		- made high fidelity wireframe for navigation drawer display
+		- made high fidelity wireframe for calendar display
+		- TODO: Try and Finish wireframes of different fragments from navigation drawer
+		- Figma Design link: https://www.figma.com/file/X7z3bAinWjwX29zwR19xhI/HRIS?node-id=0%3A1
+		- current application demonstration link: https://youtu.be/rGHMzYtdf3g
+
+      June 23, 2022:
+		- made high fidelity wireframes for Teams page
+		- made high fidelity wireframes for Vacation Leave Application page
+		- made high fidelity wireframes for Sick leave Application page
+		- made high fidelity wireframes for Profile Page
+		- wireframes for main functionalities finished
+		- Added Github repository branches for Navigation UI/UX and Menu editing/experimentation
+		- Successfully added functional Home, Calendar, Teams, Vacation Leave Request, Sick Leave Request Fragment and Views (background to be updated) in the 		  navigation bar
+		- Changed icons for Home, Calendar, Teams, Vacation leave request, Sick leave request in the navigation bar
+		- current application demonstration link: https://youtu.be/1QPmaLZollQ 
+	
+      June 24, 2022:
+	     	- Successfully Added Firebase Signout functionality
+		- Successfully Added user Email verification (turned off for now during development)
+		- Added new branch in GitHub (navbar-display-testing) to test recently found bugs
+		- Navigation Bar Header now correctly displays user's name and email
+		- Bug fixing took up more time than initially anticipated.
+		- Finished the Nav Bar UI
+		- app demo link: https://drive.google.com/file/d/1H-UKZI8wRfbvOy8D2NwriGxK6T6xoP0K/view?usp=drivesdk
+		
+      June 27, 2022: 
+		- Added Vacation Leave Form
+		- Added Sick Leave Form
+		- Added calendar toggle for both forms' start and end dates for their respective leave dates
+		- Added empty/null user input checks for both forms, on all fields
+		- Created new github branch to debug found bugs
+		- YouTube Demo link: https://youtu.be/8opwW905qFg
+		
+      June 28, 2022:
+		- Fixed threading bug found yesterday
+		- Vacation leave form and Sick leave form now functional
+		- Successfully established Firebase DB connection for dates and details in Vacation Leave request Form.
+		- Successfully established Firebase DB connection for dates and details in Sick Leave request Form.
+		- YouTube Demo link: https://youtu.be/taxS_z-l2Ro
+		
+      June 29, 2022:
+		- Added homescreen basic layout
+		- added dummy placeholders for announcements and attendance
+		- added button to display time ins (current time on click) 
+		- added button to add time out (current time on click), when timed in 
+		- Added greeting that displays authenticated user's first name.
+		- Added GitHub branch time-ins-outs to facilitate changes around time ins and outs
+		- Demo Link: https://youtu.be/_WtjdjNkip4
+		
+      June 30, 2022:
+		- modified homepage to have ScrollView
+		- locked all views to portrait
+		- overhauled home screen UI
+		- Added today's date display
+		- now displays current timed in duration (time out minus time in)
+		- Time ins, out, duration of time in, added in DB with key(child) as current date
+		- organized keys for vacation and sick leaves in DB
+		- organized registered users' details under "User Details" child in DB
+		
+      July 1, 2022:
+		- Added read operations for time ins and outs
+		- Refactored some parts of the code
+		- Fixed a bug found yesterday
+		- reformatted pushed DB values to contain Date datatypes
+      
+      July 4, 2022:
+ 		- added confirmation dialog when user logs out
+		- added confirmation dialog when user times in
+		- added confirmation dialog when user times out
+		- changed appbar text color, icon colors
+		- changed appbar background
+		- changed home screen's draft format
+		- added on back pressed methods on some views to cover an app vulnerability
+      
+      July 5, 2022:
+		- Created User Profile Fragment
+		- added user profile fragment to the navigation drawer
+		- added icon to the user profile item
+		- added placeholder images for Teams and Calendar fragments
+		- created DB Read methods for the user profile fragment details (name, age, email)
+		- slightly modified homescreen UI
+		
+      July 6, 2022:
+		- fixed layout on User Profile Fragment
+		- Added User Details edit buttons
+		- Added Dialog boxes that ask for new details to be updated
+		- Added checks for EditText fields on Name and Age Dialog
+		- Users can now Change name and age since it is also updated in the DB
+		- Email and Password updates pushed behind schedule since they require authentication.
+		
+      July 7, 2022:
+		- Removed edit info Icons
+        	- replaced icons with onLongClick event listener
+        	- Added info icon and message to let users know they can Long Tap on the fields
+        	- Added calendar placeholder
+        	- Successfully read time ins and outs all child and children
+        	- Start finding ways on how to display all time ins and outs as a log
+      
+      July 8, 2022:
+		- Added times in and out log as list
+        	- Added Vacation Leave Request log as list
+        	- Added Sick Leave Request log as list
+        	- made all logs display necessary details
+        	- Added Log Out description to the log out button
+        	- Presented current state of the Application to Sach
+		
+      July 11, 2022:
+		- Created Overtime Fragment and added it in the navigation
+		- Created Offset Fragment and added it in the navigation
+		- Added Fields for users to fill up in Overtime Fragment
+		- Added necessary icons for these newer fragments in the navigation drawer
+		- Added field checks for all fields in the Overtime Fragment
+		- Form Button now pushes Hash map in the database from all the user fields
+		
+      July 12, 2022:
+		- Added Offset form fields input checks
+        	- Added User inputs into a Hashmap
+        	- Successfully push hashmaps into DB
+        	- Reformatted previous Sick and Vacation forms' data structure to hashmaps
+        	- Added Buttons for Dialog implementations of Logs in calendar fragment
+        	- Transferred Lists inside Dialogs
+        	- Removed lists on Calendar Fragment
+		
+      July 13, 2022:
+		- Added list view and empty view inside time in and out log dialog
+		- Added list view and empty view inside sick leave log dialog
+		- Added list view and empty view inside vacation leave log dialog
+		- Added List view (from hashmap) and empty view inside overtimes log dialog
+		- Added List view (from hashmap) and empty view inside offsets log dialog
+		- Overtimes and offsets now reads, writes, and displays data from realtime database
+		- All buttons in the calendar fragment have their UIs fixed and updated.
+		- Entire Calendar Fragment and all Logs Display currently done
+      
+      July 14, 2022:
+		- Added and adjusted fields in the vacation leave request form based on the sent layout
+		- Added and adjusted fields in the sick leave request form based on the sent layout
+		- Modified all data from forms to push Hashmaps (key-value pairs) of each pair of data required
+		- Added edit user profile button
+		- added checks for all fields in the user profile button
+		- added dialog for edit user profile
+		- new profile names and ages on this dialog now gets pushed to DB
+		
+      July 15, 2022:
+		- Adjusted Offset form's fields in order to look better
+		- Adjusted Overtime form's fields in order to look more appealing
+		- Added labels to all input text fields
+		- Added forgot password View
+		- Added reset password functionality through email
+		- Met with Sach for a weekly progress review of the application
+		
+	July 18, 2022:
+		- Deleted Profile Password Display as per Sach's recommendation
+		- Changed 'No Data Found' to 'No Record Found'
+		- Removed confirm button on Log Dialogs and replaced it with a close (X) button as per Sach's recommendation
+		- clear selections on submit in Sick Leave Form
+		- Added Password Visibility toggles for Log In page, Register Page, and Edit Profile Dialog
+		- Started reading documentations on how to use Firestore
+	
+	July 19, 2022:
+		- added forms in which user can select a file
+		- changed some layouts with the sick leave form
+		- Added permissions so that users can browse PDF files from storage when selecting what to upload
+		- added upload dialog to show the progress of the file's upload
+		- Connected app with Firebase Storage (for medical certificate PDFs)
+		- Added Checks with the file upload functionality
+	
+	July 20, 2022:
+		- Changed buttons' look
+		- fixed log display of sick leaves, and spacing for other logs
+		- added navigation to "login" from "forgot password"
+		- fixed a bug in the sick leave fragment forms
+		- added navigation to "login" from "register"
+		- modified sick leave log to display name of medical certificate uploaded
+		- long pressing log items now prompts dialog to download uploaded certificate
+		
+	July 21, 2022:
+		- Added File download functionality (now working) in the Dialog that appears upon long clicking a list item
+		- File upload progress bar added when selected file is uploaded
+		- Modified vacation leaves' children key names to work better
+		- Modified Sick Leave Logs to look more organized
+		- Modified Time In and Out button so that users cannot time out again once timed out
+		- Changed  Time In and Out button appearance
+		- Added Button Animation for Time in and Out and Log Out
+		- Added Button Color Transition for Time In and Out
+		- Added labels and background to homescreen and logs
+		
+	July 22, 2022:
+		- Prepared presentation for Sach
+		- Added option to choose images as well as PDFs when uploading a file
+		- Changed how EditText functions when uploading a file
+		- Presented current state of the application to Sach
+		- Presented and explained weekly goals to Sach
+		- Added and utilized email verification for newly registered users
+		
+	July 25, 2022:
+		- cleaned up the code and removed unnecessary files and lines
+		- cleaned up formatting of all dialogs
+		- added background on home
+		- added scrollable views on log in, registration, and forgot password views
+		- tested application on a few devices in order to make sure layouts are consistent
+		- changed progress bar in all views
+		- added APK file in the repository for testing
+		
+	July 26, 2022:
+		- Added labels on placeholders on home screen, calendar, profile
+		- Added backgrounds on all fragments (home, profile, calendar, teams, vacation and sick leaves, overtimes, offset)
+		- Added on touch animations on placeholders to let users know
+		- Changed user profile icon placeholder
+		- Added additional checks on file upload for images and PDFs
+		
+	July 27, 2022:
+		- tested application layouts on a few more devices
+		- modified and edited multiple layout constraints in order to be adaptive to different screen sizes
+		- modified and edited layout constraints in order to be adaptive to different display and font sizes as well
+		- read documentations on how to implement a calendar widget
+		- cleared up and replaced some deprecated APIs and methods
+		
+	July 28, 2022:
+		- added radiobuttons on registration page to give users a way to register either as manager or employee
+		- added key "position" (as manager or employee) upon employee registration in the realtime database
+		- Added Reminders Fragment in the drawer menu
+		- Added reminders fragment temporary display
+		- Added reminders navigation
+		- Added conditional rendering on teams fragment based on authenticated user position, employee or manager, and whether they have teams or not as read from the Database
+		
+	July 29, 2022:
+		- Changed all EditText forms into more malleable Material TextField fields
+		- Added and changed some animations with regards to the newly changed textfield forms
+		- Added new and double-checked typechecks on all edited textfields
+		- Added icons in order to better present each field
+		- Added character limits on some input fields
+		- Met with Sach for the weekly review
+		- Implemented  Sach's recommendations
+		
+	August 1, 2022:
+		- Added "create a new team" dialog when the user logged in is a Manager, and has no teams.
+		- changed team child format from string to ArrayList, modified conditional rendering as such.
+		- Added newly created teams to the DB which would then specify the creator (manager) as the team leader.
+		- Added dialog to add members on a team
+		- Added more backgrounds for calendar and profile fragments
+		- added labels and changed some layout formatting on some fragments
+		
+	August 2, 2022:
+		- changed home screen layout
+		- changed application logo and launcher icon
+		- added a dialog to display all available employees to be added as a team member inside a list.
+		- added confirmation dialog when adding a team member
+		- Teams as well as updated information about employee's teams now pushed to database
+		
+	August 3, 2022:
+		- cleaned up and Fixed adding members bug
+		- team-less employee list now dynamically changes
+		- list now dynamically changes when authenticated manager searches for and adds another team member
+		- added functionality to send reminders (Manager's POV) towards a selected team member under his/her team.
+		- Added Dialog pop up when selecting team members to add details about the reminders
+		- Added Employee's team's list with all members excluding him/her in his/her teams fragment POV
+		- modified pushed data structures of teams lists as well as in reminders list in the Database
+		
+	August 4, 2022:
+		- Added reminders list adapter
+		- added reminders class
+		- added background to reminder fragment
+		- employees can now see and interact with all unfinished reminders sent to them by their respective team managers
+		- Fixed all layouts for listviews
+		- Added dialog when clicking list item to show additional infomation
+		- change buttons in Dialogs to be material text buttons
+		
+	August 5, 2022:
+		- changed and fixed launcher icon
+		- added nested scrolling on all scrollviews that contain a listview
+		- changed UI of calendar fragment
+		- changed emptylist display on reminders fragment
+		- fixed constraints on some views
+		- prepared presentation
+		- presented to Sach
