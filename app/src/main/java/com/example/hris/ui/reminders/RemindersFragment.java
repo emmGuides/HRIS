@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -42,7 +43,7 @@ public class RemindersFragment extends Fragment {
     ListView remindersList;
     ArrayList<Reminders> remindersArrayList = new ArrayList<>();
     ListAdapter_Reminders listAdapter_Reminders;
-    TextView emptyDisplayList_Reminders;
+    ConstraintLayout emptyDisplayList_Reminders;
 
     ArrayList<String> accomplished_list = new ArrayList<>();
     ArrayList<String> assignedBy_list = new ArrayList<>();
